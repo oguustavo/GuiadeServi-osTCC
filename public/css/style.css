@@ -1,10 +1,11 @@
 :root {
-    --primary-color: #007BFF;
-    --secondary-color: #FFFFFF;
-    --support-color: #03A9F4;
-    --highlight-color: #FFA500;
+    --primary: #007BFF;
+    --secondary: #FFFFFF;
+    --support: #03A9F4;
+    --highlight: #FFA500;
 }
 
+/* Reset e Estilos Básicos */
 * {
     margin: 0;
     padding: 0;
@@ -16,82 +17,169 @@ body {
     background-color: #f4f4f4;
 }
 
-.main-header {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
+/* Navbar */
+#navbar {
+    background-color: var(--primary);
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: var(--secondary);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.header-left .site-title {
+.logo {
+    color: var(--secondary);
+    text-decoration: none;
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-.header-center {
+/* Centro do Navbar */
+.nav-center {
     display: flex;
     gap: 2rem;
+    align-items: center;
 }
 
-#weather-info, #clock {
+#weather, #clock {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
 }
 
-.header-right .nav-menu {
-    display: flex;
-    align-items: center;
+#weather i, #clock i {
+    font-size: 1.2rem;
 }
 
-.auth-buttons {
+/* Menu de Navegação */
+.nav-menu {
     display: flex;
     gap: 1rem;
+    list-style: none;
 }
 
-.auth-buttons a, .logout-btn {
-    color: var(--secondary-color);
+.nav-menu a {
+    color: var(--secondary);
     text-decoration: none;
     padding: 0.5rem 1rem;
     border-radius: 4px;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
 }
 
-.login-btn {
-    background-color: var(--support-color);
+.nav-menu a:hover {
+    background-color: var(--support);
 }
 
-.register-btn {
-    background-color: var(--highlight-color);
+/* Menu Hamburguer */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
-.logout-btn {
-    background-color: #dc3545;
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--secondary);
+    margin: 5px 0;
+    transition: 0.3s;
 }
 
-.auth-buttons a:hover, .logout-btn:hover {
-    opacity: 0.9;
-}
-
-.user-profile {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
+/* Container Principal */
 .container {
     max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    margin: 0 auto;
+    padding: 2rem 1rem;
 }
 
+/* Mensagens */
 .message {
     padding: 1rem;
-    margin-bottom: 1rem;
+    background-color: var(--support);
+    color: var(--secondary);
     border-radius: 4px;
-    background-color: var(--support-color);
-    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary);
+    color: var(--secondary);
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #navbar {
+        padding: 1rem;
+        position: relative;
+    }
+
+    .nav-center {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary);
+        padding: 0.5rem;
+        justify-content: center;
+        z-index: 100;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--primary);
+        flex-direction: column;
+        padding: 1rem;
+        z-index: 99;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .container {
+        margin-top: 4rem;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.nav-menu.active {
+    animation: fadeIn 0.3s ease-in-out;
 } 
