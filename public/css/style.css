@@ -1,0 +1,97 @@
+:root {
+    --primary-color: #007BFF;
+    --secondary-color: #FFFFFF;
+    --support-color: #03A9F4;
+    --highlight-color: #FFA500;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.main-header {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header-left .site-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.header-center {
+    display: flex;
+    gap: 2rem;
+}
+
+#weather-info, #clock {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header-right .nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.auth-buttons a, .logout-btn {
+    color: var(--secondary-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.login-btn {
+    background-color: var(--support-color);
+}
+
+.register-btn {
+    background-color: var(--highlight-color);
+}
+
+.logout-btn {
+    background-color: #dc3545;
+}
+
+.auth-buttons a:hover, .logout-btn:hover {
+    opacity: 0.9;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.message {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    background-color: var(--support-color);
+    color: var(--secondary-color);
+} 

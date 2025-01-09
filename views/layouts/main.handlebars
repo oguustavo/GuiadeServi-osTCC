@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Serviços</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-left">
+            <h1 class="site-title">Guia de Serviços</h1>
+        </div>
+        
+        <div class="header-center">
+            <div id="weather-info">
+                <i class="fas fa-temperature-high"></i>
+                <span id="temperature">Carregando...</span>
+            </div>
+            <div id="clock">
+                <i class="far fa-clock"></i>
+                <span id="current-time">Carregando...</span>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <nav class="nav-menu">
+                {{#if session.userid}}
+                    <div class="user-profile">
+                        <i class="fas fa-user-circle"></i>
+                        <a href="/logout" class="logout-btn">Sair</a>
+                    </div>
+                {{else}}
+                    <div class="auth-buttons">
+                        <a href="/login" class="login-btn"><i class="fas fa-sign-in-alt"></i> Entrar</a>
+                        <a href="/register" class="register-btn"><i class="fas fa-user-plus"></i> Registrar</a>
+                    </div>
+                {{/if}}
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        {{#if messages.message}}
+            <div class="message">
+                {{messages.message}}
+            </div>
+        {{/if}}
+        {{{body}}}
+    </div>
+
+    
+    <script>
+       
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-BR');
+            document.getElementById('current-time').textContent = timeString;
+        }
+
+    
+        setInterval(updateClock, 1000);
+        updateClock(); 
+
+        
+        async function getWeather() {
+            try {
+                const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Parobe,BR&units=metric&appid=SUA_API_KEY');
+                const data = await response.json();
+                const temp = Math.round(data.main.temp);
+                document.getElementById('temperature').textContent = `${temp}°C em Parobé`;
+            } catch (error) {
+                document.getElementById('temperature').textContent = 'Indisponível';
+            }
+        }
+
+        
+        getWeather();
+        setInterval(getWeather, 1800000);
+    </script>
+</body>
+</html>
