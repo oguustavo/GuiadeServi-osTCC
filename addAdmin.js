@@ -3,8 +3,8 @@ const User = require('./models/User'); // Certifique-se de que o caminho está c
 
 async function createAdmin() {
     const name = 'Admin';
-    const email = 'admin@exemplo.com';
-    const plainPassword = 'suaSenhaSegura';
+    const email = 'admin@admin.com';
+    const plainPassword = 'senha';
     const saltRounds = 10;
 
     try {

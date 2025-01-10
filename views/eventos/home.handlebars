@@ -1,151 +1,167 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia de Serviços - Home</title>
-    <!-- Bootstrap CSS -->
+    <title>Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        .card {
+            margin: 15px;
+            transition: transform 0.2s;
+        }
         .card:hover {
             transform: scale(1.05);
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
         }
-        /* Remove o sublinhado dos links */
-        a {
-            text-decoration: none;
+        .card img {
+            height: 150px;
+            object-fit: cover;
+        }
+        .card-title {
+            color: #007BFF;
+        }
+        .btn-primary {
+            background-color: #FFA500;
+            border-color: #FFA500;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
     </style>
 </head>
 <body>
-    <div class="container my-4">
-        <h1 class="text-center mb-4">Guia de Serviços</h1>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <!-- Card: Farmácia de Plantão -->
-            <div class="col">
-                <a href="/">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/300x200?text=Farmácia+de+Plantão" class="card-img-top" alt="Farmácia de Plantão">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Farmácia de Plantão</h5>
-                            <p class="card-text">Clique para mais informações</p>
-                        </div>
-                    </div>
-                </a>
+    <div class="container">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
-            <!-- Card: Horário de Ônibus -->
-            <div class="col">
-                <a href="/">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/300x200?text=Horário+de+Ônibus" class="card-img-top" alt="Horário de Ônibus">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Horário de Ônibus</h5>
-                            <p class="card-text">Clique para mais informações</p>
-                        </div>
-                    </div>
-                </a>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/img/carousel1.jpg" class="d-block w-100" alt="Slide 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="/img/carousel2.jpg" class="d-block w-100" alt="Slide 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="/img/carousel3.jpg" class="d-block w-100" alt="Slide 3">
+                </div>
             </div>
-            <!-- Card: Lotação do Hospital -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
             <div class="col">
-                <a href="/">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/300x200?text=Lotação+do+Hospital" class="card-img-top" alt="Lotação do Hospital">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Lotação do Hospital</h5>
-                            <p class="card-text">Clique para mais informações</p>
-                        </div>
+                <div class="card h-100">
+                    <img src="/img/farmacia.jpg" class="card-img-top" alt="Farmácias de Plantão">
+                    <div class="card-body">
+                        <h5 class="card-title">Farmácias de Plantão</h5>
+                        <p class="card-text">Mostra quais farmácias estão abertas para atendimento emergencial.</p>
+                        <a href="/eventos/farmacias" class="btn btn-primary mt-auto">Clique para mais informações</a>
                     </div>
-                </a>
+                </div>
             </div>
-            <!-- Card: Mercados/Restaurantes -->
             <div class="col">
-                <a href="/">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/300x200?text=Mercados+e+Restaurantes" class="card-img-top" alt="Mercados e Restaurantes">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Mercados/Lojas/Restaurantes</h5>
-                            <p class="card-text">Clique para mais informações</p>
-                        </div>
+                <div class="card h-100">
+                    <img src="/img/onibus.jpg" class="card-img-top" alt="Horário de Ônibus">
+                    <div class="card-body">
+                        <h5 class="card-title">Horário de Ônibus</h5>
+                        <p class="card-text">Exibe os horários atualizados do transporte público.</p>
+                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
                     </div>
-                </a>
+                </div>
             </div>
-            <!-- Card: Promoções -->
             <div class="col">
-                <a href="/">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/300x200?text=Promoções" class="card-img-top" alt="Promoções">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Promoções</h5>
-                            <p class="card-text">Clique para mais informações</p>
-                        </div>
+                <div class="card h-100">
+                    <img src="/img/hospital.jpg" class="card-img-top" alt="Lotação Hospitalar (Chat)">
+                    <div class="card-body">
+                        <h5 class="card-title">Lotação Hospitalar (Chat)</h5>
+                        <p class="card-text">Oferece um recurso para verificar a lotação dos hospitais, com interação via chat.</p>
+                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
                     </div>
-                </a>
+                </div>
             </div>
-            <!-- Card: Vagas de Emprego -->
             <div class="col">
-                <a href="/">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/300x200?text=Vagas+de+Emprego" class="card-img-top" alt="Vagas de Emprego">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Vagas de Emprego</h5>
-                            <p class="card-text">Clique para mais informações</p>
-                        </div>
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Mercados/Lojas/Restaurantes Abertos (Parceiros)">
+                    <div class="card-body">
+                        <h5 class="card-title">Mercados/Lojas/Restaurantes Abertos (Parceiros)</h5>
+                        <p class="card-text">Indica quais estabelecimentos parceiros estão funcionando no momento.</p>
+                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
                     </div>
-                </a>
+                </div>
             </div>
-            <!-- Card: Eventos da Cidade -->
             <div class="col">
-                <a href="/">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/300x200?text=Eventos+da+Cidade" class="card-img-top" alt="Eventos da Cidade">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Eventos da Cidade</h5>
-                            <p class="card-text">Clique para mais informações</p>
-                        </div>
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Promoções (Parceiros)">
+                    <div class="card-body">
+                        <h5 class="card-title">Promoções (Parceiros)</h5>
+                        <p class="card-text">Divulga promoções ativas dos parceiros.</p>
+                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
                     </div>
-                </a>
+                </div>
             </div>
-            <!-- Card: Contatos Úteis -->
             <div class="col">
-                <a href="/">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/300x200?text=Contatos+Úteis" class="card-img-top" alt="Contatos Úteis">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Contatos Úteis</h5>
-                            <p class="card-text">Clique para mais informações</p>
-                        </div>
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Divulgação de Vagas de Emprego">
+                    <div class="card-body">
+                        <h5 class="card-title">Divulgação de Vagas de Emprego</h5>
+                        <p class="card-text">Apresenta oportunidades de emprego na cidade.</p>
+                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
                     </div>
-                </a>
+                </div>
             </div>
-            <!-- Card: Outros Serviços -->
             <div class="col">
-                <a href="/">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/300x200?text=Outros+Serviços" class="card-img-top" alt="Outros Serviços">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Outros Serviços</h5>
-                            <p class="card-text">Clique para mais informações</p>
-                        </div>
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Eventos da Cidade">
+                    <div class="card-body">
+                        <h5 class="card-title">Eventos da Cidade</h5>
+                        <p class="card-text">Lista eventos e atividades culturais da região.</p>
+                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
                     </div>
-                </a>
+                </div>
             </div>
-            <!-- Card: Vendas -->
             <div class="col">
-                <a href="/eventos/vendas">
-                    <div class="card h-100 shadow-sm">
-                        <img src="https://via.placeholder.com/300x200?text=Vendas+Marketplace" class="card-img-top" alt="Vendas Marketplace">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Vendas (Marketplace)</h5>
-                            <p class="card-text">Clique para mais informações</p>
-                        </div>
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Contatos Úteis">
+                    <div class="card-body">
+                        <h5 class="card-title">Contatos Úteis</h5>
+                        <p class="card-text">Fornece informações importantes como números de emergência.</p>
+                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
                     </div>
-                </a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Outros Serviços (Manutenção)">
+                    <div class="card-body">
+                        <h5 class="card-title">Outros Serviços (Manutenção)</h5>
+                        <p class="card-text">Divulga serviços de manutenção, como eletricistas e encanadores.</p>
+                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Vendas (Marketplace)">
+                    <div class="card-body">
+                        <h5 class="card-title">Vendas (Marketplace)</h5>
+                        <p class="card-text">Área dedicada à compra e venda de itens pela comunidade.</p>
+                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
