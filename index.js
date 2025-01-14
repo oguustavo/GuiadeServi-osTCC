@@ -72,7 +72,7 @@ app.get('/', EventosControllers.showEventos)
 
 //.sync({force:true})
 conn
-    .sync({ force: true }) // Isso vai recriar todas as tabelas
+    .sync() // Removido o {force: true}
     .then(() => {
         app.listen(3000)
         console.log('Servidor rodando na porta 3000')
