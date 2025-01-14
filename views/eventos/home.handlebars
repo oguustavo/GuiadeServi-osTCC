@@ -32,7 +32,13 @@
     </style>
 </head>
 <body>
-    
+        {{#if session.isAdmin}}
+    <div class="text-end mt-3">
+        <a href="/admin/dashboard" class="btn btn-primary">
+            <i class="fas fa-cog"></i> Painel Administrativo
+        </a>
+    </div>
+    {{/if}}
     <div class="container">
         
         
