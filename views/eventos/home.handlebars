@@ -29,6 +29,16 @@
             flex-direction: column;
             justify-content: space-between;
         }
+        /* Add carousel styles */
+        #carouselExampleIndicators {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .carousel-inner img {
+            max-height: 400px;
+            width: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -50,13 +60,13 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="a" class="d-block w-100" alt="Slide 1">
+                    <img src="/img/fiat.webp" class="d-block w-100" alt="Slide 1">
                 </div>
                 <div class="carousel-item">
-                    <img src="/img/carousel2.jpg" class="d-block w-100" alt="Slide 2">
+                    <img src="/img/mercado.jpg" class="d-block w-100" alt="Slide 2">
                 </div>
                 <div class="carousel-item">
-                    <img src="/img/carousel3.jpg" class="d-block w-100" alt="Slide 3">
+                    <img src="/img/oab.png" class="d-block w-100" alt="Slide 3">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
