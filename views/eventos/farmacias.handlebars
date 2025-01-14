@@ -8,8 +8,30 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h1>Farmácias de Plantão</h1>
+        <h1 class="mb-4">Farmácias de Plantão</h1>
         
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {{#each farmacias}}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{this.nome}}</h5>
+                            <p class="card-text">
+                                <strong>Endereço:</strong> {{this.endereco}}<br>
+                                <strong>Telefone:</strong> {{this.telefone}}<br>
+                                <strong>Período:</strong><br>
+                                De: {{formatDate this.dataInicio}}<br>
+                                Até: {{formatDate this.dataFim}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {{else}}
+                <div class="col-12">
+                    <p>Nenhuma farmácia de plantão no momento.</p>
+                </div>
+            {{/each}}
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

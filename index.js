@@ -18,7 +18,13 @@ const eventosRoutes = require('./routes/eventosRoutes')
 const authRoutes = require('./routes/authRoutes')
 const adminRoutes = require('./routes/adminRoutes')
 
-app.engine('handlebars', exphbs.engine())
+app.engine('handlebars', exphbs.engine({
+    helpers: {
+        formatDate: (date) => {
+            return new Date(date).toLocaleDateString('pt-BR');
+        }
+    }
+}))
 app.set('view engine', 'handlebars')
 
 app.use(
@@ -66,8 +72,9 @@ app.get('/', EventosControllers.showEventos)
 
 //.sync({force:true})
 conn
-    .sync()
+    .sync({ force: true }) // Isso vai recriar todas as tabelas
     .then(() => {
         app.listen(3000)
+        console.log('Servidor rodando na porta 3000')
     })
     .catch((err) => console.log(err))
