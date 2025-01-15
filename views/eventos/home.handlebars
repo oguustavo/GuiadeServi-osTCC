@@ -30,8 +30,7 @@
             justify-content: space-between;
         }
         
-
-            /* Estilos do Carrossel */
+        /* Estilos do Carrossel */
 .carousel-container {
     margin: 20px auto 40px;
     max-width: 1200px; 
@@ -101,10 +100,6 @@
     opacity: 1;
 }
 
-
-
-
-
 @media (max-width: 768px) {
     .carousel-container {
         margin: 10px auto 30px;
@@ -140,20 +135,32 @@
         height: 8px;
         margin: 0 4px;
     }
-    .carousel-control-prev,
-    .carousel-control-next {
-        display: none;
-    }
+    
 }
 
 .carousel-item {
     opacity: 0;
-    transition: opacity 0.6s ease-in-out;
+    
 }
 
 .carousel-item.active {
     opacity: 1;
 }
+
+        /* Add these new styles */
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            height: 100%;
+        }
+        .card-link:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+        .card-body .btn {
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -195,104 +202,124 @@
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4 mt-4 mb-4">
             <div class="col">
-                <div class="card h-100">
-                    <img src="/img/Farmacia-plantao.png" class="card-img-top" alt="Farmácias de Plantão">
-                    <div class="card-body">
-                        <h5 class="card-title">Farmácias de Plantão</h5>
-                        <p class="card-text">Mostra quais farmácias estão abertas para atendimento emergencial.</p>
-                        <a href="/eventos/farmacias" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                <a href="/eventos/farmacias" class="card-link">
+                    <div class="card h-100">
+                        <img src="/img/Farmacia-plantao.png" class="card-img-top" alt="Farmácias de Plantão">
+                        <div class="card-body">
+                            <h5 class="card-title">Farmácias de Plantão</h5>
+                            <p class="card-text">Mostra quais farmácias estão abertas para atendimento emergencial.</p>
+                            <div class="btn btn-primary mt-auto">Clique para mais informações</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <img src="/img/onibus.jpg" class="card-img-top" alt="Horário de Ônibus">
-                    <div class="card-body">
-                        <h5 class="card-title">Horário de Ônibus</h5>
-                        <p class="card-text">Exibe os horários atualizados do transporte público.</p>
-                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                <a href="/" class="card-link">
+                    <div class="card h-100">
+                        <img src="/img/onibus.jpg" class="card-img-top" alt="Horário de Ônibus">
+                        <div class="card-body">
+                            <h5 class="card-title">Horário de Ônibus</h5>
+                            <p class="card-text">Exibe os horários atualizados do transporte público.</p>
+                            <div class="btn btn-primary mt-auto">Clique para mais informações</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <img src="/img/hospital.jpg" class="card-img-top" alt="Lotação Hospitalar (Chat)">
-                    <div class="card-body">
-                        <h5 class="card-title">Lotação Hospitalar (Chat)</h5>
-                        <p class="card-text">Oferece um recurso para verificar a lotação dos hospitais, com interação via chat.</p>
-                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                <a href="/" class="card-link">
+                    <div class="card h-100">
+                        <img src="/img/hospital.jpg" class="card-img-top" alt="Lotação Hospitalar (Chat)">
+                        <div class="card-body">
+                            <h5 class="card-title">Lotação Hospitalar (Chat)</h5>
+                            <p class="card-text">Oferece um recurso para verificar a lotação dos hospitais, com interação via chat.</p>
+                            <div class="btn btn-primary mt-auto">Clique para mais informações</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <img src="/img/mercados.jpg" class="card-img-top" alt="Mercados/Lojas/Restaurantes Abertos (Parceiros)">
-                    <div class="card-body">
-                        <h5 class="card-title">Mercados/Lojas/Restaurantes Abertos (Parceiros)</h5>
-                        <p class="card-text">Indica quais estabelecimentos parceiros estão funcionando no momento.</p>
-                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                <a href="/" class="card-link">
+                    <div class="card h-100">
+                        <img src="/img/mercados.jpg" class="card-img-top" alt="Mercados/Lojas/Restaurantes Abertos (Parceiros)">
+                        <div class="card-body">
+                            <h5 class="card-title">Mercados/Lojas/Restaurantes Abertos (Parceiros)</h5>
+                            <p class="card-text">Indica quais estabelecimentos parceiros estão funcionando no momento.</p>
+                            <div class="btn btn-primary mt-auto">Clique para mais informações</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <img src="/img/promocoes.jpg" class="card-img-top" alt="Promoções (Parceiros)">
-                    <div class="card-body">
-                        <h5 class="card-title">Promoções (Parceiros)</h5>
-                        <p class="card-text">Divulga promoções ativas dos parceiros.</p>
-                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                <a href="/" class="card-link">
+                    <div class="card h-100">
+                        <img src="/img/promocoes.jpg" class="card-img-top" alt="Promoções (Parceiros)">
+                        <div class="card-body">
+                            <h5 class="card-title">Promoções (Parceiros)</h5>
+                            <p class="card-text">Divulga promoções ativas dos parceiros.</p>
+                            <div class="btn btn-primary mt-auto">Clique para mais informações</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <img src="/img/emprego.jpg" class="card-img-top" alt="Divulgação de Vagas de Emprego">
-                    <div class="card-body">
-                        <h5 class="card-title">Divulgação de Vagas de Emprego</h5>
-                        <p class="card-text">Apresenta oportunidades de emprego na cidade.</p>
-                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                <a href="/" class="card-link">
+                    <div class="card h-100">
+                        <img src="/img/emprego.jpg" class="card-img-top" alt="Divulgação de Vagas de Emprego">
+                        <div class="card-body">
+                            <h5 class="card-title">Divulgação de Vagas de Emprego</h5>
+                            <p class="card-text">Apresenta oportunidades de emprego na cidade.</p>
+                            <div class="btn btn-primary mt-auto">Clique para mais informações</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <img src="/img/eventos.jpg" class="card-img-top" alt="Eventos da Cidade">
-                    <div class="card-body">
-                        <h5 class="card-title">Eventos da Cidade</h5>
-                        <p class="card-text">Lista eventos e atividades culturais da região.</p>
-                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                <a href="/" class="card-link">
+                    <div class="card h-100">
+                        <img src="/img/eventos.jpg" class="card-img-top" alt="Eventos da Cidade">
+                        <div class="card-body">
+                            <h5 class="card-title">Eventos da Cidade</h5>
+                            <p class="card-text">Lista eventos e atividades culturais da região.</p>
+                            <div class="btn btn-primary mt-auto">Clique para mais informações</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <img src="/img/contatos.jpg" class="card-img-top" alt="Contatos Úteis">
-                    <div class="card-body">
-                        <h5 class="card-title">Contatos Úteis</h5>
-                        <p class="card-text">Fornece informações importantes como números de emergência.</p>
-                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                <a href="/" class="card-link">
+                    <div class="card h-100">
+                        <img src="/img/contatos.jpg" class="card-img-top" alt="Contatos Úteis">
+                        <div class="card-body">
+                            <h5 class="card-title">Contatos Úteis</h5>
+                            <p class="card-text">Fornece informações importantes como números de emergência.</p>
+                            <div class="btn btn-primary mt-auto">Clique para mais informações</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <img src="/img/servicos.jpg" class="card-img-top" alt="Outros Serviços (Manutenção)">
-                    <div class="card-body">
-                        <h5 class="card-title">Outros Serviços (Manutenção)</h5>
-                        <p class="card-text">Divulga serviços de manutenção, como eletricistas e encanadores.</p>
-                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                <a href="/" class="card-link">
+                    <div class="card h-100">
+                        <img src="/img/servicos.jpg" class="card-img-top" alt="Outros Serviços (Manutenção)">
+                        <div class="card-body">
+                            <h5 class="card-title">Outros Serviços (Manutenção)</h5>
+                            <p class="card-text">Divulga serviços de manutenção, como eletricistas e encanadores.</p>
+                            <div class="btn btn-primary mt-auto">Clique para mais informações</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <img src="/img/marketplace.jpg" class="card-img-top" alt="Vendas (Marketplace)">
-                    <div class="card-body">
-                        <h5 class="card-title">Vendas (Marketplace)</h5>
-                        <p class="card-text">Área dedicada à compra e venda de itens pela comunidade.</p>
-                        <a href="/" class="btn btn-primary mt-auto">Clique para mais informações</a>
+                <a href="/" class="card-link">
+                    <div class="card h-100">
+                        <img src="/img/marketplace.jpg" class="card-img-top" alt="Vendas (Marketplace)">
+                        <div class="card-body">
+                            <h5 class="card-title">Vendas (Marketplace)</h5>
+                            <p class="card-text">Área dedicada à compra e venda de itens pela comunidade.</p>
+                            <div class="btn btn-primary mt-auto">Clique para mais informações</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
