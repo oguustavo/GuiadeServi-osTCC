@@ -34,7 +34,7 @@
                 <li><a href="/logout">Sair</a></li>
             {{else}}
                 <li><a href="/login">Entrar</a></li>
-                <li><a href="/register">Registrar</a></li>
+                <li><a href="/register">Sobre</a></li>
             {{/if}}
         </ul>
     </nav>
@@ -53,9 +53,27 @@
     </footer>
 
     <script>
-        document.getElementById('hamburger').addEventListener('click', function() {
-            document.getElementById('nav-menu').classList.toggle('active');
-            this.classList.toggle('active');
+        const hamburger = document.getElementById('hamburger');
+        const navCenter = document.querySelector('.nav-center');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            navCenter.classList.toggle('active');
+            
+            // Prevenir scroll quando menu está aberto
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Fechar menu ao clicar em um link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                navCenter.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
         });
 
         function updateClock() {
