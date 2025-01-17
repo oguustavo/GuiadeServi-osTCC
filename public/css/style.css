@@ -125,6 +125,11 @@ body {
     }
 }
 
+/* Adicionar antes da media query mobile */
+.hamburger {
+    display: none;  /* Esconde por padrão */
+}
+
 /* Mobile styles */
 @media (max-width: 768px) {
     #navbar {
@@ -191,12 +196,14 @@ body {
     }
 
     .hamburger {
-        display: block;
+        display: block;  /* Mostra apenas no mobile */
         background: none;
         border: none;
         cursor: pointer;
         width: 30px;
         height: 24px;
+        padding: 0;
+        margin-left: auto; /* Empurra para a direita */
     }
 
     .hamburger span {
