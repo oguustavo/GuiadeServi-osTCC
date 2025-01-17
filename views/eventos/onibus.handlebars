@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horários de Ônibus - Tarifa Zero</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #007BFF;
+            --secondary: #FFFFFF;
+            --support: #03A9F4;
+            --highlight: #FFA500;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        .page-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--highlight);
+        }
+        
+        .bus-schedule {
+            margin: 20px 0;
+        }
+        
+        .route-card {
+            border: none;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            margin-bottom: 2rem;
+        }
+        
+        .route-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 500;
+            padding: 1rem;
+        }
+        
+        .time-slot {
+            border-left: 4px solid var(--highlight);
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .time-badge {
+            background-color: var(--highlight);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: bold;
+            min-width: 80px;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .route-info {
+            margin-left: 10px;
+            color: #555;
+        }
+        
+        .bus-icon {
+            color: var(--highlight);
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        
+        .search-container {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid var(--primary);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+            background: #f8f9fa;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="page-title">
+            Horários do Tarifa Zero
+        </h1>
+
+        <div class="search-container">
+            <input type="text" 
+                   class="search-input" 
+                   id="searchInput" 
+                   placeholder="Busque por horário ou local (ex: 'Centro', '08:00', 'Jardim'...)"
+                   autocomplete="off">
+        </div>
+
+        <div class="bus-schedule">
+            <!-- Card Dias Úteis -->
+            <div class="card route-card">
+                <div class="card-header">
+                    <i class="fas fa-route me-2"></i>
+                    Segunda a Sexta-feira (Ônibus 1 Urbano)
+                </div>
+                <div class="card-body" id="weekdayContainer">
+                    <div class="time-slot">
+                        <span class="time-badge">06:15</span>
+                        <span class="route-info">JARDIM, ALEXANDRIA, CENTRO, GUARUJÁ, VILA NOVA, FAZ. PIRES, JARDIM</span>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <span class="time-badge">07:15</span>
+                        <span class="route-info">JARDIM, FAZ. PIRES, VILA NOVA, NOVA GUARUJÁ, MARIANA, CENTRO, NOVA PAROBÉ, FUNIL, RES. AZALÉIA, CENTRO</span>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <span class="time-badge">08:00</span>
+                        <span class="route-info">CENTRO, EMANCIPAÇÃO II, ALVORADA, CENTRO</span>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <span class="time-badge">09:30</span>
+                        <span class="route-info">PARADÃO (RUBINHO), 15 DE JUNHO, N. GUARUJÁ, CENTRO, JARDIM</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">10:00</span>
+                        <span class="route-info">JARDIM, AREIA BRANCA, FAZ. PIRES, CENTRO</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">11:30</span>
+                        <span class="route-info">RODOVIÁRIA, CENTRO, JARDIM, PINHAL, M. DA PEDRA, VL SÃO JOÃO, CENTRO</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">11:30</span>
+                        <span class="route-info">RODOVIÁRIA, CENTRO, EMAN II, ALVORADA, CENTRO (IGREJA), N. GUARUJÁ, FAZ. PIRES, JARDIM, RODOVIÁRIA</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">12:45</span>
+                        <span class="route-info">RODOVIÁRIA, CENTRO, JARDIM, FAZ. PIRES, VILA NOVA, N. GUARUJÁ, MARIANA, CENTRO</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">13:00</span>
+                        <span class="route-info">CENTRO, ALVORADA, CENTRO, JARDIM, AREIA BRANCA, CENTRO</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">15:00</span>
+                        <span class="route-info">PARADÃO (RUBINHO), 15 DE JUNHO, NOVA GUARUJÁ, CENTRO, JARDIM</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">15:55</span>
+                        <span class="route-info">JARDIM, CENTRO, GUARUJÁ, VILA FELIZ, FAZ.PIRES, HORTO, VILA FELIZ, GUARUJÁ, CENTRO, JARDIM</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">17:20</span>
+                        <span class="route-info">RESIDENCIAL AZALÉIA, JARDIM, FUNIL, LARANJEIRA, NOVA PAROBÉ, CENTRO</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">17:45</span>
+                        <span class="route-info">NOVA GUARUJÁ, VILA NOVA, FAZ.PIRES</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">18:30</span>
+                        <span class="route-info">RODOVIÁRIA, CENTRO, EMANCIPAÇÃO II, ALVORADA, CENTRO (IGREJA), NOVA GUARUJÁ, PASSARELA DO RUBINHO, VILA NOVA, FAZENDA PIRES, HORTO, BORA, VILA NOVA, PASSARELA DO RUBINHO, N. GUARUJÁ, CENTRO</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">18:30</span>
+                        <span class="route-info">RODOVIÁRIA, CENTRO, NOVA PAROBÉ, FUNIL, RES. AZALÉIA, PINHAL, MORRO DA PEDRA, VL SÃO JOÃO, PINHAL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Sábado -->
+            <div class="card route-card">
+                <div class="card-header">
+                    <i class="fas fa-route me-2"></i>
+                    Sábado (Ônibus 1 Urbano)
+                </div>
+                <div class="card-body" id="saturdayContainer">
+                    <div class="time-slot">
+                        <span class="time-badge">06:50</span>
+                        <span class="route-info">RODOVIÁRIA, JARDIM, PINHAL, MORRO DA PEDRA, VL SÃO JOÃO, PINHAL</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">07:30</span>
+                        <span class="route-info">PINHAL, JARDIM, RES. AZALÉIA, FUNIL, LARANJEIRA, NOVA PAROBÉ, CENTRO</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">07:30</span>
+                        <span class="route-info">FAZ. PIRES (PECUÁRIA), V. NOVA, PASSARELA DO RUBINHO (FESTEJANDO), NOVA GUARUJÁ, MARIANA, CENTRO (IGREJA), EMANCIPAÇÃO II, ALVORADA, CENTRO</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">12:00</span>
+                        <span class="route-info">RODOVIÁRIA, CENTRO, NOVA PAROBÉ, LARANJEIRAS, FUNIL, RES. AZALÉIA, PINHAL, MORRO DA PEDRA, VL SÃO JOÃO, PINHAL, CENTRO</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">12:00</span>
+                        <span class="route-info">RODOVIÁRIA, CENTRO, EMANCIPAÇÃO II, ALVORADA, CENTRO (IGREJA), NOVA GUARUJÁ, FESTEJANDO(PASSARELA), VILA NOVA, FAZ. PIRES, HORTO, BORA, VILA NOVA, (PASSARELA, FESTEJANDO), NOVA GUARUJÁ, CENTRO</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">13:00</span>
+                        <span class="route-info">PINHAL, JARDIM, RES. AZALEIA, FUNIL, LARANJEIRA, NOVA PAROBÉ, CENTRO</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">17:00</span>
+                        <span class="route-info">RODOVIÁRIA, CENTRO, EMANCIPAÇÃO II, ALVORADA, CENTRO(IGREJA), NOVA GUARUJÁ, FESTEJANDO(PASSARELA), VILA NOVA, FAZENDA PIRES, ROTULA BORA, VILA NOVA, PASSARELA, FESTEJANDO, NOVA GUARUJÁ, CENTRO, NOVA PAROBÉ, LARANJEIRAS, FUNIL, RESIDENCIAL, JARDIM, CENTRO</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Domingo -->
+            <div class="card route-card">
+                <div class="card-header">
+                    <i class="fas fa-route me-2"></i>
+                    Domingo (Ônibus 1 Urbano)
+                </div>
+                <div class="card-body" id="sundayContainer">
+                    <div class="time-slot">
+                        <span class="time-badge">07:00</span>
+                        <span class="route-info">JARDIM, RESIDENCIAL, FUNIL, LARANJEIRA, NOVA PAROBÉ, CENTRO(XIS DO VINI)</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">07:35</span>
+                        <span class="route-info">CENTRO (XIS DO VINI), EMANCIPAÇÃO II, ALVORADA, CENTRO(IGREJA), NOVA GUARUJÁ, FESTEJANDO, PASSARELA, VILA NOVA, FAZENDA PIRES, RÓTULA</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">08:30</span>
+                        <span class="route-info">FAZENDA PIRES, RÓTULA, BORA, VILA NOVA, PASSARELA, FESTEJANDO, NOVA GUARUJÁ, CENTRO, NOVA PAROBÉ, LARANJEIRA, FUNIL, RESIDENCIAL, JARDIM</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">17:00</span>
+                        <span class="route-info">JARDIM, RESIDENCIAL, FUNIL, LARANJEIRA, NOVA PAROBÉ, CENTRO(XIS DO VINI)</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">17:35</span>
+                        <span class="route-info">CENTRO (XIS DO VINI), EMANCIPAÇÃO II, ALVORADA, CENTRO(IGREJA), NOVA GUARUJÁ, FESTEJANDO, PASSARELA, VILA NOVA, FAZENDA PIRES, RÓTULA</span>
+                    </div>
+
+                    <div class="time-slot">
+                        <span class="time-badge">18:30</span>
+                        <span class="route-info">FAZENDA PIRES, RÓTULA, BORA, VILA NOVA, PASSARELA, FESTEJANDO, NOVA GUARUJÁ, CENTRO, NOVA PAROBÉ, LARANJEIRA, FUNIL, RESIDENCIAL, JARDIM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4 mb-4">
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home me-2"></i>
+                Voltar para Home
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const containers = [
+                document.getElementById('weekdayContainer'),
+                document.getElementById('saturdayContainer'),
+                document.getElementById('sundayContainer')
+            ];
+            
+            // Armazena os dados originais de todos os containers
+            const originalSlots = containers.flatMap(container => 
+                Array.from(container.getElementsByClassName('time-slot')).map(slot => ({
+                    element: slot,
+                    time: slot.querySelector('.time-badge').textContent,
+                    route: slot.querySelector('.route-info').textContent,
+                    container: slot.parentElement
+                }))
+            );
+
+            function filterSchedule(searchTerm) {
+                const term = searchTerm.toLowerCase().trim();
+                let hasResults = false;
+
+                originalSlots.forEach(({element, time, route, container}) => {
+                    const matchesSearch = time.toLowerCase().includes(term) || 
+                                        route.toLowerCase().includes(term);
+                    
+                    if (matchesSearch) {
+                        hasResults = true;
+                        element.style.display = '';
+                        
+                        if (term) {
+                            const routeInfo = element.querySelector('.route-info');
+                            routeInfo.innerHTML = route.replace(new RegExp(term, 'gi'), 
+                                match => `<span class="highlight">${match}</span>`);
+                        }
+                    } else {
+                        element.style.display = 'none';
+                    }
+                });
+
+                // Gerencia mensagem de "nenhum resultado" para cada container
+                containers.forEach(container => {
+                    const visibleSlots = Array.from(container.getElementsByClassName('time-slot'))
+                        .some(slot => slot.style.display !== 'none');
+                    
+                    const existingNoResults = container.querySelector('.no-results');
+                    
+                    if (!visibleSlots) {
+                        if (!existingNoResults) {
+                            const noResults = document.createElement('div');
+                            noResults.className = 'no-results';
+                            noResults.innerHTML = `
+                                <i class="fas fa-search me-2"></i>
+                                Nenhum horário encontrado para "${searchTerm}"
+                            `;
+                            container.appendChild(noResults);
+                        }
+                    } else if (existingNoResults) {
+                        existingNoResults.remove();
+                    }
+                });
+            }
+
+            function restoreOriginal() {
+                originalSlots.forEach(({element, time, route}) => {
+                    element.style.display = '';
+                    element.querySelector('.route-info').textContent = route;
+                });
+                
+                containers.forEach(container => {
+                    const existingNoResults = container.querySelector('.no-results');
+                    if (existingNoResults) {
+                        existingNoResults.remove();
+                    }
+                });
+            }
+
+            let debounceTimer;
+            searchInput.addEventListener('input', function(e) {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    const searchTerm = e.target.value;
+                    if (searchTerm) {
+                        filterSchedule(searchTerm);
+                    } else {
+                        restoreOriginal();
+                    }
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>

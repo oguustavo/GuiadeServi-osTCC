@@ -54,4 +54,13 @@ module.exports = class EventosControllers {
             res.status(500).send('Erro ao excluir farmácia')
         }
     }
+
+    static async showOnibus(req, res) {
+        try {
+            res.render('eventos/onibus')
+        } catch (error) {
+            console.log(error)
+            res.status(500).send('Erro ao carregar página de ônibus')
+        }
+    }
 }
