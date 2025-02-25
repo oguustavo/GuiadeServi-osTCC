@@ -161,7 +161,99 @@
         .card-body .btn {
             pointer-events: none;
         }
+        
+        /* Atualização do estilo do cabeçalho */
+        .header-section {
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .main-title {
+            color: #333;
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+        
+        .info-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .weather-info {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .weather-info i {
+            font-size: 1.2rem;
+            color: #FFA500;
+        }
+
+        .divider {
+            color: #e0e0e0;
+        }
+
+        /* Estilos responsivos para o cabeçalho */
+        @media (max-width: 768px) {
+            .title-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .main-title {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+
+            .info-container {
+                font-size: 0.9rem;
+                gap: 15px;
+            }
+
+            #weekday {
+                min-width: 90px; /* Evita quebras indesejadas */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info-container {
+                font-size: 0.85rem;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-title {
+                font-size: 1.3rem;
+            }
+
+            .divider {
+                display: none; /* Remove divisores em telas muito pequenas */
+            }
+
+            .weather-info, #weekday, #time {
+                background: rgba(0,0,0,0.05);
+                padding: 3px 8px;
+                border-radius: 4px;
+            }
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
         {{#if session.isAdmin}}
@@ -172,6 +264,20 @@
     </div>
     {{/if}}
     <div class="container">
+        <div class="header-section">
+            <div class="title-container">
+                <h1 class="main-title">Guia de Serviços</h1>
+                <div class="info-container">
+                    <div class="weather-info">
+                        <span id="temp">Carregando...</span>
+                    </div>
+                    <span class="divider">|</span>
+                    <div id="weekday"></div>
+                    <span class="divider">|</span>
+                    <div id="time"></div>
+                </div>
+            </div>
+        </div>
         
         
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -323,6 +429,44 @@
             </div>
         </div>
     </div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-BR');
+            const weekDayString = now.toLocaleDateString('pt-BR', { weekday: 'long' });
+            
+            // Capitaliza primeira letra e formata o dia da semana
+            const formattedWeekDay = weekDayString.charAt(0).toUpperCase() + weekDayString.slice(1);
+            
+            document.getElementById('time').textContent = timeString;
+            document.getElementById('weekday').textContent = formattedWeekDay;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        async function getWeather() {
+            const API_KEY = '8f57cb746c4c1d4b48b7f35eba6f6230';
+            try {
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Vitoria Brasil,BR&units=metric&appid=${API_KEY}`);
+                if (!response.ok) {
+                    throw new Error('Erro na resposta da API');
+                }
+                const data = await response.json();
+                if (data && data.main && typeof data.main.temp !== 'undefined') {
+                    const temp = Math.round(data.main.temp);
+                    document.getElementById('temp').textContent = `${temp}°C`;
+                } else {
+                    throw new Error('Dados de temperatura não encontrados');
+                }
+            } catch (error) {
+                console.error('Erro ao obter dados do clima:', error);
+                document.getElementById('temp').textContent = 'Temp. indisponível';
+            }
+        }
+
+        getWeather();
+        setInterval(getWeather, 300000);
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
 </body>
