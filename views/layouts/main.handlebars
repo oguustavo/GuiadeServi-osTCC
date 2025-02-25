@@ -11,8 +11,8 @@
     <nav id="navbar">
         <div class="nav-brand">
             <a href="/" class="logo">
-                <i class="fas fa-map-marked-alt"></i>
-                Guia de Serviços
+                <i class="fas fa-compass"></i>
+                Guia de servicos
             </a>
             <button class="hamburger" id="hamburger">
                 <span></span>
@@ -23,7 +23,7 @@
 
         <div class="nav-center">
             <div id="weather">
-                <i class="fas fa-temperature-high"></i>
+                <i class="fas fa-temperature-low"></i>
                 <span id="temp">Carregando...</span>
             </div>
             <div id="clock">
@@ -33,11 +33,23 @@
         </div>
 
         <ul class="nav-menu" id="nav-menu">
+            <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+            <li class="nav-item dropdown">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-concierge-bell"></i>Serviços</a>
+                <ul class="dropdown-menu">
+                    <li><a href="/onibus"><i class="fas fa-bus"></i>Horários de Ônibus</a></li>
+                    <li><a href="/eventos"><i class="fas fa-calendar-alt"></i>Eventos</a></li>
+                    <li><a href="/farmacias"><i class="fas fa-prescription-bottle-medical"></i>Farmácias</a></li>
+                    <li><a href="/mercados"><i class="fas fa-shopping-cart"></i>Mercados</a></li>
+                    <li><a href="/restaurantes"><i class="fas fa-utensils"></i>Restaurantes</a></li>
+                </ul>
+            </li>
+            <li><a href="/sobre"><i class="fas fa-info-circle"></i>Sobre</a></li>
+            <li><a href="/contato"><i class="fas fa-envelope"></i>Contato</a></li>
             {{#if session.userid}}
                 <li><a href="/logout"><i class="fas fa-sign-out-alt"></i>Sair</a></li>
             {{else}}
-                <li><a href="/"><i class="fas fa-user-plus"></i>Conteudo</a></li>
-                <li><a href="/login"><i class="fas fa-sign-in-alt"></i>Entrar</a></li>
+                <li><a href="/login"><i class="fas fa-user"></i>Entrar</a></li>
             {{/if}}
         </ul>
     </nav>
@@ -60,17 +72,44 @@
         const navCenter = document.querySelector('.nav-center');
         const navMenu = document.getElementById('nav-menu');
 
+        // Dropdown functionality
+        document.querySelectorAll('.dropdown-toggle').forEach(dropdown => {
+            dropdown.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Fecha outros dropdowns
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    if (menu !== this.nextElementSibling) {
+                        menu.classList.remove('show');
+                    }
+                });
+                
+                // Toggle atual dropdown
+                const dropdownMenu = this.nextElementSibling;
+                dropdownMenu.classList.toggle('show');
+            });
+        });
+
+        // Fechar dropdown ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-item.dropdown')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            }
+        });
+
+        // Hamburguer menu
         hamburger.addEventListener('click', function() {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
             navCenter.classList.toggle('active');
-            
-            // Prevenir scroll quando menu está aberto
             document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
         });
 
-        // Fechar menu ao clicar em um link
-        document.querySelectorAll('.nav-menu a').forEach(link => {
+        // Fechar menu ao clicar em links (exceto dropdown)
+        document.querySelectorAll('.nav-menu a:not(.dropdown-toggle)').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
