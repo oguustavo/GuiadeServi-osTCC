@@ -63,4 +63,13 @@ module.exports = class EventosControllers {
             res.status(500).send('Erro ao carregar página de ônibus')
         }
     }
+
+    static async showOutrosServicos(req, res) {
+        try {
+            res.render('eventos/outrosServicos')
+        } catch (error) {
+            console.log(error)
+            res.status(500).send('Erro ao carregar página de outros serviços')
+        }
+    }
 }

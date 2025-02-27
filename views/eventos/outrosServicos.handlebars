@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outros Serviços</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            margin: 15px;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            height: 250px;
+            object-fit: cover;
+        }
+        .card-title {
+            color: #007BFF;
+        }
+        .btn-primary {
+            background-color: #FFA500;
+            border-color: #FFA500;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Outros Serviços</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="/img/eletricista.jpg" class="card-img-top" alt="Eletricista">
+                    <div class="card-body">
+                        <h5 class="card-title">Eletricista</h5>
+                        <p class="card-text">Serviços de eletricista disponíveis na região.</p>
+                        <a href="#" class="btn btn-primary mt-auto">Mais informações</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="/img/encanador.jpg" class="card-img-top" alt="Encanador">
+                    <div class="card-body">
+                        <h5 class="card-title">Encanador</h5>
+                        <p class="card-text">Serviços de encanador disponíveis na região.</p>
+                        <a href="#" class="btn btn-primary mt-auto">Mais informações</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more cards as needed -->
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
