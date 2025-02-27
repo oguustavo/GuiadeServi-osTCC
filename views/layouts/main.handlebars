@@ -35,7 +35,7 @@
                     <li><a href="/restaurantes"><i class="fas fa-utensils"></i>Restaurantes</a></li>
                 </ul>
             </li>
-            <li><a href="/sobre"><i class="fas fa-info-circle"></i>Sobre</a></li>
+
             <li><a href="/contato"><i class="fas fa-envelope"></i>Contato</a></li>
             {{#if session.userid}}
                 <li><a href="/logout"><i class="fas fa-sign-out-alt"></i>Sair</a></li>
@@ -63,26 +63,26 @@
         const navCenter = document.querySelector('.nav-center');
         const navMenu = document.getElementById('nav-menu');
 
-        // Dropdown functionality
+        
         document.querySelectorAll('.dropdown-toggle').forEach(dropdown => {
             dropdown.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 
-                // Fecha outros dropdowns
+                
                 document.querySelectorAll('.dropdown-menu').forEach(menu => {
                     if (menu !== this.nextElementSibling) {
                         menu.classList.remove('show');
                     }
                 });
                 
-                // Toggle atual dropdown
+                
                 const dropdownMenu = this.nextElementSibling;
                 dropdownMenu.classList.toggle('show');
             });
         });
 
-        // Fechar dropdown ao clicar fora
+        
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-item.dropdown')) {
                 document.querySelectorAll('.dropdown-menu').forEach(menu => {
@@ -91,7 +91,7 @@
             }
         });
 
-        // Hamburguer menu
+        
         hamburger.addEventListener('click', function() {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
@@ -99,7 +99,7 @@
             document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
         });
 
-        // Fechar menu ao clicar em links (exceto dropdown)
+       
         document.querySelectorAll('.nav-menu a:not(.dropdown-toggle)').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
