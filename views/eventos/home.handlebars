@@ -178,10 +178,33 @@
         }
         
         .main-title {
-            color: #333;
+            color: #2c3e50;
             margin: 0;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 500;
+            line-height: 1.2;
+            text-transform: capitalize;
+            background: linear-gradient(120deg, #2c3e50, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            position: relative;
+            letter-spacing: -0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 1.3rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 1.1rem;
+                padding: 0 5px;
+            }
         }
         
         .info-container {
@@ -243,7 +266,7 @@
             }
 
             .divider {
-                display: none; /* Remove divisores em telas muito pequenas */
+                display: none; /
             }
 
             .weather-info, #weekday, #time {
@@ -266,7 +289,7 @@
     <div class="container">
         <div class="header-section">
             <div class="title-container">
-                <h1 class="main-title">Guia de Serviços</h1>
+                <h1 class="main-title">Seu guia para transporte, comércio e eventos em Parobé</h1>
                 <div class="info-container">
                     <div class="weather-info">
                         <span id="temp">Carregando...</span>
