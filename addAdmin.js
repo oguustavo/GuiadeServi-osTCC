@@ -8,10 +8,8 @@ async function createAdmin() {
     const saltRounds = 10;
 
     try {
-        // Gerar o hash da senha
         const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
 
-        // Criar o usuário administrador
         const adminUser = await User.create({
             name,
             email,
