@@ -135,4 +135,13 @@ module.exports = class EventosControllers {
             res.status(500).send('Erro ao carregar página de outros serviços')
         }
     }
+
+    static async showPromocoes(req, res) {
+        try {
+            res.render('eventos/promocoes')
+        } catch (error) {
+            console.log('Erro ao carregar página de promoções:', error)
+            res.status(500).send('Erro ao carregar página de promoções')
+        }
+    }
 }

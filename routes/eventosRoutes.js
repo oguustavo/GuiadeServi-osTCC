@@ -7,5 +7,6 @@ router.get('/farmacias', EventosControllers.showFarmacias)
 router.get('/onibus', EventosControllers.showOnibus)
 router.get('/outrosServicos', EventosControllers.showOutrosServicos)
 router.get('/mercados', EventosControllers.showMercados)
+router.get('/promocoes', EventosControllers.showPromocoes)
 
 module.exports = router
