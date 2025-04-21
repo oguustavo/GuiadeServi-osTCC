@@ -4,15 +4,15 @@ const db = require('../db/conn')
 const Evento = db.define('Evento', {
     nome: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     endereco: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     telefone: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     tipo: {
         type: DataTypes.STRING,
@@ -22,16 +22,37 @@ const Evento = db.define('Evento', {
         type: DataTypes.STRING,
         allowNull: true
     },
-    imagem: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
     dataInicio: {
         type: DataTypes.DATE,
         allowNull: true
     },
     dataFim: {
         type: DataTypes.DATE,
+        allowNull: true
+    },
+    imagem: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    // Novos campos para vagas de emprego
+    cargo: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    empresa: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    tipoVaga: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    requisitos: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    contato: {
+        type: DataTypes.STRING,
         allowNull: true
     }
 })

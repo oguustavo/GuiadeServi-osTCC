@@ -9,7 +9,7 @@ module.exports = class AdminControllers {
         }
 
         try {
-            const [farmacias, estabelecimentos] = await Promise.all([
+            const [farmacias, estabelecimentos, vagas] = await Promise.all([
                 Evento.findAll({
                     where: { tipo: 'farmacia' },
                     raw: true
@@ -17,12 +17,17 @@ module.exports = class AdminControllers {
                 Evento.findAll({
                     where: { tipo: 'estabelecimento' },
                     raw: true
+                }),
+                Evento.findAll({
+                    where: { tipo: 'vaga' },
+                    raw: true
                 })
             ]);
 
             res.render('admin/dashboard', { 
                 farmacias,
-                estabelecimentos
+                estabelecimentos,
+                vagas
             });
         } catch (error) {
             console.log(error)

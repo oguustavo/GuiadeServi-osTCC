@@ -117,7 +117,7 @@
     </div>
 
     <!-- Lista de Estabelecimentos -->
-    <div class="card">
+    <div class="card mb-4">
         <div class="card-body">
             <h2 class="card-title">Estabelecimentos Cadastrados</h2>
             {{#if estabelecimentos}}
@@ -160,6 +160,92 @@
                 </div>
             {{else}}
                 <p>Nenhum estabelecimento cadastrado.</p>
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- Nova Seção de Vagas de Emprego -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Cadastrar Vaga de Emprego</h2>
+            <form action="/admin/eventos/create" method="POST">
+                <input type="hidden" name="tipo" value="vaga">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="cargo" class="form-label">Cargo</label>
+                        <input type="text" class="form-control" id="cargo" name="cargo" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="empresa" class="form-label">Empresa</label>
+                        <input type="text" class="form-control" id="empresa" name="empresa" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="tipoVaga" class="form-label">Tipo de Vaga</label>
+                        <select class="form-select" id="tipoVaga" name="tipoVaga" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="CLT">CLT</option>
+                            <option value="Estágio">Estágio</option>
+                            <option value="Freelance">Freelance</option>
+                            <option value="Temporário">Temporário</option>
+                            <option value="PJ">PJ</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="contato" class="form-label">Contato para Currículo</label>
+                        <input type="text" class="form-control" id="contato" name="contato" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="endereco" class="form-label">Endereço da Empresa</label>
+                    <input type="text" class="form-control" id="endereco" name="endereco" required>
+                </div>
+                <div class="mb-3">
+                    <label for="requisitos" class="form-label">Requisitos</label>
+                    <textarea class="form-control" id="requisitos" name="requisitos" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Cadastrar Vaga</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lista de Vagas de Emprego -->
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Vagas de Emprego Cadastradas</h2>
+            {{#if vagas}}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Cargo</th>
+                                <th>Empresa</th>
+                                <th>Tipo</th>
+                                <th>Contato</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each vagas}}
+                                <tr>
+                                    <td>{{this.cargo}}</td>
+                                    <td>{{this.empresa}}</td>
+                                    <td>{{this.tipoVaga}}</td>
+                                    <td>{{this.contato}}</td>
+                                    <td>
+                                        <form action="/admin/eventos/delete" method="POST" style="display: inline;">
+                                            <input type="hidden" name="id" value="{{this.id}}">
+                                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            {{else}}
+                <p>Nenhuma vaga cadastrada.</p>
             {{/if}}
         </div>
     </div>

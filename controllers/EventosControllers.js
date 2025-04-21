@@ -43,9 +43,25 @@ module.exports = class EventosControllers {
         }
     }
 
+    static async showEmpregos(req, res) {
+        try {
+            const vagas = await Evento.findAll({
+                where: {
+                    tipo: 'vaga'
+                },
+                raw: true
+            })
+            console.log('Vagas encontradas:', vagas)
+            res.render('eventos/empregos', { vagas })
+        } catch (error) {
+            console.log('Erro ao buscar vagas:', error)
+            res.status(500).send('Erro ao carregar página de empregos')
+        }
+    }
+
     static async createEvento(req, res) {
         try {
-            const { nome, endereco, telefone, tipo, subtipo, dataInicio, dataFim } = req.body
+            const { nome, endereco, telefone, tipo, subtipo, dataInicio, dataFim, cargo, empresa, tipoVaga, requisitos, contato } = req.body
             let imagem = null
 
             // Handle file upload if present
@@ -87,12 +103,25 @@ module.exports = class EventosControllers {
                 })
                 console.log('Estabelecimento criado:', novoEstabelecimento)
                 req.flash('success', 'Estabelecimento cadastrado com sucesso!')
+            } else if (tipo === 'vaga') {
+                console.log('Dados da vaga:', { cargo, empresa, tipoVaga, requisitos, contato, endereco })
+                const novaVaga = await Evento.create({
+                    tipo,
+                    cargo,
+                    empresa,
+                    tipoVaga,
+                    requisitos,
+                    contato,
+                    endereco
+                })
+                console.log('Vaga criada:', novaVaga)
+                req.flash('success', 'Vaga cadastrada com sucesso!')
             }
 
             res.redirect('/admin/dashboard')
         } catch (error) {
             console.log('Erro ao criar evento:', error)
-            req.flash('error', 'Erro ao cadastrar estabelecimento')
+            req.flash('error', 'Erro ao cadastrar item')
             res.redirect('/admin/dashboard')
         }
     }
