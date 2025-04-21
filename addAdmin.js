@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const User = require('./models/User'); // Certifique-se de que o caminho está correto
+const User = require('./models/User'); 
 
 async function createAdmin() {
     const name = 'Admin';

@@ -9,13 +9,21 @@ module.exports = class AdminControllers {
         }
 
         try {
-            const eventos = await Evento.findAll({
-                where: {
-                    tipo: 'farmacia'
-                },
-                raw: true
-            })
-            res.render('admin/dashboard', { eventos })
+            const [farmacias, estabelecimentos] = await Promise.all([
+                Evento.findAll({
+                    where: { tipo: 'farmacia' },
+                    raw: true
+                }),
+                Evento.findAll({
+                    where: { tipo: 'estabelecimento' },
+                    raw: true
+                })
+            ]);
+
+            res.render('admin/dashboard', { 
+                farmacias,
+                estabelecimentos
+            });
         } catch (error) {
             console.log(error)
             res.status(500).send('Erro ao carregar dashboard')

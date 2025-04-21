@@ -3,6 +3,7 @@ const exphbs = require('express-handlebars')
 const session = require('express-session')
 const FileStore = require('session-file-store')(session)
 const flash = require('express-flash')
+const fileUpload = require('express-fileupload')
 
 const app = express()
 
@@ -22,6 +23,15 @@ app.engine('handlebars', exphbs.engine({
     helpers: {
         formatDate: (date) => {
             return new Date(date).toLocaleDateString('pt-BR');
+        },
+        capitalizeFirst: (str) => {
+            if (typeof str !== 'string') return '';
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+        section: function(name, options) {
+            if (!this._sections) this._sections = {};
+            this._sections[name] = options.fn(this);
+            return null;
         }
     }
 }))
@@ -33,6 +43,11 @@ app.use(
     })
 )
 app.use(express.json())
+
+// Configuração do express-fileupload
+app.use(fileUpload({
+    createParentPath: true
+}))
 
 app.use(
     session({

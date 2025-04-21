@@ -1,10 +1,12 @@
 <div class="container mt-4">
     <h1 class="mb-4">Painel Administrativo</h1>
 
+    <!-- Seção de Farmácias -->
     <div class="card mb-4">
         <div class="card-body">
             <h2 class="card-title">Cadastrar Farmácia de Plantão</h2>
             <form action="/admin/eventos/create" method="POST">
+                <input type="hidden" name="tipo" value="farmacia">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="nome" class="form-label">Nome da Farmácia</label>
@@ -29,15 +31,56 @@
                         <input type="date" class="form-control" id="dataFim" name="dataFim" required>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <button type="submit" class="btn btn-primary">Cadastrar Farmácia</button>
             </form>
         </div>
     </div>
 
-    <div class="card">
+    <!-- Nova Seção de Estabelecimentos -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Cadastrar Estabelecimento</h2>
+            <form action="/admin/eventos/create" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="tipo" value="estabelecimento">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="subtipo" class="form-label">Tipo de Estabelecimento</label>
+                        <select class="form-select" id="subtipo" name="subtipo" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="mercado">Mercado</option>
+                            <option value="loja">Loja</option>
+                            <option value="restaurante">Restaurante</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="nome" class="form-label">Nome do Estabelecimento</label>
+                        <input type="text" class="form-control" id="nome" name="nome" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="telefone" class="form-label">Telefone</label>
+                        <input type="text" class="form-control" id="telefone" name="telefone" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="endereco" class="form-label">Endereço Completo</label>
+                        <input type="text" class="form-control" id="endereco" name="endereco" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="imagem" class="form-label">Imagem de Capa</label>
+                    <input type="file" class="form-control" id="imagem" name="imagem" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Cadastrar Estabelecimento</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lista de Farmácias -->
+    <div class="card mb-4">
         <div class="card-body">
             <h2 class="card-title">Farmácias Cadastradas</h2>
-            {{#if eventos}}
+            {{#if farmacias}}
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -50,7 +93,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each eventos}}
+                            {{#each farmacias}}
                                 <tr>
                                     <td>{{this.nome}}</td>
                                     <td>{{this.endereco}}</td>
@@ -69,6 +112,54 @@
                 </div>
             {{else}}
                 <p>Nenhuma farmácia cadastrada.</p>
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- Lista de Estabelecimentos -->
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Estabelecimentos Cadastrados</h2>
+            {{#if estabelecimentos}}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Nome</th>
+                                <th>Endereço</th>
+                                <th>Telefone</th>
+                                <th>Imagem</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each estabelecimentos}}
+                                <tr>
+                                    <td>{{this.subtipo}}</td>
+                                    <td>{{this.nome}}</td>
+                                    <td>{{this.endereco}}</td>
+                                    <td>{{this.telefone}}</td>
+                                    <td>
+                                        {{#if this.imagem}}
+                                            <img src="/uploads/{{this.imagem}}" alt="{{this.nome}}" style="height: 50px;">
+                                        {{else}}
+                                            Sem imagem
+                                        {{/if}}
+                                    </td>
+                                    <td>
+                                        <form action="/admin/eventos/delete" method="POST" style="display: inline;">
+                                            <input type="hidden" name="id" value="{{this.id}}">
+                                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            {{else}}
+                <p>Nenhum estabelecimento cadastrado.</p>
             {{/if}}
         </div>
     </div>
