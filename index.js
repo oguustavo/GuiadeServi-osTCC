@@ -27,6 +27,9 @@ app.engine('handlebars', exphbs.engine({
             if (typeof str !== 'string') return '';
             return str.charAt(0).toUpperCase() + str.slice(1);
         },
+        isEqual: function(a, b) {
+            return a === b;
+        },
         section: function(name, options) {
             if (!this._sections) this._sections = {};
             this._sections[name] = options.fn(this);

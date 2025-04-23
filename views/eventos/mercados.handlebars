@@ -23,6 +23,18 @@
             padding-bottom: 0.5rem;
             border-bottom: 3px solid var(--highlight);
         }
+        .section-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--highlight);
+        }
+        .section-status {
+            color: #28a745;
+            font-size: 0.9em;
+            margin-left: 1rem;
+        }
         .card {
             transition: transform 0.2s;
             margin-bottom: 20px;
@@ -53,32 +65,96 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h1 class="page-title">Mercados e Restaurantes Abertos</h1>
+        <h1 class="page-title">Estabelecimentos Abertos</h1>
         
         {{#if estabelecimentos}}
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <!-- Seção de Lojas -->
+            <h2 class="section-title">LOJAS<span class="section-status">Lojas abertas</span></h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
                 {{#each estabelecimentos}}
-                    <div class="col">
-                        <div class="card h-100">
-                            {{#if this.imagem}}
-                                <img src="/uploads/{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
-                            {{else}}
-                                <img src="/img/mercado.jpg" class="card-img-top" alt="Imagem padrão">
-                            {{/if}}
-                            <div class="estabelecimento-tipo">
-                                {{capitalizeFirst this.subtipo}}
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">{{this.nome}}</h5>
-                                <p class="card-text">
-                                    <i class="fas fa-map-marker-alt text-primary me-2"></i>{{this.endereco}}
-                                </p>
-                                <p class="card-text">
-                                    <i class="fas fa-phone text-primary me-2"></i>{{this.telefone}}
-                                </p>
+                    {{#if (isEqual this.subtipo "loja")}}
+                        <div class="col">
+                            <div class="card h-100">
+                                {{#if this.imagem}}
+                                    <img src="/uploads/{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
+                                {{else}}
+                                    <img src="/img/mercado.jpg" class="card-img-top" alt="Imagem padrão">
+                                {{/if}}
+                                <div class="estabelecimento-tipo">
+                                    {{capitalizeFirst this.subtipo}}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{this.nome}}</h5>
+                                    <p class="card-text">
+                                        <i class="fas fa-map-marker-alt text-primary me-2"></i>{{this.endereco}}
+                                    </p>
+                                    <p class="card-text">
+                                        <i class="fas fa-phone text-primary me-2"></i>{{this.telefone}}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+
+            <!-- Seção de Mercados -->
+            <h2 class="section-title">MERCADOS<span class="section-status">Mercados abertos</span></h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+                {{#each estabelecimentos}}
+                    {{#if (isEqual this.subtipo "mercado")}}
+                        <div class="col">
+                            <div class="card h-100">
+                                {{#if this.imagem}}
+                                    <img src="/uploads/{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
+                                {{else}}
+                                    <img src="/img/mercado.jpg" class="card-img-top" alt="Imagem padrão">
+                                {{/if}}
+                                <div class="estabelecimento-tipo">
+                                    {{capitalizeFirst this.subtipo}}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{this.nome}}</h5>
+                                    <p class="card-text">
+                                        <i class="fas fa-map-marker-alt text-primary me-2"></i>{{this.endereco}}
+                                    </p>
+                                    <p class="card-text">
+                                        <i class="fas fa-phone text-primary me-2"></i>{{this.telefone}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+
+            <!-- Seção de Restaurantes -->
+            <h2 class="section-title">RESTAURANTES<span class="section-status">Restaurantes abertos</span></h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {{#each estabelecimentos}}
+                    {{#if (isEqual this.subtipo "restaurante")}}
+                        <div class="col">
+                            <div class="card h-100">
+                                {{#if this.imagem}}
+                                    <img src="/uploads/{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
+                                {{else}}
+                                    <img src="/img/mercado.jpg" class="card-img-top" alt="Imagem padrão">
+                                {{/if}}
+                                <div class="estabelecimento-tipo">
+                                    {{capitalizeFirst this.subtipo}}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{this.nome}}</h5>
+                                    <p class="card-text">
+                                        <i class="fas fa-map-marker-alt text-primary me-2"></i>{{this.endereco}}
+                                    </p>
+                                    <p class="card-text">
+                                        <i class="fas fa-phone text-primary me-2"></i>{{this.telefone}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
                 {{/each}}
             </div>
         {{else}}
