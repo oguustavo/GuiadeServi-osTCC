@@ -1,7 +1,7 @@
 const {Sequelize} = require('sequelize')
 
 
-const sequelize = new Sequelize('eventos2','root','root',{
+const sequelize = new Sequelize('eventos2','root','',{
 
     host:'localhost',
     dialect:'mysql',
@@ -14,7 +14,7 @@ try {
     console.log(`não conectamos:${err}`)
 }
 
-// Sincroniza o modelo com o banco de dados
+
 sequelize.sync({ alter: true })
     .then(() => {
         console.log('Banco de dados atualizado com sucesso!')

@@ -9,12 +9,11 @@ const app = express()
 
 const conn = require('./db/conn')
 
-//models
+
 const Evento = require('./models/Evento')
 const User = require('./models/User')
 const EventosControllers = require('./controllers/EventosControllers')
 
-//import routes
 const eventosRoutes = require('./routes/eventosRoutes')
 const authRoutes = require('./routes/authRoutes')
 const adminRoutes = require('./routes/adminRoutes')
@@ -44,7 +43,7 @@ app.use(
 )
 app.use(express.json())
 
-// Configuração do express-fileupload
+
 app.use(fileUpload({
     createParentPath: true
 }))
@@ -70,8 +69,6 @@ app.use(
 
 app.use(flash())
 
-// Certificar-se que esta linha está antes das rotas
-app.use(express.static('public'))
 
 app.use((req, res, next) => {
     if (req.session.userid) {
@@ -85,9 +82,11 @@ app.use('/', authRoutes)
 app.use('/admin', adminRoutes)
 app.get('/', EventosControllers.showEventos)
 
-//.sync({force:true})
+app.use(express.static('public'))
+
+
 conn
-    .sync() // Removido o {force: true}
+    .sync() 
     .then(() => {
         app.listen(3000)
         console.log('Servidor rodando na porta 3000')

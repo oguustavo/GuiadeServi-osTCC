@@ -6,7 +6,7 @@ const fs = require('fs')
 module.exports = class EventosControllers {
     static async showEventos(req, res) {
         res.render('eventos/home', {
-            user: req.user || null  // Passa o usuário para a view
+            user: req.user || null  
         })
     }
 
@@ -64,13 +64,13 @@ module.exports = class EventosControllers {
             const { nome, endereco, telefone, tipo, subtipo, dataInicio, dataFim, cargo, empresa, tipoVaga, requisitos, contato } = req.body
             let imagem = null
 
-            // Handle file upload if present
+           
             if (req.files && req.files.imagem) {
                 const file = req.files.imagem
                 const fileName = Date.now() + path.extname(file.name)
                 const uploadPath = path.join(__dirname, '..', 'public', 'uploads', fileName)
 
-                // Create uploads directory if it doesn't exist
+                
                 const uploadsDir = path.join(__dirname, '..', 'public', 'uploads')
                 if (!fs.existsSync(uploadsDir)) {
                     fs.mkdirSync(uploadsDir, { recursive: true })
