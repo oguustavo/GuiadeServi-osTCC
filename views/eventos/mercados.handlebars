@@ -8,58 +8,170 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #007BFF;
+            --primary: #2563eb;
             --secondary: #FFFFFF;
-            --support: #03A9F4;
-            --highlight: #FFA500;
+            --support: #3b82f6;
+            --highlight: #f59e0b;
+            --success: #22c55e;
+            --neutral: #64748b;
         }
+
         body {
-            background-color: #f8f9fa;
+            background-color: #f1f5f9;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
+
         .page-title {
             color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--highlight);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 4px solid var(--highlight);
+            position: relative;
         }
+
         .section-title {
             color: var(--primary);
             font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--highlight);
+            margin: 2rem 0 1.5rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
+
         .section-status {
-            color: #28a745;
+            color: var(--success);
             font-size: 0.9em;
-            margin-left: 1rem;
+            padding: 6px 12px;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
+
+        .section-status i {
+            font-size: 0.8em;
+        }
+
         .card {
-            transition: transform 0.2s;
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
             margin-bottom: 20px;
             height: 100%;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
+
         .card:hover {
-            transform: scale(1.02);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-        .card-img-top {
+
+        .card-img-wrapper {
+            position: relative;
             height: 200px;
-            object-fit: cover;
+            overflow: hidden;
         }
+
+        .card-img-top {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img-top {
+            transform: scale(1.1);
+        }
+
         .estabelecimento-tipo {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: var(--highlight);
+            top: 16px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.75);
             color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.9em;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .card-footer {
-            background-color: transparent;
-            border-top: none;
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            color: var(--primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.75rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .info-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .info-item i {
+            color: var(--primary);
+            font-size: 1.1em;
+            width: 24px;
+            text-align: center;
+        }
+
+        .info-item span {
+            color: var(--neutral);
+            font-size: 0.95em;
+        }
+
+        .alert {
+            border: none;
+            border-radius: 12px;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .alert i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .section-title {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -69,28 +181,42 @@
         
         {{#if estabelecimentos}}
             <!-- Seção de Lojas -->
-            <h2 class="section-title">LOJAS<span class="section-status">Lojas abertas</span></h2>
+            <h2 class="section-title">
+                <span>
+                    <i class="fas fa-store me-2"></i>
+                    LOJAS
+                </span>
+                <span class="section-status">
+                    <i class="fas fa-circle"></i>
+                    ABERTO
+                </span>
+            </h2>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
                 {{#each estabelecimentos}}
                     {{#if (isEqual this.subtipo "loja")}}
                         <div class="col">
                             <div class="card h-100">
-                                {{#if this.imagem}}
-                                    <img src="/uploads/{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
-                                {{else}}
-                                    <img src="/img/mercado.jpg" class="card-img-top" alt="Imagem padrão">
-                                {{/if}}
-                                <div class="estabelecimento-tipo">
-                                    {{capitalizeFirst this.subtipo}}
+                                <div class="card-img-wrapper">
+                                    {{#if this.imagem}}
+                                        <img src="/uploads/{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
+                                    {{else}}
+                                        <img src="/img/mercado.jpg" class="card-img-top" alt="Imagem padrão">
+                                    {{/if}}
+                                    <div class="estabelecimento-tipo">
+                                        <i class="fas fa-store"></i>
+                                        {{capitalizeFirst this.subtipo}}
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">{{this.nome}}</h5>
-                                    <p class="card-text">
-                                        <i class="fas fa-map-marker-alt text-primary me-2"></i>{{this.endereco}}
-                                    </p>
-                                    <p class="card-text">
-                                        <i class="fas fa-phone text-primary me-2"></i>{{this.telefone}}
-                                    </p>
+                                    <div class="info-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>{{this.endereco}}</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-phone"></i>
+                                        <span>{{this.telefone}}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -99,28 +225,42 @@
             </div>
 
             <!-- Seção de Mercados -->
-            <h2 class="section-title">MERCADOS<span class="section-status">Mercados abertos</span></h2>
+            <h2 class="section-title">
+                <span>
+                    <i class="fas fa-shopping-cart me-2"></i>
+                    MERCADOS
+                </span>
+                <span class="section-status">
+                    <i class="fas fa-circle"></i>
+                    ABERTO
+                </span>
+            </h2>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
                 {{#each estabelecimentos}}
                     {{#if (isEqual this.subtipo "mercado")}}
                         <div class="col">
                             <div class="card h-100">
-                                {{#if this.imagem}}
-                                    <img src="/uploads/{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
-                                {{else}}
-                                    <img src="/img/mercado.jpg" class="card-img-top" alt="Imagem padrão">
-                                {{/if}}
-                                <div class="estabelecimento-tipo">
-                                    {{capitalizeFirst this.subtipo}}
+                                <div class="card-img-wrapper">
+                                    {{#if this.imagem}}
+                                        <img src="/uploads/{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
+                                    {{else}}
+                                        <img src="/img/mercado.jpg" class="card-img-top" alt="Imagem padrão">
+                                    {{/if}}
+                                    <div class="estabelecimento-tipo">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        {{capitalizeFirst this.subtipo}}
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">{{this.nome}}</h5>
-                                    <p class="card-text">
-                                        <i class="fas fa-map-marker-alt text-primary me-2"></i>{{this.endereco}}
-                                    </p>
-                                    <p class="card-text">
-                                        <i class="fas fa-phone text-primary me-2"></i>{{this.telefone}}
-                                    </p>
+                                    <div class="info-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>{{this.endereco}}</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-phone"></i>
+                                        <span>{{this.telefone}}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -129,28 +269,42 @@
             </div>
 
             <!-- Seção de Restaurantes -->
-            <h2 class="section-title">RESTAURANTES<span class="section-status">Restaurantes abertos</span></h2>
+            <h2 class="section-title">
+                <span>
+                    <i class="fas fa-utensils me-2"></i>
+                    RESTAURANTES
+                </span>
+                <span class="section-status">
+                    <i class="fas fa-circle"></i>
+                    ABERTO
+                </span>
+            </h2>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 {{#each estabelecimentos}}
                     {{#if (isEqual this.subtipo "restaurante")}}
                         <div class="col">
                             <div class="card h-100">
-                                {{#if this.imagem}}
-                                    <img src="/uploads/{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
-                                {{else}}
-                                    <img src="/img/mercado.jpg" class="card-img-top" alt="Imagem padrão">
-                                {{/if}}
-                                <div class="estabelecimento-tipo">
-                                    {{capitalizeFirst this.subtipo}}
+                                <div class="card-img-wrapper">
+                                    {{#if this.imagem}}
+                                        <img src="/uploads/{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
+                                    {{else}}
+                                        <img src="/img/mercado.jpg" class="card-img-top" alt="Imagem padrão">
+                                    {{/if}}
+                                    <div class="estabelecimento-tipo">
+                                        <i class="fas fa-utensils"></i>
+                                        {{capitalizeFirst this.subtipo}}
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">{{this.nome}}</h5>
-                                    <p class="card-text">
-                                        <i class="fas fa-map-marker-alt text-primary me-2"></i>{{this.endereco}}
-                                    </p>
-                                    <p class="card-text">
-                                        <i class="fas fa-phone text-primary me-2"></i>{{this.telefone}}
-                                    </p>
+                                    <div class="info-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>{{this.endereco}}</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-phone"></i>
+                                        <span>{{this.telefone}}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -158,9 +312,9 @@
                 {{/each}}
             </div>
         {{else}}
-            <div class="alert alert-info" role="alert">
-                <i class="fas fa-info-circle me-2"></i>
-                Nenhum estabelecimento cadastrado no momento.
+            <div class="alert" role="alert">
+                <i class="fas fa-info-circle"></i>
+                <span>Nenhum estabelecimento cadastrado no momento.</span>
             </div>
         {{/if}}
     </div>

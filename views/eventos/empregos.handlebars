@@ -8,85 +8,197 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #007BFF;
+            --primary: #2563eb;
             --secondary: #FFFFFF;
             --support: #03A9F4;
-            --highlight: #FFA500;
+            --highlight: #3b82f6;
+            --success: #22c55e;
+            --neutral: #64748b;
         }
+        
         body {
-            background-color: #f8f9fa;
+            background-color: #f1f5f9;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
+        
         .page-title {
             color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 4px solid var(--highlight);
+            position: relative;
+        }
+
+        .filters-section {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .filter-button {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
             font-weight: 600;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--highlight);
+            margin: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+
+        .filter-button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .filter-button.active {
+            background: var(--primary);
+            color: white;
         }
 
         .vaga-card {
             border: none;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            transition: transform 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            border-radius: 16px;
+            overflow: hidden;
+            background: white;
+            position: relative;
         }
 
         .vaga-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         .vaga-header {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--highlight));
             color: white;
-            padding: 15px;
-            border-radius: 10px 10px 0 0;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vaga-header::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
         }
 
         .vaga-tipo {
-            background-color: var(--highlight);
+            background-color: rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(4px);
+            margin-top: 12px;
         }
 
         .vaga-empresa {
             color: var(--primary);
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .vaga-requisitos {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 10px 0;
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+            border: 1px solid #e2e8f0;
         }
 
         .vaga-contato {
-            background-color: #e9ecef;
-            padding: 15px;
-            border-radius: 0 0 10px 10px;
+            background-color: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--neutral);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        .location-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #f1f5f9;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--neutral);
+            margin-top: 12px;
         }
 
         .sem-vagas {
             text-align: center;
-            padding: 50px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            margin: 20px 0;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            padding: 60px 24px;
+            background-color: white;
+            border-radius: 16px;
+            margin: 32px 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .sem-vagas i {
-            font-size: 3rem;
+            font-size: 4rem;
             color: var(--primary);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            opacity: 0.8;
         }
 
         .card-title {
             margin: 0;
-            font-size: 1.25rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .vaga-card {
+                margin-bottom: 16px;
+            }
+
+            .filters-section {
+                padding: 16px;
+            }
+        }
+
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
@@ -94,32 +206,53 @@
     <div class="container mt-4">
         <h1 class="page-title">Vagas de emprego</h1>
         
+        <!-- Seção de Filtros -->
+        <div class="filters-section">
+            <h5 class="mb-3">Filtrar por tipo de vaga:</h5>
+            <button class="filter-button active" data-filter="todos">Todas as vagas</button>
+            <button class="filter-button" data-filter="CLT">CLT</button>
+            <button class="filter-button" data-filter="Estágio">Estágio</button>
+            <button class="filter-button" data-filter="Freelance">Freelance</button>
+            <button class="filter-button" data-filter="Temporário">Temporário</button>
+            <button class="filter-button" data-filter="PJ">PJ</button>
+        </div>
+
         {{#if vagas.length}}
-            <div class="row">
+            <div class="row g-4">
                 {{#each vagas}}
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="vaga-card card">
+                    <div class="col-12 col-md-6 col-lg-4 vaga-item" data-tipo="{{tipoVaga}}">
+                        <div class="vaga-card">
                             <div class="vaga-header">
-                                <h3 class="card-title mb-2">{{cargo}}</h3>
-                                <span class="vaga-tipo">{{tipoVaga}}</span>
+                                <h3 class="card-title">{{cargo}}</h3>
+                                <span class="vaga-tipo">
+                                    <i class="fas fa-briefcase"></i>
+                                    {{tipoVaga}}
+                                </span>
                             </div>
                             <div class="card-body">
-                                <h4 class="vaga-empresa mb-3">
-                                    <i class="fas fa-building me-2"></i>{{empresa}}
+                                <h4 class="vaga-empresa">
+                                    <i class="fas fa-building"></i>
+                                    {{empresa}}
                                 </h4>
                                 
-                                <div class="d-flex align-items-center mb-3">
-                                    <i class="fas fa-location-dot me-2 text-primary"></i>
-                                    <span>{{endereco}}</span>
+                                <div class="location-badge">
+                                    <i class="fas fa-location-dot"></i>
+                                    {{endereco}}
                                 </div>
                                 
                                 <div class="vaga-requisitos">
-                                    <h5 class="mb-2"><i class="fas fa-list-check me-2"></i>Requisitos:</h5>
+                                    <h5 class="section-title">
+                                        <i class="fas fa-list-check text-primary"></i>
+                                        Requisitos
+                                    </h5>
                                     <p class="mb-0">{{requisitos}}</p>
                                 </div>
                                 
-                                <div class="vaga-contato mt-3">
-                                    <h5 class="mb-2"><i class="fas fa-envelope me-2"></i>Contato:</h5>
+                                <div class="vaga-contato">
+                                    <h5 class="section-title">
+                                        <i class="fas fa-envelope text-primary"></i>
+                                        Contato
+                                    </h5>
                                     <p class="mb-0">{{contato}}</p>
                                 </div>
                             </div>
@@ -129,12 +262,44 @@
             </div>
         {{else}}
             <div class="sem-vagas">
-                <i class="fas fa-briefcase mb-3"></i>
+                <i class="fas fa-briefcase"></i>
                 <h3>Nenhuma vaga disponível no momento</h3>
                 <p class="text-muted">Fique de olho! Novas oportunidades serão publicadas em breve.</p>
             </div>
         {{/if}}
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script para o filtro -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-button');
+            const vagaItems = document.querySelectorAll('.vaga-item');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    button.classList.add('active');
+
+                    const filterValue = button.getAttribute('data-filter');
+
+                    vagaItems.forEach(item => {
+                        if (filterValue === 'todos') {
+                            item.classList.remove('hidden');
+                        } else {
+                            if (item.getAttribute('data-tipo') === filterValue) {
+                                item.classList.remove('hidden');
+                            } else {
+                                item.classList.add('hidden');
+                            }
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html> 
