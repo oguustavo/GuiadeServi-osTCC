@@ -1,28 +1,149 @@
-<div class="auth-container"></div>
-    <h2>Registrar</h2>
-    <form action="/register" method="POST">
-        <div class="form-control">
-            <label for="name">Nome:</label>
-            <input type="text" name="name" placeholder="digite seu nome" required>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Guia de Serviços</title>
+    <link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2 class="auth-title">Criar Conta</h2>
+                <p class="auth-subtitle">Preencha seus dados para se cadastrar</p>
+            </div>
+            
+            <form action="/register" method="POST">
+                <div class="form-group">
+                    <input type="text" 
+                           class="form-control" 
+                           name="name" 
+                           id="name" 
+                           placeholder=" "
+                           required>
+                    <label for="name" class="form-label">Nome completo</label>
+                    <div class="form-error">O nome é obrigatório</div>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" 
+                           class="form-control" 
+                           name="email" 
+                           id="email" 
+                           placeholder=" "
+                           required>
+                    <label for="email" class="form-label">E-mail</label>
+                    <div class="form-error">Por favor, insira um e-mail válido</div>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" 
+                           class="form-control" 
+                           name="password" 
+                           id="password" 
+                           placeholder=" "
+                           required>
+                    <label for="password" class="form-label">Senha</label>
+                    <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                        <i class="far fa-eye"></i>
+                    </button>
+                    <div class="form-error">A senha deve ter no mínimo 6 caracteres</div>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" 
+                           class="form-control" 
+                           name="confirmpassword" 
+                           id="confirmpassword" 
+                           placeholder=" "
+                           required>
+                    <label for="confirmpassword" class="form-label">Confirme sua senha</label>
+                    <button type="button" class="password-toggle" onclick="togglePassword('confirmpassword')">
+                        <i class="far fa-eye"></i>
+                    </button>
+                    <div class="form-error">As senhas não coincidem</div>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" 
+                           class="form-control" 
+                           name="matricula" 
+                           id="matricula" 
+                           placeholder=" ">
+                    <label for="matricula" class="form-label">Matrícula (opcional)</label>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-user-plus"></i> Criar conta
+                </button>
+
+                <div class="auth-footer">
+                    <p>Já tem uma conta? <a href="/login" class="auth-link">Entre aqui</a></p>
+                </div>
+            </form>
         </div>
-        <div class="form-control">
-            <label for="email">email:</label>
-            <input type="email" name="email" placeholder="digite seu email" required>
-        </div>
-        <div class="form-control">
-            <label for="password">senha:</label>
-            <input type="password" name="password" placeholder="digite sua senha" required>
-        </div>
-        <div class="form-control">
-            <label for="confirmpassword">confirme sua senha:</label>
-            <input type="password" name="confirmpassword" placeholder="confirme sua senha" required>
-        </div>
-        <div class="form-control">
-            <label for="matricula">digite sua matricula:</label>
-            <input type="text" name="matricula" placeholder="digite sua matricula">
-        </div>
-        <input type="submit" value="cadastrar">
-            <p>ja tem conta? 
-            <a href="/login">clique aqui</a></p>
-    </form>
-</div>
+    </div>
+
+    <script>
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const icon = input.nextElementSibling.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Validação do formulário
+        const form = document.querySelector('form');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmpassword');
+
+        form.addEventListener('submit', function(e) {
+            let isValid = true;
+
+            if (!nameInput.value.trim()) {
+                nameInput.classList.add('error');
+                isValid = false;
+            } else {
+                nameInput.classList.remove('error');
+            }
+
+            if (!emailInput.value || !emailInput.value.includes('@')) {
+                emailInput.classList.add('error');
+                isValid = false;
+            } else {
+                emailInput.classList.remove('error');
+            }
+
+            if (!passwordInput.value || passwordInput.value.length < 6) {
+                passwordInput.classList.add('error');
+                isValid = false;
+            } else {
+                passwordInput.classList.remove('error');
+            }
+
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                confirmPasswordInput.classList.add('error');
+                isValid = false;
+            } else {
+                confirmPasswordInput.classList.remove('error');
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

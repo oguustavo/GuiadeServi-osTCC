@@ -1,0 +1,186 @@
+:root {
+    --primary: #007BFF;
+    --secondary: #FFFFFF;
+    --support: #03A9F4;
+    --highlight: #FFA500;
+    --error: #dc3545;
+    --success: #28a745;
+    --neutral-100: #f8f9fa;
+    --neutral-200: #e9ecef;
+    --neutral-300: #dee2e6;
+    --neutral-700: #495057;
+    --neutral-800: #343a40;
+}
+
+.auth-container {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--neutral-100);
+}
+
+.auth-card {
+    background: var(--secondary);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--highlight));
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-title {
+    color: var(--neutral-800);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    color: var(--neutral-700);
+    font-size: 0.95rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    border: 2px solid var(--neutral-200);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: var(--neutral-100);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--secondary);
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+}
+
+.form-label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--neutral-100);
+    padding: 0 0.5rem;
+    color: var(--neutral-700);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.form-control:focus ~ .form-label,
+.form-control:not(:placeholder-shown) ~ .form-label {
+    top: 0;
+    font-size: 0.85rem;
+    color: var(--primary);
+    background: var(--secondary);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary);
+    color: var(--secondary);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.submit-btn:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--neutral-700);
+}
+
+.auth-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.auth-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--neutral-700);
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+.password-toggle:hover {
+    color: var(--primary);
+}
+
+.form-error {
+    color: var(--error);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.form-control.error {
+    border-color: var(--error);
+}
+
+.form-control.error ~ .form-error {
+    display: block;
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 2rem;
+    }
+
+    .auth-title {
+        font-size: 1.5rem;
+    }
+
+    .form-control {
+        padding: 0.75rem;
+    }
+} 
