@@ -54,6 +54,35 @@ const Evento = db.define('Evento', {
     contato: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    // Novos campos para eventos
+    tipoEvento: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    data: {
+        type: DataTypes.DATE,
+        allowNull: true
+    },
+    horario: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    local: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    descricao: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    vendaPresencial: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    linkInscricao: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 })
 

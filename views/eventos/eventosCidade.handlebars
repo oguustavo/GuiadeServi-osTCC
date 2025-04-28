@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos da Cidade</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #007BFF;
+            --secondary: #FFFFFF;
+            --support: #03A9F4;
+            --highlight: #FFA500;
+        }
+        
+        .page-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--highlight);
+        }
+        
+        .event-card {
+            margin-bottom: 2rem;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+        .event-image {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+        }
+        .event-type-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .event-date {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .event-location {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .event-description {
+            color: #495057;
+            margin: 1rem 0;
+        }
+        .event-contact {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        .search-container {
+            margin: 20px 0 30px;
+            padding: 10px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 45px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M11 2c4.968 0 9 4.032 9 9s-4.032 9-9 9-9-4.032-9-9 4.032-9 9-9zm0 16c3.867 0 7-3.133 7-7 0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7zm8.485.071l2.829 2.828-1.415 1.415-2.828-2.829 1.414-1.414z' fill='rgba(0,123,255,0.5)'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 15px center;
+            background-size: 20px;
+            background-color: transparent;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0,123,255,0.1);
+        }
+        .filter-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .type-filter {
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: transparent;
+        }
+        .type-filter:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0,123,255,0.1);
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px;
+            border-radius: 2px;
+        }
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+            background: #f8f9fa;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="page-title">
+            Eventos da Cidade
+        </h1>
+
+        <div class="filter-container">
+            <div class="search-container" style="flex: 2;">
+                <input type="text" 
+                       class="search-input" 
+                       id="searchInput" 
+                       placeholder="Busque por nome do evento..."
+                       autocomplete="off">
+            </div>
+            <div style="flex: 1;">
+                <select class="type-filter" id="typeFilter">
+                    <option value="">Todos os tipos</option>
+                    <option value="show">Show</option>
+                    <option value="festival">Festival</option>
+                    <option value="palestra">Palestra</option>
+                    <option value="feira">Feira</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="row" id="eventsContainer">
+            {{#if eventos}}
+                {{#each eventos}}
+                    <div class="col-md-6 col-lg-4 event-item" data-type="{{this.tipoEvento}}">
+                        <div class="card event-card">
+                            {{#if this.imagem}}
+                                <img src="/uploads/{{this.imagem}}" class="card-img-top event-image" alt="{{this.nome}}">
+                            {{else}}
+                                <img src="/images/default-event.jpg" class="card-img-top event-image" alt="Evento sem imagem">
+                            {{/if}}
+                            <span class="event-type-badge bg-primary text-white">{{this.tipoEvento}}</span>
+                            <div class="card-body">
+                                <h5 class="card-title">{{this.nome}}</h5>
+                                <p class="event-date">
+                                    <i class="fas fa-calendar-alt"></i> {{formatDate this.data}} às {{this.horario}}
+                                </p>
+                                <p class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i> {{this.local}}
+                                </p>
+                                <p class="event-description">{{this.descricao}}</p>
+                                
+                                <div class="event-contact">
+                                    {{#if this.vendaPresencial}}
+                                        <p class="mb-0">
+                                            <i class="fas fa-ticket-alt"></i> Venda de ingressos presencial
+                                        </p>
+                                    {{else}}
+                                        <a href="{{this.linkInscricao}}" class="btn btn-primary w-100" target="_blank">
+                                            <i class="fas fa-link"></i> Inscreva-se aqui
+                                        </a>
+                                    {{/if}}
+                                    {{#if this.contato}}
+                                        <p class="mt-2 mb-0">
+                                            <i class="fas fa-phone"></i> {{this.contato}}
+                                        </p>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            {{else}}
+                <div class="col-12 text-center">
+                    <p class="text-muted">Nenhum evento cadastrado no momento.</p>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const typeFilter = document.getElementById('typeFilter');
+            const eventsContainer = document.getElementById('eventsContainer');
+            const eventItems = document.querySelectorAll('.event-item');
+
+            function filterEvents() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const selectedType = typeFilter.value.toLowerCase();
+                let hasResults = false;
+
+                eventItems.forEach(item => {
+                    const eventName = item.querySelector('.card-title').textContent.toLowerCase();
+                    const eventType = item.getAttribute('data-type').toLowerCase();
+                    
+                    const matchesSearch = eventName.includes(searchTerm);
+                    const matchesType = !selectedType || eventType === selectedType;
+                    
+                    if (matchesSearch && matchesType) {
+                        hasResults = true;
+                        item.style.display = '';
+                        
+                        if (searchTerm) {
+                            const title = item.querySelector('.card-title');
+                            title.innerHTML = title.textContent.replace(
+                                new RegExp(searchTerm, 'gi'),
+                                match => `<span class="highlight">${match}</span>`
+                            );
+                        }
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                // Mostra mensagem quando não há resultados
+                const noResults = document.createElement('div');
+                noResults.className = 'col-12 no-results';
+                noResults.innerHTML = `
+                    <i class="fas fa-search me-2"></i>
+                    Nenhum evento encontrado
+                `;
+
+                const existingNoResults = eventsContainer.querySelector('.no-results');
+                if (!hasResults) {
+                    if (!existingNoResults) {
+                        eventsContainer.appendChild(noResults);
+                    }
+                } else if (existingNoResults) {
+                    existingNoResults.remove();
+                }
+            }
+
+            // Adiciona event listeners para os filtros
+            searchInput.addEventListener('input', filterEvents);
+            typeFilter.addEventListener('change', filterEvents);
+        });
+    </script>
+</body>
+</html>

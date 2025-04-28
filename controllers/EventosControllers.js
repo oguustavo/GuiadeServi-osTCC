@@ -59,9 +59,25 @@ module.exports = class EventosControllers {
         }
     }
 
+    static async showEventosCidade(req, res) {
+        try {
+            const eventos = await Evento.findAll({
+                where: {
+                    tipo: 'evento'
+                },
+                raw: true
+            })
+            console.log('Eventos encontrados:', eventos)
+            res.render('eventos/eventosCidade', { eventos })
+        } catch (error) {
+            console.log('Erro ao buscar eventos:', error)
+            res.status(500).send('Erro ao carregar página de eventos')
+        }
+    }
+
     static async createEvento(req, res) {
         try {
-            const { nome, endereco, telefone, tipo, subtipo, dataInicio, dataFim, cargo, empresa, tipoVaga, requisitos, contato } = req.body
+            const { nome, endereco, telefone, tipo, subtipo, dataInicio, dataFim, cargo, empresa, tipoVaga, requisitos, contato, tipoEvento, data, horario, local, descricao, vendaPresencial, linkInscricao } = req.body
             let imagem = null
 
            
@@ -116,6 +132,22 @@ module.exports = class EventosControllers {
                 })
                 console.log('Vaga criada:', novaVaga)
                 req.flash('success', 'Vaga cadastrada com sucesso!')
+            } else if (tipo === 'evento') {
+                console.log('Dados do evento:', { nome, tipoEvento, data, horario, local, descricao, vendaPresencial, linkInscricao, imagem })
+                const novoEvento = await Evento.create({
+                    tipo,
+                    nome,
+                    tipoEvento,
+                    data,
+                    horario,
+                    local,
+                    descricao,
+                    vendaPresencial: vendaPresencial === 'on',
+                    linkInscricao,
+                    imagem
+                })
+                console.log('Evento criado:', novoEvento)
+                req.flash('success', 'Evento cadastrado com sucesso!')
             }
 
             res.redirect('/admin/dashboard')
