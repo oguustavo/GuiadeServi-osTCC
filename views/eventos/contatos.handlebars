@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contatos Úteis - Parobé</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #007BFF;
+            --secondary: #FFFFFF;
+            --support: #03A9F4;
+            --highlight: #FFA500;
+            --emergency: #dc3545;
+            --success: #28a745;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        .page-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--highlight);
+        }
+        
+        .emergency-contacts {
+            margin: 20px 0;
+        }
+        
+        .contact-card {
+            border: none;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 500;
+            padding: 1rem;
+        }
+
+        .emergency-header {
+            background-color: var(--emergency) !important;
+        }
+        
+        .contact-item {
+            border-left: 4px solid var(--highlight);
+            margin: 10px 0;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .emergency-item {
+            border-left: 4px solid var(--emergency);
+            background-color: #fff9f9;
+        }
+        
+        .contact-name {
+            font-weight: 500;
+            color: #333;
+            flex-grow: 1;
+        }
+        
+        .contact-number-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-number {
+            background-color: var(--highlight);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .emergency-number {
+            background-color: var(--emergency);
+            font-size: 1.1em;
+        }
+        
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--highlight);
+            transform: scale(1.1);
+        }
+
+        .copy-btn.copied {
+            color: var(--success);
+        }
+        
+        .contact-icon {
+            color: var(--highlight);
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .emergency-icon {
+            color: var(--emergency);
+        }
+
+        .search-container {
+            margin: 20px 0 30px;
+            padding: 10px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 45px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M11 2c4.968 0 9 4.032 9 9s-4.032 9-9 9-9-4.032-9-9 4.032-9 9-9zm0 16c3.867 0 7-3.133 7-7 0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7zm8.485.071l2.829 2.828-1.415 1.415-2.828-2.829 1.414-1.414z' fill='rgba(0,123,255,0.5)'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 15px center;
+            background-size: 20px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0,123,255,0.1);
+        }
+
+        .search-input::placeholder {
+            color: #adb5bd;
+            font-size: 0.95rem;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px;
+            border-radius: 2px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-style: italic;
+            background: #f8f9fa;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .public-search {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .public-search .search-input {
+            padding-right: 40px;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #adb5bd;
+            cursor: pointer;
+            display: none;
+        }
+
+        .clear-search:hover {
+            color: var(--primary);
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background-color: var(--success);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            display: none;
+            animation: fadeInOut 2s ease;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="page-title">
+            Contatos Úteis
+        </h1>
+
+        
+        <div class="emergency-contacts">
+            <!-- Números de Emergência Principais -->
+            <div class="card contact-card">
+                <div class="card-header emergency-header" role="button">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Números de Emergência Principais
+                </div>
+                <div class="card-body" id="emergencyContainer">
+                    <div class="contact-item emergency-item">
+                        <i class="fas fa-ambulance contact-icon emergency-icon"></i>
+                        <span class="contact-name">SAMU</span>
+                        <div class="contact-number-container">
+                            <span class="contact-number emergency-number">192</span>
+                            <button class="copy-btn" data-number="192">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item emergency-item">
+                        <i class="fas fa-fire-extinguisher contact-icon emergency-icon"></i>
+                        <span class="contact-name">Bombeiros</span>
+                        <div class="contact-number-container">
+                            <span class="contact-number emergency-number">193</span>
+                            <button class="copy-btn" data-number="193">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item emergency-item">
+                        <i class="fas fa-shield-alt contact-icon emergency-icon"></i>
+                        <span class="contact-name">Polícia Militar</span>
+                        <div class="contact-number-container">
+                            <span class="contact-number emergency-number">190</span>
+                            <button class="copy-btn" data-number="190">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item emergency-item">
+                        <i class="fas fa-user-shield contact-icon emergency-icon"></i>
+                        <span class="contact-name">Polícia Civil</span>
+                        <div class="contact-number-container">
+                            <span class="contact-number emergency-number">197</span>
+                            <button class="copy-btn" data-number="197">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Outros Números de Emergência -->
+            <div class="card contact-card">
+                <div class="card-header" role="button">
+                    <i class="fas fa-phone-alt me-2"></i>
+                    Outros Números de Emergência
+                </div>
+                <div class="card-body" id="otherEmergencyContainer">
+                    <div class="contact-item">
+                        <i class="fas fa-bolt contact-icon"></i>
+                        <span class="contact-name">CEEE (Emergência)</span>
+                        <div class="contact-number-container">
+                            <span class="contact-number">0800 721 2333</span>
+                            <button class="copy-btn" data-number="0800 721 2333">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-tint contact-icon"></i>
+                        <span class="contact-name">CORSAN (Emergência)</span>
+                        <div class="contact-number-container">
+                            <span class="contact-number">0800 646 6444</span>
+                            <button class="copy-btn" data-number="0800 646 6444">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-child contact-icon"></i>
+                        <span class="contact-name">Conselho Tutelar</span>
+                        <div class="contact-number-container">
+                            <span class="contact-number">100</span>
+                            <button class="copy-btn" data-number="100">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-venus contact-icon"></i>
+                        <span class="contact-name">Central de Atendimento à Mulher</span>
+                        <div class="contact-number-container">
+                            <span class="contact-number">180</span>
+                            <button class="copy-btn" data-number="180">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Órgãos Públicos -->
+            <div class="card contact-card">
+                <div class="card-header" role="button">
+                    <i class="fas fa-building me-2"></i>
+                    Órgãos Públicos
+                </div>
+                <div class="card-body">
+                    <div class="public-search">
+                        <input type="text" 
+                               class="search-input" 
+                               id="publicSearchInput" 
+                               placeholder="Buscar em órgãos públicos..."
+                               autocomplete="off">
+                        <button class="clear-search" id="clearPublicSearch">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div id="publicContainer">
+                        <div class="contact-item">
+                            <i class="fas fa-hospital contact-icon"></i>
+                            <span class="contact-name">Hospital São Francisco</span>
+                            <div class="contact-number-container">
+                                <span class="contact-number">(51) 3543-8500</span>
+                                <button class="copy-btn" data-number="(51) 3543-8500">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-city contact-icon"></i>
+                            <span class="contact-name">Prefeitura Municipal</span>
+                            <div class="contact-number-container">
+                                <span class="contact-number">(51) 3543-8600</span>
+                                <button class="copy-btn" data-number="(51) 3543-8600">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-balance-scale contact-icon"></i>
+                            <span class="contact-name">Fórum</span>
+                            <div class="contact-number-container">
+                                <span class="contact-number">(51) 3543-1924</span>
+                                <button class="copy-btn" data-number="(51) 3543-1924">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-graduation-cap contact-icon"></i>
+                            <span class="contact-name">Secretaria de Educação</span>
+                            <div class="contact-number-container">
+                                <span class="contact-number">(51) 3543-8700</span>
+                                <button class="copy-btn" data-number="(51) 3543-8700">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-heartbeat contact-icon"></i>
+                            <span class="contact-name">Secretaria de Saúde</span>
+                            <div class="contact-number-container">
+                                <span class="contact-number">(51) 3543-8750</span>
+                                <button class="copy-btn" data-number="(51) 3543-8750">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const publicSearchInput = document.getElementById('publicSearchInput');
+            const clearPublicSearch = document.getElementById('clearPublicSearch');
+            const publicContainer = document.getElementById('publicContainer');
+            
+            // Armazena os dados originais dos contatos públicos
+            const originalItems = Array.from(publicContainer.getElementsByClassName('contact-item')).map(item => ({
+                element: item,
+                name: item.querySelector('.contact-name').textContent,
+                number: item.querySelector('.contact-number').textContent
+            }));
+
+            // Função para copiar número
+            function copyNumber(number) {
+                navigator.clipboard.writeText(number).then(() => {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
+                    
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Número copiado!'
+                    });
+                }).catch(err => {
+                    console.error('Erro ao copiar número:', err);
+                });
+            }
+
+            // Adiciona event listeners para os botões de cópia
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const number = this.dataset.number;
+                    copyNumber(number);
+                    
+                    // Adiciona efeito visual ao botão
+                    this.classList.add('copied');
+                    setTimeout(() => {
+                        this.classList.remove('copied');
+                    }, 1000);
+                });
+            });
+
+            function filterPublicContacts(searchTerm) {
+                const term = searchTerm.toLowerCase().trim();
+                let hasResults = false;
+
+                originalItems.forEach(({element, name, number}) => {
+                    const matchesSearch = name.toLowerCase().includes(term) || 
+                                        number.toLowerCase().includes(term);
+                    
+                    if (matchesSearch) {
+                        hasResults = true;
+                        element.style.display = '';
+                        
+                        if (term) {
+                            const nameElement = element.querySelector('.contact-name');
+                            nameElement.innerHTML = name.replace(new RegExp(term, 'gi'), 
+                                match => `<span class="highlight">${match}</span>`);
+                        }
+                    } else {
+                        element.style.display = 'none';
+                    }
+                });
+
+                // Gerencia mensagem de "nenhum resultado"
+                const existingNoResults = publicContainer.querySelector('.no-results');
+                
+                if (!hasResults) {
+                    if (!existingNoResults) {
+                        const noResults = document.createElement('div');
+                        noResults.className = 'no-results';
+                        noResults.innerHTML = `
+                            <i class="fas fa-search me-2"></i>
+                            Nenhum contato encontrado para "${searchTerm}"
+                        `;
+                        publicContainer.appendChild(noResults);
+                    }
+                } else if (existingNoResults) {
+                    existingNoResults.remove();
+                }
+
+                // Mostra/esconde o botão de limpar busca
+                clearPublicSearch.style.display = term ? 'block' : 'none';
+            }
+
+            function restorePublicContacts() {
+                originalItems.forEach(({element, name}) => {
+                    element.style.display = '';
+                    element.querySelector('.contact-name').textContent = name;
+                });
+                
+                const existingNoResults = publicContainer.querySelector('.no-results');
+                if (existingNoResults) {
+                    existingNoResults.remove();
+                }
+            }
+
+            // Event listener para busca em órgãos públicos
+            let publicDebounceTimer;
+            publicSearchInput.addEventListener('input', function(e) {
+                clearTimeout(publicDebounceTimer);
+                publicDebounceTimer = setTimeout(() => {
+                    const searchTerm = e.target.value;
+                    if (searchTerm) {
+                        filterPublicContacts(searchTerm);
+                    } else {
+                        restorePublicContacts();
+                    }
+                }, 300);
+            });
+
+            // Event listener para limpar busca de órgãos públicos
+            clearPublicSearch.addEventListener('click', function() {
+                publicSearchInput.value = '';
+                restorePublicContacts();
+                this.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html> 

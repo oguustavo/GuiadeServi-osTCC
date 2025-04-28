@@ -173,4 +173,13 @@ module.exports = class EventosControllers {
             res.status(500).send('Erro ao carregar página de promoções')
         }
     }
+
+    static async showContatos(req, res) {
+        try {
+            res.render('eventos/contatos')
+        } catch (error) {
+            console.log('Erro ao carregar página de contatos:', error)
+            res.status(500).send('Erro ao carregar página de contatos')
+        }
+    }
 }
