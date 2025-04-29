@@ -1,4 +1,7 @@
-const Evento = require('../models/Evento')
+const Farmacia = require('../models/Farmacia')
+const Mercado = require('../models/Mercado')
+const Emprego = require('../models/Emprego')
+const EventoCidade = require('../models/EventoCidade')
 
 module.exports = class AdminControllers {
     static async dashboard(req, res) {
@@ -9,25 +12,18 @@ module.exports = class AdminControllers {
         }
 
         try {
-            const [farmacias, estabelecimentos, vagas] = await Promise.all([
-                Evento.findAll({
-                    where: { tipo: 'farmacia' },
-                    raw: true
-                }),
-                Evento.findAll({
-                    where: { tipo: 'estabelecimento' },
-                    raw: true
-                }),
-                Evento.findAll({
-                    where: { tipo: 'vaga' },
-                    raw: true
-                })
+            const [farmacias, estabelecimentos, vagas, eventos] = await Promise.all([
+                Farmacia.findAll({ raw: true }),
+                Mercado.findAll({ raw: true }),
+                Emprego.findAll({ raw: true }),
+                EventoCidade.findAll({ raw: true })
             ]);
 
             res.render('admin/dashboard', { 
                 farmacias,
                 estabelecimentos,
-                vagas
+                vagas,
+                eventos
             });
         } catch (error) {
             console.log(error)

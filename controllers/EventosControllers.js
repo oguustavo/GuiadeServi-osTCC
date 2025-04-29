@@ -1,4 +1,7 @@
-const Evento = require('../models/Evento')
+const Farmacia = require('../models/Farmacia')
+const Mercado = require('../models/Mercado')
+const Emprego = require('../models/Emprego')
+const EventoCidade = require('../models/EventoCidade')
 const User = require('../models/User')
 const path = require('path')
 const fs = require('fs')
@@ -12,13 +15,10 @@ module.exports = class EventosControllers {
 
     static async showFarmacias(req, res) {
         try {
-            const farmacias = await Evento.findAll({
-                where: {
-                    tipo: 'farmacia'
-                },
+            const farmacias = await Farmacia.findAll({
                 raw: true
             })
-            console.log('Farmácias encontradas:', farmacias) // Para debug
+            console.log('Farmácias encontradas:', farmacias)
             res.render('eventos/farmacias', { farmacias })
         } catch (error) {
             console.log(error)
@@ -29,10 +29,7 @@ module.exports = class EventosControllers {
     static async showMercados(req, res) {
         try {
             console.log('Buscando estabelecimentos...')
-            const estabelecimentos = await Evento.findAll({
-                where: {
-                    tipo: 'estabelecimento'
-                },
+            const estabelecimentos = await Mercado.findAll({
                 raw: true
             })
             console.log('Estabelecimentos encontrados:', estabelecimentos)
@@ -45,10 +42,7 @@ module.exports = class EventosControllers {
 
     static async showEmpregos(req, res) {
         try {
-            const vagas = await Evento.findAll({
-                where: {
-                    tipo: 'vaga'
-                },
+            const vagas = await Emprego.findAll({
                 raw: true
             })
             console.log('Vagas encontradas:', vagas)
@@ -61,10 +55,7 @@ module.exports = class EventosControllers {
 
     static async showEventosCidade(req, res) {
         try {
-            const eventos = await Evento.findAll({
-                where: {
-                    tipo: 'evento'
-                },
+            const eventos = await EventoCidade.findAll({
                 raw: true
             })
             console.log('Eventos encontrados:', eventos)
@@ -80,13 +71,11 @@ module.exports = class EventosControllers {
             const { nome, endereco, telefone, tipo, subtipo, dataInicio, dataFim, cargo, empresa, tipoVaga, requisitos, contato, tipoEvento, data, horario, local, descricao, vendaPresencial, linkInscricao } = req.body
             let imagem = null
 
-           
             if (req.files && req.files.imagem) {
                 const file = req.files.imagem
                 const fileName = Date.now() + path.extname(file.name)
                 const uploadPath = path.join(__dirname, '..', 'public', 'uploads', fileName)
 
-                
                 const uploadsDir = path.join(__dirname, '..', 'public', 'uploads')
                 if (!fs.existsSync(uploadsDir)) {
                     fs.mkdirSync(uploadsDir, { recursive: true })
@@ -96,24 +85,21 @@ module.exports = class EventosControllers {
                 imagem = fileName
             }
 
-            // Create event based on type
             if (tipo === 'farmacia') {
-                await Evento.create({
+                await Farmacia.create({
                     nome,
                     endereco,
                     telefone,
-                    tipo,
                     dataInicio,
                     dataFim
                 })
                 req.flash('success', 'Farmácia cadastrada com sucesso!')
             } else if (tipo === 'estabelecimento') {
-                console.log('Dados do estabelecimento:', { nome, endereco, telefone, tipo, subtipo, imagem })
-                const novoEstabelecimento = await Evento.create({
+                console.log('Dados do estabelecimento:', { nome, endereco, telefone, subtipo, imagem })
+                const novoEstabelecimento = await Mercado.create({
                     nome,
                     endereco,
                     telefone,
-                    tipo,
                     subtipo,
                     imagem
                 })
@@ -121,8 +107,7 @@ module.exports = class EventosControllers {
                 req.flash('success', 'Estabelecimento cadastrado com sucesso!')
             } else if (tipo === 'vaga') {
                 console.log('Dados da vaga:', { cargo, empresa, tipoVaga, requisitos, contato, endereco })
-                const novaVaga = await Evento.create({
-                    tipo,
+                const novaVaga = await Emprego.create({
                     cargo,
                     empresa,
                     tipoVaga,
@@ -134,8 +119,7 @@ module.exports = class EventosControllers {
                 req.flash('success', 'Vaga cadastrada com sucesso!')
             } else if (tipo === 'evento') {
                 console.log('Dados do evento:', { nome, tipoEvento, data, horario, local, descricao, vendaPresencial, linkInscricao, imagem })
-                const novoEvento = await Evento.create({
-                    tipo,
+                const novoEvento = await EventoCidade.create({
                     nome,
                     tipoEvento,
                     data,
@@ -160,17 +144,36 @@ module.exports = class EventosControllers {
 
     static async deleteEvento(req, res) {
         try {
-            const { id } = req.body
-            const evento = await Evento.findByPk(id)
+            const { id, tipo } = req.body
+            let model
 
-            if (evento.imagem) {
-                const imagePath = path.join(__dirname, '..', 'public', 'uploads', evento.imagem)
+            switch(tipo) {
+                case 'farmacia':
+                    model = Farmacia
+                    break
+                case 'estabelecimento':
+                    model = Mercado
+                    break
+                case 'vaga':
+                    model = Emprego
+                    break
+                case 'evento':
+                    model = EventoCidade
+                    break
+                default:
+                    throw new Error('Tipo inválido')
+            }
+
+            const item = await model.findByPk(id)
+
+            if (item.imagem) {
+                const imagePath = path.join(__dirname, '..', 'public', 'uploads', item.imagem)
                 if (fs.existsSync(imagePath)) {
                     fs.unlinkSync(imagePath)
                 }
             }
 
-            await Evento.destroy({ where: { id } })
+            await model.destroy({ where: { id } })
             req.flash('success', 'Item removido com sucesso!')
             res.redirect('/admin/dashboard')
         } catch (error) {

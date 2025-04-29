@@ -9,8 +9,10 @@ const app = express()
 
 const conn = require('./db/conn')
 
-
-const Evento = require('./models/Evento')
+const Farmacia = require('./models/Farmacia')
+const Mercado = require('./models/Mercado')
+const Emprego = require('./models/Emprego')
+const EventoCidade = require('./models/EventoCidade')
 const User = require('./models/User')
 const EventosControllers = require('./controllers/EventosControllers')
 
@@ -23,6 +25,21 @@ app.engine('handlebars', exphbs.engine({
     helpers: {
         formatDate: (date) => {
             return new Date(date).toLocaleDateString('pt-BR');
+        },
+        formatNumber: (number) => {
+            if (!number) return '';
+            return new Intl.NumberFormat('pt-BR').format(number);
+        },
+        formatPhone: (phone) => {
+            if (!phone) return '';
+            // Remove todos os caracteres não numéricos
+            const cleaned = phone.replace(/\D/g, '');
+            // Formata o número de telefone
+            const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+            if (match) {
+                return `(${match[1]}) ${match[2]}-${match[3]}`;
+            }
+            return phone;
         },
         capitalizeFirst: (str) => {
             if (typeof str !== 'string') return '';
@@ -46,7 +63,6 @@ app.use(
     })
 )
 app.use(express.json())
-
 
 app.use(fileUpload({
     createParentPath: true
@@ -73,7 +89,6 @@ app.use(
 
 app.use(flash())
 
-
 app.use((req, res, next) => {
     if (req.session.userid) {
         res.locals.session = req.session
@@ -88,7 +103,6 @@ app.use('/', premiumRoutes)
 app.get('/', EventosControllers.showEventos)
 
 app.use(express.static('public'))
-
 
 conn
     .sync() 

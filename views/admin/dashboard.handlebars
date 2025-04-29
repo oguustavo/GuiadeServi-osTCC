@@ -385,11 +385,12 @@
                                     <tr>
                                         <td>{{this.nome}}</td>
                                         <td>{{this.endereco}}</td>
-                                        <td>{{this.telefone}}</td>
+                                        <td>{{formatPhone this.telefone}}</td>
                                         <td>{{formatDate this.dataInicio}} até {{formatDate this.dataFim}}</td>
                                         <td>
                                             <form action="/admin/eventos/delete" method="POST" style="display: inline;">
                                                 <input type="hidden" name="id" value="{{this.id}}">
+                                                <input type="hidden" name="tipo" value="farmacia">
                                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Excluir</button>
                                             </form>
                                         </td>
@@ -427,7 +428,7 @@
                                         <td>{{this.subtipo}}</td>
                                         <td>{{this.nome}}</td>
                                         <td>{{this.endereco}}</td>
-                                        <td>{{this.telefone}}</td>
+                                        <td>{{formatPhone this.telefone}}</td>
                                         <td>
                                             {{#if this.imagem}}
                                                 <img src="/uploads/{{this.imagem}}" alt="{{this.nome}}" style="height: 50px; border-radius: 4px;">
@@ -438,6 +439,7 @@
                                         <td>
                                             <form action="/admin/eventos/delete" method="POST" style="display: inline;">
                                                 <input type="hidden" name="id" value="{{this.id}}">
+                                                <input type="hidden" name="tipo" value="estabelecimento">
                                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Excluir</button>
                                             </form>
                                         </td>
@@ -474,10 +476,11 @@
                                         <td>{{this.cargo}}</td>
                                         <td>{{this.empresa}}</td>
                                         <td>{{this.tipoVaga}}</td>
-                                        <td>{{this.contato}}</td>
+                                        <td>{{formatPhone this.contato}}</td>
                                         <td>
                                             <form action="/admin/eventos/delete" method="POST" style="display: inline;">
                                                 <input type="hidden" name="id" value="{{this.id}}">
+                                                <input type="hidden" name="tipo" value="vaga">
                                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Excluir</button>
                                             </form>
                                         </td>
@@ -526,6 +529,7 @@
                                         <td>
                                             <form action="/admin/eventos/delete" method="POST" style="display: inline;">
                                                 <input type="hidden" name="id" value="{{this.id}}">
+                                                <input type="hidden" name="tipo" value="evento">
                                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Excluir</button>
                                             </form>
                                         </td>
