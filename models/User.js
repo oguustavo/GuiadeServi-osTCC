@@ -23,5 +23,9 @@ const User = db.define('User',{
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
+    isPremium: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    }
 })
 module.exports = User

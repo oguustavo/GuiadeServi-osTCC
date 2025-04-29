@@ -1,0 +1,92 @@
+<div class="premium-container">
+    <h1>Seja um Usuário Premium</h1>
+    
+    {{#if messages.message}}
+        <div class="message">
+            {{messages.message}}
+        </div>
+    {{/if}}
+
+    {{#if notLogged}}
+        <div class="register-message">
+            <p>{{message}}</p>
+            <a href="/register" class="register-button">Fazer Registro</a>
+        </div>
+    {{else}}
+        <div class="premium-benefits">
+            <h2>Benefícios Premium</h2>
+            <ul>
+                <li><i class="fas fa-check"></i> Acesso antecipado a novos recursos</li>
+                <li><i class="fas fa-check"></i> Suporte prioritário</li>
+                <li><i class="fas fa-check"></i> Conteúdo exclusivo</li>
+                <li><i class="fas fa-check"></i> Sem anúncios</li>
+            </ul>
+        </div>
+    {{/if}}
+</div>
+
+<style>
+.premium-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.register-message {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.register-message p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.register-button {
+    background-color: #2196F3;
+    color: white;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    transition: background-color 0.3s;
+}
+
+.register-button:hover {
+    background-color: #1976D2;
+}
+
+.premium-benefits {
+    margin: 2rem 0;
+}
+
+.premium-benefits ul {
+    list-style: none;
+    padding: 0;
+}
+
+.premium-benefits li {
+    margin: 1rem 0;
+    font-size: 1.1rem;
+}
+
+.premium-benefits i {
+    color: #4CAF50;
+    margin-right: 10px;
+}
+
+.message {
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+}
+</style> 
