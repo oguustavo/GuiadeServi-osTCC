@@ -118,7 +118,7 @@ module.exports = class EventosControllers {
                 console.log('Vaga criada:', novaVaga)
                 req.flash('success', 'Vaga cadastrada com sucesso!')
             } else if (tipo === 'evento') {
-                console.log('Dados do evento:', { nome, tipoEvento, data, horario, local, descricao, vendaPresencial, linkInscricao, imagem })
+                console.log('Dados do evento:', { nome, tipoEvento, data, horario, local, descricao, vendaPresencial, linkInscricao, imagem, contato })
                 const novoEvento = await EventoCidade.create({
                     nome,
                     tipoEvento,
@@ -128,7 +128,8 @@ module.exports = class EventosControllers {
                     descricao,
                     vendaPresencial: vendaPresencial === 'on',
                     linkInscricao,
-                    imagem
+                    imagem,
+                    contato
                 })
                 console.log('Evento criado:', novoEvento)
                 req.flash('success', 'Evento cadastrado com sucesso!')

@@ -34,10 +34,10 @@ app.engine('handlebars', exphbs.engine({
             if (!phone) return '';
             // Remove todos os caracteres não numéricos
             const cleaned = phone.replace(/\D/g, '');
-            // Formata o número de telefone
-            const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+            // Formata o número de telefone no padrão (51) 9 9995-5494
+            const match = cleaned.match(/^(\d{2})(\d{1})(\d{4})(\d{4})$/);
             if (match) {
-                return `(${match[1]}) ${match[2]}-${match[3]}`;
+                return `(${match[1]}) ${match[2]} ${match[3]}-${match[4]}`;
             }
             return phone;
         },

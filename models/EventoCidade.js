@@ -37,6 +37,10 @@ const EventoCidade = db.define('EventoCidade', {
     imagem: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    contato: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 })
 
