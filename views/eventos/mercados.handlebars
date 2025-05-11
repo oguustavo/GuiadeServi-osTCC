@@ -62,7 +62,7 @@
             border: none;
             border-radius: 16px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.3s ease;
             margin-bottom: 20px;
             height: 100%;
             background: white;
@@ -70,7 +70,6 @@
         }
 
         .card:hover {
-            transform: translateY(-8px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
@@ -84,11 +83,10 @@
             height: 100%;
             width: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
         }
 
         .card:hover .card-img-top {
-            transform: scale(1.1);
+            transform: none;
         }
 
         .estabelecimento-tipo {
@@ -211,7 +209,9 @@
                                     <h5 class="card-title">{{this.nome}}</h5>
                                     <div class="info-item">
                                         <i class="fas fa-map-marker-alt"></i>
-                                        <span>{{this.endereco}}</span>
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.endereco}}" target="_blank" class="text-decoration-none">
+                                            <span>{{this.endereco}}</span>
+                                        </a>
                                     </div>
                                     <div class="info-item">
                                         <i class="fas fa-phone"></i>
@@ -255,7 +255,9 @@
                                     <h5 class="card-title">{{this.nome}}</h5>
                                     <div class="info-item">
                                         <i class="fas fa-map-marker-alt"></i>
-                                        <span>{{this.endereco}}</span>
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.endereco}}" target="_blank" class="text-decoration-none">
+                                            <span>{{this.endereco}}</span>
+                                        </a>
                                     </div>
                                     <div class="info-item">
                                         <i class="fas fa-phone"></i>
@@ -299,7 +301,9 @@
                                     <h5 class="card-title">{{this.nome}}</h5>
                                     <div class="info-item">
                                         <i class="fas fa-map-marker-alt"></i>
-                                        <span>{{this.endereco}}</span>
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.endereco}}" target="_blank" class="text-decoration-none">
+                                            <span>{{this.endereco}}</span>
+                                        </a>
                                     </div>
                                     <div class="info-item">
                                         <i class="fas fa-phone"></i>
