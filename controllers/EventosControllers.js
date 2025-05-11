@@ -68,22 +68,7 @@ module.exports = class EventosControllers {
 
     static async createEvento(req, res) {
         try {
-            const { nome, endereco, telefone, tipo, subtipo, dataInicio, dataFim, cargo, empresa, tipoVaga, requisitos, contato, tipoEvento, data, horario, local, descricao, vendaPresencial, linkInscricao } = req.body
-            let imagem = null
-
-            if (req.files && req.files.imagem) {
-                const file = req.files.imagem
-                const fileName = Date.now() + path.extname(file.name)
-                const uploadPath = path.join(__dirname, '..', 'public', 'uploads', fileName)
-
-                const uploadsDir = path.join(__dirname, '..', 'public', 'uploads')
-                if (!fs.existsSync(uploadsDir)) {
-                    fs.mkdirSync(uploadsDir, { recursive: true })
-                }
-
-                await file.mv(uploadPath)
-                imagem = fileName
-            }
+            const { tipo, nome, endereco, telefone, dataInicio, dataFim, subtipo, imagem, cargo, empresa, tipoVaga, requisitos, contato, tipoEvento, data, horario, local, descricao, vendaPresencial, linkInscricao } = req.body
 
             if (tipo === 'farmacia') {
                 await Farmacia.create({
@@ -93,21 +78,24 @@ module.exports = class EventosControllers {
                     dataInicio,
                     dataFim
                 })
-                req.flash('success', 'Farmácia cadastrada com sucesso!')
+                return res.json({
+                    success: true,
+                    message: '✨ Farmácia cadastrada com sucesso!'
+                });
             } else if (tipo === 'estabelecimento') {
-                console.log('Dados do estabelecimento:', { nome, endereco, telefone, subtipo, imagem })
-                const novoEstabelecimento = await Mercado.create({
+                await Mercado.create({
                     nome,
                     endereco,
                     telefone,
                     subtipo,
                     imagem
                 })
-                console.log('Estabelecimento criado:', novoEstabelecimento)
-                req.flash('success', 'Estabelecimento cadastrado com sucesso!')
+                return res.json({
+                    success: true,
+                    message: '✨ Estabelecimento cadastrado com sucesso!'
+                });
             } else if (tipo === 'vaga') {
-                console.log('Dados da vaga:', { cargo, empresa, tipoVaga, requisitos, contato, endereco })
-                const novaVaga = await Emprego.create({
+                await Emprego.create({
                     cargo,
                     empresa,
                     tipoVaga,
@@ -115,11 +103,12 @@ module.exports = class EventosControllers {
                     contato,
                     endereco
                 })
-                console.log('Vaga criada:', novaVaga)
-                req.flash('success', 'Vaga cadastrada com sucesso!')
+                return res.json({
+                    success: true,
+                    message: '✨ Nova vaga cadastrada com sucesso!'
+                });
             } else if (tipo === 'evento') {
-                console.log('Dados do evento:', { nome, tipoEvento, data, horario, local, descricao, vendaPresencial, linkInscricao, imagem, contato })
-                const novoEvento = await EventoCidade.create({
+                await EventoCidade.create({
                     nome,
                     tipoEvento,
                     data,
@@ -131,15 +120,17 @@ module.exports = class EventosControllers {
                     imagem,
                     contato
                 })
-                console.log('Evento criado:', novoEvento)
-                req.flash('success', 'Evento cadastrado com sucesso!')
+                return res.json({
+                    success: true,
+                    message: '✨ Evento cadastrado com sucesso!'
+                });
             }
-
-            res.redirect('/admin/dashboard')
         } catch (error) {
             console.log('Erro ao criar evento:', error)
-            req.flash('error', 'Erro ao cadastrar item')
-            res.redirect('/admin/dashboard')
+            return res.json({
+                success: false,
+                message: '❌ Erro ao cadastrar. Por favor, tente novamente.'
+            });
         }
     }
 
@@ -147,25 +138,36 @@ module.exports = class EventosControllers {
         try {
             const { id, tipo } = req.body
             let model
+            let itemName = ''
 
             switch(tipo) {
                 case 'farmacia':
                     model = Farmacia
+                    itemName = 'Farmácia'
                     break
                 case 'estabelecimento':
                     model = Mercado
+                    itemName = 'Estabelecimento'
                     break
                 case 'vaga':
                     model = Emprego
+                    itemName = 'Vaga'
                     break
                 case 'evento':
                     model = EventoCidade
+                    itemName = 'Evento'
                     break
                 default:
                     throw new Error('Tipo inválido')
             }
 
             const item = await model.findByPk(id)
+            if (!item) {
+                return res.json({
+                    success: false,
+                    message: '❌ Item não encontrado'
+                });
+            }
 
             if (item.imagem) {
                 const imagePath = path.join(__dirname, '..', 'public', 'uploads', item.imagem)
@@ -175,11 +177,16 @@ module.exports = class EventosControllers {
             }
 
             await model.destroy({ where: { id } })
-            req.flash('success', 'Item removido com sucesso!')
-            res.redirect('/admin/dashboard')
+            return res.json({
+                success: true,
+                message: `🗑️ ${itemName} excluído com sucesso!`
+            });
         } catch (error) {
-            console.log(error)
-            res.status(500).send('Erro ao excluir item')
+            console.log('Erro ao excluir:', error)
+            return res.json({
+                success: false,
+                message: '❌ Erro ao excluir. Por favor, tente novamente.'
+            });
         }
     }
 

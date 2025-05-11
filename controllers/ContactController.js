@@ -33,11 +33,13 @@ class ContactController {
 
         try {
             await transporter.sendMail(mailOptions);
-            req.flash('success', 'Mensagem enviada com sucesso! Em breve entraremos em contato.');
+            req.flash('message', 'Mensagem enviada com sucesso! Em breve entraremos em contato.');
+            req.flash('success', true);
             res.redirect('/contato');
         } catch (error) {
             console.error('Erro ao enviar email:', error);
-            req.flash('error', 'Erro ao enviar mensagem. Por favor, tente novamente.');
+            req.flash('message', 'Erro ao enviar mensagem. Por favor, tente novamente.');
+            req.flash('error', true);
             res.redirect('/contato');
         }
     }

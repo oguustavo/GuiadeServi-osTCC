@@ -6,14 +6,45 @@
     <title>Guia de Serviços</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="/css/flash.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .flash-message {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background-color: #4CAF50;
+            color: white;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            max-width: 300px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .flash-message.success { background-color: #4CAF50; }
+        .flash-message.error { background-color: #f44336; }
+        .flash-message.info { background-color: #2196F3; }
+
+        .flash-message i {
+            font-size: 16px;
+        }
+
+        .flash-message.fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+    </style>
 </head>
 <body>
     <nav id="navbar">
         <div class="nav-brand">
             <a href="/" class="logo">
                 <img src="/img/logo.png" alt="Guia de Serviços Logo" class="nav-logo">
-               
             </a>
             <button class="hamburger" id="hamburger">
                 <span></span>
@@ -21,8 +52,6 @@
                 <span></span>
             </button>
         </div>
-
-        
 
         <ul class="nav-menu" id="nav-menu">
             <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
@@ -52,7 +81,8 @@
 
     <div class="container">
         {{#if messages.message}}
-            <div class="message">
+            <div class="flash-message {{#if messages.success}}success{{else}}{{#if messages.error}}error{{else}}info{{/if}}{{/if}}">
+                <i class="fas {{#if messages.success}}fa-check-circle{{else}}{{#if messages.error}}fa-exclamation-circle{{else}}fa-info-circle{{/if}}{{/if}}"></i>
                 {{messages.message}}
             </div>
         {{/if}}
@@ -65,53 +95,42 @@
 
     <script>
         const hamburger = document.getElementById('hamburger');
-        const navCenter = document.querySelector('.nav-center');
         const navMenu = document.getElementById('nav-menu');
 
-        
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            
+            flashMessages.forEach(message => {
+                setTimeout(() => {
+                    message.classList.add('fade-out');
+                }, 4500);
+
+                setTimeout(() => {
+                    message.remove();
+                }, 5000);
+            });
+        });
+
         document.querySelectorAll('.dropdown-toggle').forEach(dropdown => {
             dropdown.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
-                
-                document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    if (menu !== this.nextElementSibling) {
-                        menu.classList.remove('show');
-                    }
-                });
-                
-                
                 const dropdownMenu = this.nextElementSibling;
                 dropdownMenu.classList.toggle('show');
             });
         });
 
-        
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.nav-item.dropdown')) {
                 document.querySelectorAll('.dropdown-menu').forEach(menu => {
                     menu.classList.remove('show');
                 });
             }
-        });
-
-        
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            navCenter.classList.toggle('active');
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
-        });
-
-       
-        document.querySelectorAll('.nav-menu a:not(.dropdown-toggle)').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-                navCenter.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
         });
 
         function updateClock() {
