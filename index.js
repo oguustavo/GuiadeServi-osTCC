@@ -20,6 +20,7 @@ const eventosRoutes = require('./routes/eventosRoutes')
 const authRoutes = require('./routes/authRoutes')
 const adminRoutes = require('./routes/adminRoutes')
 const premiumRoutes = require('./routes/premiumRoutes')
+const contactRoutes = require('./routes/contactRoutes')
 
 app.engine('handlebars', exphbs.engine({
     helpers: {
@@ -103,6 +104,7 @@ app.use('/eventos', eventosRoutes)
 app.use('/', authRoutes)
 app.use('/admin', adminRoutes)
 app.use('/', premiumRoutes)
+app.use('/contato', contactRoutes)
 app.get('/', EventosControllers.showEventos)
 
 app.use(express.static('public'))

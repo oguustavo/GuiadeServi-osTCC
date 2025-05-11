@@ -1,0 +1,87 @@
+<div class="contact-container">
+    <div class="contact-header">
+        <h2>Entre em Contato</h2>
+        <p>Preencha o formulário abaixo para nos enviar uma mensagem</p>
+    </div>
+
+    {{#if messages.success}}
+        <div class="alert success">
+            <i class="fas fa-check-circle"></i>
+            {{messages.success}}
+        </div>
+    {{/if}}
+
+    {{#if messages.error}}
+        <div class="alert error">
+            <i class="fas fa-exclamation-circle"></i>
+            {{messages.error}}
+        </div>
+    {{/if}}
+
+    <div class="contact-form">
+        <form id="contactForm" action="/contato/send" method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">
+                        <i class="fas fa-user"></i>
+                        Nome
+                    </label>
+                    <input type="text" id="name" name="name" required 
+                           placeholder="Seu nome completo">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </label>
+                    <input type="email" id="email" name="email" required 
+                           placeholder="seu.email@exemplo.com">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">
+                        <i class="fas fa-phone"></i>
+                        Telefone
+                    </label>
+                    <input type="tel" id="phone" name="phone" 
+                           placeholder="(51) 9 9999-9999">
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">
+                        <i class="fas fa-tag"></i>
+                        Assunto
+                    </label>
+                    <input type="text" id="subject" name="subject" required 
+                           placeholder="Assunto da mensagem">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="message">
+                    <i class="fas fa-comment"></i>
+                    Mensagem
+                </label>
+                <textarea id="message" name="message" required 
+                          placeholder="Digite sua mensagem aqui..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i>
+                Enviar Mensagem
+            </button>
+        </form>
+        
+        <div class="contact-divider">
+            <span>ou entre em contato pelo</span>
+        </div>
+        
+        <a href="https://wa.me/5551SEUNUMERO" target="_blank" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp
+        </a>
+    </div>
+</div> 
