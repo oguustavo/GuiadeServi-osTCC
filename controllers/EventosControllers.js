@@ -179,7 +179,7 @@ module.exports = class EventosControllers {
             await model.destroy({ where: { id } })
             return res.json({
                 success: true,
-                message: `🗑️ ${itemName} excluído com sucesso!`
+                message: ` ${itemName} excluído com sucesso!`
             });
         } catch (error) {
             console.log('Erro ao excluir:', error)
