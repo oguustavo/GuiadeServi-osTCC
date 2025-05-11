@@ -384,7 +384,7 @@
                                 {{#each farmacias}}
                                     <tr>
                                         <td>{{this.nome}}</td>
-                                        <td>{{this.endereco}}</td>
+                                        <td><a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.endereco}}" target="_blank" class="text-decoration-none">{{this.endereco}}</a></td>
                                         <td>{{formatPhone this.telefone}}</td>
                                         <td>{{formatDate this.dataInicio}} até {{formatDate this.dataFim}}</td>
                                         <td>
@@ -427,7 +427,7 @@
                                     <tr>
                                         <td>{{this.subtipo}}</td>
                                         <td>{{this.nome}}</td>
-                                        <td>{{this.endereco}}</td>
+                                        <td><a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.endereco}}" target="_blank" class="text-decoration-none">{{this.endereco}}</a></td>
                                         <td>{{formatPhone this.telefone}}</td>
                                         <td>
                                             {{#if this.imagem}}
@@ -467,6 +467,7 @@
                                     <th>Empresa</th>
                                     <th>Tipo</th>
                                     <th>Contato</th>
+                                    <th>Endereço</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -477,6 +478,7 @@
                                         <td>{{this.empresa}}</td>
                                         <td>{{this.tipoVaga}}</td>
                                         <td>{{formatPhone this.contato}}</td>
+                                        <td><a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.endereco}}" target="_blank" class="text-decoration-none">{{this.endereco}}</a></td>
                                         <td>
                                             <form action="/admin/eventos/delete" method="POST" style="display: inline;">
                                                 <input type="hidden" name="id" value="{{this.id}}">
@@ -518,7 +520,7 @@
                                         <td>{{this.nome}}</td>
                                         <td>{{this.tipoEvento}}</td>
                                         <td>{{formatDate this.data}} às {{this.horario}}</td>
-                                        <td>{{this.local}}</td>
+                                        <td><a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.local}}" target="_blank" class="text-decoration-none">{{this.local}}</a></td>
                                         <td>
                                             {{#if this.imagem}}
                                                 <img src="/uploads/{{this.imagem}}" alt="{{this.nome}}" style="height: 50px; border-radius: 4px;">

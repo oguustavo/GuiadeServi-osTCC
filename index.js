@@ -52,6 +52,9 @@ app.engine('handlebars', exphbs.engine({
             if (!this._sections) this._sections = {};
             this._sections[name] = options.fn(this);
             return null;
+        },
+        encodeURIComponent: function(str) {
+            return encodeURIComponent(str);
         }
     }
 }))
