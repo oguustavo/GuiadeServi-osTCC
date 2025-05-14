@@ -181,12 +181,11 @@ body {
     }
 }
 
-/* Adicionar antes da media query mobile */
+
 .hamburger {
-    display: none;  /* Esconde por padrão */
+    display: none;  
 }
 
-/* Mobile styles */
 @media (max-width: 768px) {
     #navbar {
         padding: 1rem;
@@ -570,3 +569,4 @@ footer {
         font-size: 1rem;
     }
 }
+

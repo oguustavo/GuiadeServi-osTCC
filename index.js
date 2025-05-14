@@ -33,9 +33,9 @@ app.engine('handlebars', exphbs.engine({
         },
         formatPhone: (phone) => {
             if (!phone) return '';
-            // Remove todos os caracteres não numéricos
+            
             const cleaned = phone.replace(/\D/g, '');
-            // Formata o número de telefone no padrão (51) 9 9995-5494
+           
             const match = cleaned.match(/^(\d{2})(\d{1})(\d{4})(\d{4})$/);
             if (match) {
                 return `(${match[1]}) ${match[2]} ${match[3]}-${match[4]}`;
@@ -85,7 +85,7 @@ app.use(
         cookie: {
             secure: false,
             maxAge: 360000,
-            expires: new Date(Date.now() + 360000),
+            expires: new Date(Date.now() + 9860000),
             httpOnly: true
         }
     }),
