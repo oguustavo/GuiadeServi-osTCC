@@ -181,14 +181,12 @@
             color: #2c3e50;
             margin: 0;
             font-size: 1.5rem;
-            font-weight: 500;
-            line-height: 1.2;
+            font-weight: bolder;
             text-transform: capitalize;
-            background: linear-gradient(120deg, #2c3e50, #3498db);
+            background: linear-gradient(120deg, #2c3e50, #022ce6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-fill-color: transparent;
             position: relative;
             letter-spacing: -0.5px;
         }
@@ -289,7 +287,11 @@
     <div class="container">
         <div class="header-section">
             <div class="title-container">
-                <h1 class="main-title">Seu guia para transporte, comércio e eventos em Parobé</h1>
+                <h1 class="main-title">
+                    | <span class="highlight">Seu guia para transporte, comércio e eventos</span> em <span class="city">Parobé</span>
+                </h1>
+                
+               
                 <div class="info-container">
                     <div class="weather-info">
                         <span id="temp">Carregando...</span>
@@ -427,18 +429,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col">
-                <a href="/" class="card-link">
-                    <div class="card h-100">
-                        <img src="/img/hospital.jpg" class="card-img-top" alt="Lotação Hospitalar (Chat)">
-                        <div class="card-body">
-                            <h5 class="card-title">Lotação Hospitalar (Chat)</h5>
-                            <p class="card-text">Oferece um recurso para verificar a lotação dos hospitais, com interação via chat.</p>
-                            <div class="btn btn-primary mt-auto">Clique para mais informações</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            
         </div>
     </div>
     <script>
@@ -447,7 +438,7 @@
             const timeString = now.toLocaleTimeString('pt-BR');
             const weekDayString = now.toLocaleDateString('pt-BR', { weekday: 'long' });
             
-            // Capitaliza primeira letra e formata o dia da semana
+           
             const formattedWeekDay = weekDayString.charAt(0).toUpperCase() + weekDayString.slice(1);
             
             document.getElementById('time').textContent = timeString;
