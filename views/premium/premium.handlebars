@@ -1,33 +1,152 @@
 <div class="premium-container">
-    <h1>Seja um Usuário Premium</h1>
-    
-    {{#if messages.message}}
-        <div class="message">
-            {{messages.message}}
-        </div>
-    {{/if}}
 
-    {{#if notLogged}}
-        <div class="register-message">
-            <p>{{message}}</p>
-            <a href="/register" class="register-button">Fazer Registro</a>
+
+
+    <div class="premium-content">
+        <div class="premium-header">
+            <h2>Seja um Usuário Premium</h2>
+            <p class="premium-subtitle">Faça login ou cadastre-se para acessar os recursos premium</p>
         </div>
-    {{else}}
+
         <div class="premium-benefits">
-            <h2>Benefícios Premium</h2>
-            <ul>
-                <li><i class="fas fa-check"></i> Acesso antecipado a novos recursos</li>
-                <li><i class="fas fa-check"></i> Suporte prioritário</li>
-                <li><i class="fas fa-check"></i> Conteúdo exclusivo</li>
-                <li><i class="fas fa-check"></i> Sem anúncios</li>
-            </ul>
+            <div class="benefit-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Alcance Local Direto</h3>
+                <p>Divulgue seu trabalho para toda a cidade de Parobé — atinja clientes reais, próximos de você.</p>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-chart-line"></i>
+                <h3>Aumente suas Vendas e Serviços</h3>
+                <p>Ganhe mais visibilidade e conquiste novos clientes diariamente.</p>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-star"></i>
+                <h3>Destaque Garantido</h3>
+                <p>Sua vaga ou serviço aparece no topo da página por vários dias, dependendo do plano escolhido — mais chances de ser visto e contratado.</p>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-sync"></i>
+                <h3>Renovação Automática</h3>
+                <p>A divulgação sobe para o topo a cada 10 dias (nos planos Básico, Grande e Gigante), mantendo sua presença constante.</p>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-bullseye"></i>
+                <h3>Divulgação Inteligente</h3>
+                <p>Você aparece onde importa: para quem está procurando exatamente o que você oferece.</p>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Credibilidade e Confiança</h3>
+                <p>Estar presente em uma plataforma local gera mais confiança e profissionalismo aos olhos dos clientes.</p>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Pronto para Celular</h3>
+                <p>Seu anúncio é otimizado para ser visto com qualidade tanto no celular quanto no computador.</p>
+            </div>
         </div>
-    {{/if}}
+
+        {{#if notLogged}}
+            
+        {{/if}}
+
+        <div class="pricing-section">
+            <h2>Escolha seu Plano</h2>
+            {{#if notLogged}}
+                <div class="login-alert">
+                    <p>Faça o registro agora para acessar a opção de ser premium!</p>
+                    <a href="/register" class="register-button">Fazer Registro</a>
+                </div>
+            {{/if}}
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plano Básico</h3>
+                        <div class="price">
+                            <span class="amount">R$10</span>
+                            <span class="period">/mês</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> 1 vaga para divulgar</li>
+                            <li><i class="fas fa-check"></i> Destaque por 3 dias seguidos</li>
+                            <li><i class="fas fa-check"></i> Renovação automática a cada 10 dias</li>
+                        </ul>
+                    </div>
+                    {{#unless notLogged}}
+                        <a href="/premium/subscribe/basic" class="plan-button">Escolher Plano</a>
+                    {{/unless}}
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plano Grande</h3>
+                        <div class="price">
+                            <span class="amount">R$20</span>
+                            <span class="period">/mês</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Até 3 vagas para divulgar</li>
+                            <li><i class="fas fa-check"></i> Destaque por 5 dias seguidos</li>
+                            <li><i class="fas fa-check"></i> Renovação automática a cada 10 dias</li>
+                        </ul>
+                    </div>
+                    {{#unless notLogged}}
+                        <a href="/premium/subscribe/grande" class="plan-button">Escolher Plano</a>
+                    {{/unless}}
+                </div>
+
+                <div class="pricing-card recommended">
+                    <div class="pricing-header">
+                        <div class="recommended-badge">Mais Popular</div>
+                        <h3>Plano Gigante</h3>
+                        <div class="price">
+                            <span class="amount">R$30</span>
+                            <span class="period">/mês</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Até 4 vagas para divulgar</li>
+                            <li><i class="fas fa-check"></i> Destaque por 7 dias seguidos</li>
+                            <li><i class="fas fa-check"></i> Renovação automática a cada 10 dias</li>
+                        </ul>
+                    </div>
+                    {{#unless notLogged}}
+                        <a href="/premium/subscribe/gigante" class="plan-button">Escolher Plano</a>
+                    {{/unless}}
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Plano Master</h3>
+                        <div class="price">
+                            <span class="amount">R$50</span>
+                            <span class="period">/mês</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Até 8 vagas para divulgar</li>
+                            <li><i class="fas fa-check"></i> Vagas fixas no topo permanentemente</li>
+                            <li><i class="fas fa-check"></i> Máxima visibilidade garantida</li>
+                        </ul>
+                    </div>
+                    {{#unless notLogged}}
+                        <a href="/premium/subscribe/master" class="plan-button">Escolher Plano</a>
+                    {{/unless}}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
 .premium-container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 2rem auto;
     padding: 2rem;
     background-color: #fff;
@@ -35,10 +154,60 @@
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
+.premium-content {
+    text-align: center;
+}
+
+.premium-header {
+    margin-bottom: 3rem;
+}
+
+.premium-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+    margin: 1rem 0;
+}
+
+.premium-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.benefit-item {
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.benefit-item:hover {
+    transform: translateY(-5px);
+}
+
+.benefit-item i {
+    font-size: 2rem;
+    color: #2196F3;
+    margin-bottom: 1rem;
+}
+
+.benefit-item h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.benefit-item p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
 .register-message {
     text-align: center;
     padding: 2rem;
-    background-color: #f8f9fa;
+    background-color: #e3f2fd;
     border-radius: 8px;
     margin: 2rem 0;
 }
@@ -57,29 +226,13 @@
     border-radius: 5px;
     font-size: 1.2rem;
     transition: background-color 0.3s;
+    display: inline-block;
 }
 
 .register-button:hover {
     background-color: #1976D2;
-}
-
-.premium-benefits {
-    margin: 2rem 0;
-}
-
-.premium-benefits ul {
-    list-style: none;
-    padding: 0;
-}
-
-.premium-benefits li {
-    margin: 1rem 0;
-    font-size: 1.1rem;
-}
-
-.premium-benefits i {
-    color: #4CAF50;
-    margin-right: 10px;
+    color: white;
+    text-decoration: none;
 }
 
 .message {
@@ -88,5 +241,165 @@
     border-radius: 5px;
     background-color: #4CAF50;
     color: white;
+}
+
+.pricing-section {
+    margin-top: 4rem;
+    padding: 2rem 0;
+}
+
+.pricing-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2rem;
+    color: #333;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.pricing-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    border: 1px solid #e0e0e0;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.pricing-card.recommended {
+    border: 2px solid #2196F3;
+    transform: scale(1.02);
+}
+
+.recommended-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2196F3;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.pricing-header h3 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.price {
+    margin: 1rem 0;
+}
+
+.price .amount {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2196F3;
+}
+
+.price .period {
+    color: #666;
+    font-size: 1rem;
+}
+
+.pricing-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pricing-features li {
+    padding: 0.8rem 0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pricing-features i {
+    color: #4CAF50;
+    font-size: 1.1rem;
+}
+
+.plan-button {
+    display: block;
+    text-align: center;
+    background: #2196F3;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.plan-button:hover {
+    background: #1976D2;
+    color: white;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .pricing-card.recommended {
+        transform: none;
+    }
+}
+
+.login-alert {
+    text-align: center;
+    
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 0 auto 2rem auto;
+    max-width: 600px;
+}
+
+.login-alert p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.login-alert .register-button {
+    display: inline-block;
+    background-color: #2196F3;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.login-alert .register-button:hover {
+    background-color: #1976D2;
+    color: white;
+    text-decoration: none;
 }
 </style> 
