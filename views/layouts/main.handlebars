@@ -38,6 +38,129 @@
             opacity: 0;
             transition: opacity 0.5s ease-out;
         }
+
+        footer {
+            background-color: rgba(0, 123, 255, 0.95);
+            color: #fff;
+            padding: 0;
+            margin-top: 3rem;
+            width: 100%;
+        }
+        
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+            padding: 0 1rem;
+        }
+        
+        .footer-section h3 {
+            color: #ffffff;
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ffffff;
+        }
+        
+        .footer-section p {
+            margin-bottom: 0.8rem;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .footer-section.about p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            width: 40px;
+            background-color: transparent;
+            border-radius: 50%;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: transparent;
+            transform: translateY(-3px);
+            color: #e0e0e0;
+        }
+        
+        .footer-section.links ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-section.links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section.links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: inline-block;
+        }
+        
+        .footer-section.links a:hover {
+            color: #e0e0e0;
+            padding-left: 5px;
+        }
+        
+        .footer-section.contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-section.contact i {
+            color: #ffffff;
+        }
+        
+        .footer-bottom {
+            background-color: rgba(0, 123, 255, 0.8);
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+            }
+            
+            .footer-section {
+                margin-bottom: 2rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -90,7 +213,38 @@
     </div>
 
     <footer>
-        <p><span>Rodape</span>&copy;2024</p>
+        <div class="footer-container">
+            <div class="footer-section about">
+                <h3>Guia de Serviços</h3>
+                <p>Plataforma dedicada a conectar prestadores de serviços e clientes na cidade de Parobé-RS.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section links">
+                <h3>Links Rápidos</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/premium">Seja Premium</a></li>
+                    <li><a href="/contato">Contato</a></li>
+                    <li><a href="/eventos/empregos">Empregos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section contact">
+                <h3>Contato</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Parobé, RS - Brasil</p>
+                <p><i class="fas fa-envelope"></i> contato@guiadeservicos.com</p>
+                <p><i class="fas fa-phone"></i> (51) 99999-9999</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>TCC - Guia de Serviços</p>
+        </div>
     </footer>
 
     <script>
