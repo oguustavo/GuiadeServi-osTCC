@@ -5,6 +5,7 @@ const EventoCidade = require('../models/EventoCidade')
 const User = require('../models/User')
 const path = require('path')
 const fs = require('fs')
+const { cloudinary } = require('../config/cloudinary')
 
 module.exports = class EventosControllers {
     static async showEventos(req, res) {
@@ -68,7 +69,10 @@ module.exports = class EventosControllers {
 
     static async createEvento(req, res) {
         try {
-            const { tipo, nome, endereco, telefone, dataInicio, dataFim, subtipo, imagem, cargo, empresa, tipoVaga, requisitos, contato, tipoEvento, data, horario, local, descricao, vendaPresencial, linkInscricao } = req.body
+            const { tipo, nome, endereco, telefone, dataInicio, dataFim, subtipo, cargo, empresa, tipoVaga, requisitos, contato, tipoEvento, data, horario, local, descricao, vendaPresencial, linkInscricao } = req.body
+
+            // Obter a URL da imagem do Cloudinary
+            const imagem = req.file ? req.file.path : null;
 
             if (tipo === 'farmacia') {
                 await Farmacia.create({
@@ -169,11 +173,10 @@ module.exports = class EventosControllers {
                 });
             }
 
+            // Deletar imagem do Cloudinary se existir
             if (item.imagem) {
-                const imagePath = path.join(__dirname, '..', 'public', 'uploads', item.imagem)
-                if (fs.existsSync(imagePath)) {
-                    fs.unlinkSync(imagePath)
-                }
+                const publicId = item.imagem.split('/').pop().split('.')[0];
+                await cloudinary.uploader.destroy(publicId);
             }
 
             await model.destroy({ where: { id } })

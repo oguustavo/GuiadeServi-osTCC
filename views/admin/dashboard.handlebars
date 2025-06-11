@@ -552,7 +552,7 @@
                                         <td>{{formatPhone this.telefone}}</td>
                                         <td>
                                             {{#if this.imagem}}
-                                                <img src="/uploads/{{this.imagem}}" alt="{{this.nome}}" style="height: 50px; border-radius: 4px;">
+                                                <img src="{{this.imagem}}" alt="{{this.nome}}" style="height: 50px; border-radius: 4px;">
                                             {{else}}
                                                 <span class="text-muted">Sem imagem</span>
                                             {{/if}}
@@ -644,7 +644,7 @@
                                         <td><a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.local}}" target="_blank" class="text-decoration-none">{{this.local}}</a></td>
                                         <td>
                                             {{#if this.imagem}}
-                                                <img src="/uploads/{{this.imagem}}" alt="{{this.nome}}" style="height: 50px; border-radius: 4px;">
+                                                <img src="{{this.imagem}}" alt="{{this.nome}}" style="height: 50px; border-radius: 4px;">
                                             {{else}}
                                                 <span class="text-muted">Sem imagem</span>
                                             {{/if}}

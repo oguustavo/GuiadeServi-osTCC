@@ -1,9 +1,11 @@
+require('dotenv').config()
+
 const express = require('express')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
 const FileStore = require('session-file-store')(session)
 const flash = require('express-flash')
-const fileUpload = require('express-fileupload')
+const { upload } = require('./config/cloudinary')
 
 const app = express()
 
@@ -68,9 +70,7 @@ app.use(
 )
 app.use(express.json())
 
-app.use(fileUpload({
-    createParentPath: true
-}))
+app.use(upload.single('imagem'))
 
 app.use(
     session({
