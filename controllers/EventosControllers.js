@@ -252,7 +252,13 @@ module.exports = class EventosControllers {
                 }],
                 order: [['createdAt', 'DESC']]
             })
-            const premiumPosts = premiumPostsRaw.map(post => post.get({ plain: true }))
+            const premiumPosts = premiumPostsRaw.map((post, index) => {
+                const postData = post.get({ plain: true })
+                if (index < 3) {
+                    postData.isTopWeek = true
+                }
+                return postData
+            })
 
             res.render('eventos/outrosServicos', {
                 premiumPosts,

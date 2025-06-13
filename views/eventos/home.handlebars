@@ -6,148 +6,308 @@
     <title>Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .card {
-            margin: 15px;
-            transition: transform 0.2s;
+        :root {
+            --primary-blue: #007BFF;
+            --accent-orange: #FFA500;
+            --light-grey: #f8f9fa;
+            --dark-text: #333;
+            --medium-text: #666;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --hover-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            --border-radius: 10px;
         }
+
+        body {
+            background-color: var(--light-grey);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .header-section {
+            padding: 15px 25px 25px 25px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0;
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .main-title {
+            color: var(--dark-text);
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-transform: capitalize;
+            background: linear-gradient(90deg, var(--primary-blue), #022ce6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            letter-spacing: -0.8px;
+        }
+
+        .main-title .highlight {
+            font-weight: 800;
+        }
+
+        .main-title .city {
+            color: var(--accent-orange);
+            -webkit-text-fill-color: var(--accent-orange);
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 1.8rem;
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        .info-container {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            color: var(--medium-text);
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .weather-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .weather-info i {
+            font-size: 1.3rem;
+            color: var(--accent-orange);
+        }
+
+        .divider {
+            color: #ccc;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .title-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .info-container {
+                font-size: 0.95rem;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info-container {
+                flex-wrap: wrap;
+                justify-content: center;
+                font-size: 0.9rem;
+                gap: 10px;
+            }
+            .divider {
+                display: none; 
+            }
+            .weather-info, #weekday, #time {
+                background: rgba(0,0,0,0.05);
+                padding: 5px 10px;
+                border-radius: 5px;
+            }
+        }
+
+        .carousel-container {
+            margin: 20px auto 40px;
+            max-width: 1200px; 
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            background-color: white;
+        }
+
+        .carousel-inner {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/7; 
+        }
+
+        .carousel-item {
+            height: 100%;
+            background-color: #000;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.9);
+            transition: transform 0.4s ease;
+        }
+
+        .carousel-item:hover img {
+            transform: scale(1.03);
+            filter: brightness(1);
+        }
+
+        .carousel-control-prev, .carousel-control-next {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-control-prev:hover, .carousel-control-next:hover {
+            background: rgba(0, 0, 0, 0.9);
+            opacity: 1;
+        }
+
+        .carousel-control-prev {
+            left: 20px;
+        }
+
+        .carousel-control-next {
+            right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-container {
+                margin: 15px auto 30px;
+            }
+            .carousel-inner {
+                aspect-ratio: 16/9; 
+            }
+            .carousel-control-prev, .carousel-control-next {
+                width: 40px;
+                height: 40px;
+                opacity: 0.8; 
+            }
+            .carousel-control-prev {
+                left: 10px;
+            }
+            .carousel-control-next {
+                right: 10px;
+            }
+            .carousel-indicators {
+                bottom: 10px;
+            }
+            .carousel-indicators button {
+                width: 8px;
+                height: 8px;
+                margin: 0 4px;
+            }
+        }
+
+        .card-row-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-orange);
+            padding-bottom: 10px;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            display: block;
+        }
+
+        .card {
+            border: none;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background-color: white;
+            height: 100%;
+        }
+
         .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .card img {
+            height: 200px; /* Ajuste para um tamanho mais padrão */
+            object-fit: cover;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover img {
             transform: scale(1.05);
         }
-        .card img {
-            height: 250px;
-            object-fit: cover;
-        }
-        .card-title {
-            color: #007BFF;
-        }
-        .btn-primary {
-            background-color: #FFA500;
-            border-color: #FFA500;
-        }
+
         .card-body {
+            padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            height: calc(100% - 200px); /* Altura do card menos a imagem */
         }
-        
-       
-.carousel-container {
-    margin: 20px auto 40px;
-    max-width: 1200px; 
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    position: relative;
-    background-color: white;
-    padding: 10px;
-}
 
-.carousel-inner {
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16/7; 
-}
+        .card-title {
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 1.35rem;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
 
-.carousel-item {
-    height: 100%;
-    background-color: #000;
-}
+        .card-text {
+            color: var(--medium-text);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
 
-.carousel-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    filter: brightness(0.95);
-    transition: transform 0.3s ease;
-}
+        .btn-primary {
+            background-color: var(--accent-orange);
+            border-color: var(--accent-orange);
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+        }
 
-.carousel-item:hover img {
-    transform: scale(1.02);
-}
+        .btn-primary:hover {
+            background-color: #e69500; /* Tom mais escuro do laranja */
+            border-color: #e69500;
+            transform: translateY(-2px);
+        }
 
-
-.carousel-control-prev,
-.carousel-control-next {
-    width: 50px;
-    height: 50px;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 50%;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.carousel-container:hover .carousel-control-prev,
-.carousel-container:hover .carousel-control-next {
-    opacity: 0.8;
-}
-
-.carousel-control-prev {
-    left: 20px;
-}
-
-.carousel-control-next {
-    right: 20px;
-}
-
-.carousel-control-prev:hover,
-.carousel-control-next:hover {
-    background: rgba(0, 0, 0, 0.9);
-    opacity: 1;
-}
-
-@media (max-width: 768px) {
-    .carousel-container {
-        margin: 10px auto 30px;
-        border-radius: 15px;
-        padding: 5px;
-    }
-
-    .carousel-inner {
-        aspect-ratio: 16/9; 
-    }
-
-    .carousel-control-prev,
-    .carousel-control-next {
-        width: 40px;
-        height: 40px;
-        opacity: 0.7; 
-    }
-
-    .carousel-control-prev {
-        left: 10px;
-    }
-
-    .carousel-control-next {
-        right: 10px;
-    }
-
-    .carousel-indicators {
-        bottom: 10px;
-    }
-
-    .carousel-indicators button {
-        width: 8px;
-        height: 8px;
-        margin: 0 4px;
-    }
-    
-}
-
-.carousel-item {
-    opacity: 0;
-    
-}
-
-.carousel-item.active {
-    opacity: 1;
-}
-
-       
         .card-link {
             text-decoration: none;
             color: inherit;
@@ -159,141 +319,53 @@
             color: inherit;
         }
         .card-body .btn {
-            pointer-events: none;
-        }
-        
-        
-        .header-section {
-            padding: 15px 0;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .title-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .main-title {
-            color: #2c3e50;
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: bolder;
-            text-transform: capitalize;
-            background: linear-gradient(120deg, #2c3e50, #022ce6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-            letter-spacing: -0.5px;
+            pointer-events: auto; /* Reativa o click do botão */
         }
 
-        @media (max-width: 768px) {
-            .main-title {
-                font-size: 1.3rem;
-                text-align: center;
-            }
+        /* Admin Button */
+        .admin-button-container {
+            text-align: end;
+            margin-top: 20px;
+            margin-bottom: 30px;
         }
 
-        @media (max-width: 480px) {
-            .main-title {
-                font-size: 1.1rem;
-                padding: 0 5px;
-            }
-        }
-        
-        .info-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            color: #666;
-            font-size: 1rem;
+        .admin-button {
+            background-color: #6c757d; /* Cinza para o botão de admin */
+            border-color: #6c757d;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .weather-info {
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .admin-button:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+            transform: translateY(-2px);
         }
 
-        .weather-info i {
-            font-size: 1.2rem;
-            color: #FFA500;
-        }
-
-        .divider {
-            color: #e0e0e0;
-        }
-
-       
-        @media (max-width: 768px) {
-            .title-container {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .main-title {
-                font-size: 1.5rem;
-                margin-bottom: 10px;
-            }
-
-            .info-container {
-                font-size: 0.9rem;
-                gap: 15px;
-            }
-
-            #weekday {
-                min-width: 90px; 
-            }
-        }
-
-        @media (max-width: 480px) {
-            .info-container {
-                font-size: 0.85rem;
-                gap: 10px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .main-title {
-                font-size: 1.3rem;
-            }
-
-            .divider {
-                display: none; /
-            }
-
-            .weather-info, #weekday, #time {
-                background: rgba(0,0,0,0.05);
-                padding: 3px 8px;
-                border-radius: 4px;
-            }
-        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-        {{#if session.isAdmin}}
-    <div class="text-end mt-3">
-        <a href="/admin/dashboard" class="btn btn-primary">
-            <i class="fas fa-cog"></i> Painel Administrativo
-        </a>
-    </div>
-    {{/if}}
     <div class="container">
+        {{#if session.isAdmin}}
+            <div class="admin-button-container">
+                <a href="/admin/dashboard" class="btn admin-button">
+                    <i class="fas fa-cog"></i> Painel Administrativo
+                </a>
+            </div>
+        {{/if}}
+        
         <div class="header-section">
             <div class="title-container">
                 <h1 class="main-title">
-                    | <span class="highlight">Seu guia para transporte, comércio e eventos</span> em <span class="city">Parobé</span>
+                    <span class="highlight">Seu guia para transporte, comércio e eventos</span> em <span class="city">Parobé</span>
                 </h1>
                 
-               
                 <div class="info-container">
                     <div class="weather-info">
+                        <i class="fas fa-cloud-sun"></i>
                         <span id="temp">Carregando...</span>
                     </div>
                     <span class="divider">|</span>
@@ -304,8 +376,7 @@
             </div>
         </div>
         
-        
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide carousel-container" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -331,6 +402,9 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
+        
+        <h2 class="card-row-title">Descubra Serviços e Oportunidades</h2>
+
         <div class="row row-cols-1 row-cols-md-3 g-4 mt-4 mb-4">
             <div class="col">
                 <a href="/eventos/farmacias" class="card-link">
@@ -361,7 +435,7 @@
                     <div class="card h-100">
                         <img src="/img/servicos.png" class="card-img-top" alt="Outros Serviços (Manutenção)">
                         <div class="card-body">
-                            <h5 class="card-title">Outros Serviços (Manutenção)</h5>
+                            <h5 class="card-title">Serviços</h5>
                             <p class="card-text">Divulga serviços de manutenção, como eletricistas e encanadores.</p>
                             <div class="btn btn-primary mt-auto">Clique para mais informações</div>
                         </div>

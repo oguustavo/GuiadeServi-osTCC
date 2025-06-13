@@ -7,6 +7,10 @@ const PremiumPost = conn.define('PremiumPost', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    description: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+    },
     coverImage: {
         type: DataTypes.STRING,
         allowNull: true,
