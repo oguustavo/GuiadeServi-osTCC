@@ -9,4 +9,8 @@ router.post('/premium/process-payment', PremiumController.processPayment)
 router.get('/premium/post-form', PremiumController.showPostForm)
 router.post('/premium/create-post', upload.single('coverImage'), PremiumController.createPost)
 
+router.get('/profile', PremiumController.showProfilePage)
+router.post('/profile/cancel-premium', PremiumController.cancelPremium)
+router.post('/profile/delete-post/:id', PremiumController.deletePremiumPost)
+
 module.exports = router 
