@@ -6,12 +6,19 @@ const User = require('../models/User')
 const path = require('path')
 const fs = require('fs')
 const { cloudinary } = require('../config/cloudinary')
+const Evento = require('../models/Evento')
+const PremiumPost = require('../models/PremiumPost')
+const { Op } = require('sequelize')
 
 module.exports = class EventosControllers {
     static async showEventos(req, res) {
-        res.render('eventos/home', {
-            user: req.user || null  
-        })
+        try {
+            const eventos = await Evento.findAll({ raw: true })
+            res.render('eventos/home', { eventos })
+        } catch (error) {
+            console.log(error)
+            res.status(500).send('Erro ao carregar eventos')
+        }
     }
 
     static async showFarmacias(req, res) {
@@ -204,10 +211,58 @@ module.exports = class EventosControllers {
 
     static async showOutrosServicos(req, res) {
         try {
-            res.render('eventos/outrosServicos')
+            let isPremium = false
+            if (req.session.userid) {
+                const user = await User.findByPk(req.session.userid)
+                isPremium = user.isPremium
+            }
+
+            // Buscar tipos de trabalho únicos para o filtro
+            const workTypes = await PremiumPost.findAll({
+                attributes: ['workType'],
+                where: {
+                    isActive: true,
+                    expiresAt: {
+                        [Op.gt]: new Date()
+                    }
+                },
+                group: ['workType'],
+                raw: true
+            })
+            const uniqueWorkTypes = [...new Set(workTypes.map(type => type.workType))]
+
+            // Filtro por categoria
+            const filter = {
+                isActive: true,
+                expiresAt: {
+                    [Op.gt]: new Date()
+                }
+            }
+            const selectedCategory = req.query.category
+            if (selectedCategory) {
+                filter.workType = selectedCategory
+            }
+
+            // Buscar posts premium ativos (filtrados)
+            const premiumPostsRaw = await PremiumPost.findAll({
+                where: filter,
+                include: [{
+                    model: User,
+                    attributes: ['name']
+                }],
+                order: [['createdAt', 'DESC']]
+            })
+            const premiumPosts = premiumPostsRaw.map(post => post.get({ plain: true }))
+
+            res.render('eventos/outrosServicos', {
+                premiumPosts,
+                isPremium,
+                workTypes: uniqueWorkTypes,
+                selectedCategory
+            })
         } catch (error) {
-            console.log(error)
-            res.status(500).send('Erro ao carregar página de outros serviços')
+            console.error(error)
+            res.status(500).send('Erro ao carregar serviços')
         }
     }
 

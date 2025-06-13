@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento - Plano {{planName}}</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .payment-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .plan-details {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .plan-price {
+            font-size: 2rem;
+            color: #2196F3;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .payment-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .payment-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h1>Pagamento - Plano {{planName}}</h1>
+        
+        <div class="plan-details">
+            <h2>Detalhes do Plano</h2>
+            <p>{{planDescription}}</p>
+            <div class="plan-price">R${{planPrice}}/mês</div>
+        </div>
+
+        <form action="/premium/process-payment" method="POST">
+            <input type="hidden" name="planType" value="{{planType}}">
+            <button type="submit" class="payment-button">Pagar Agora</button>
+        </form>
+    </div>
+</body>
+</html> 

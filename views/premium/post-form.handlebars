@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divulgar Trabalho</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .post-form-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input[type="file"] {
+            padding: 0.5rem;
+        }
+
+        .submit-button {
+            background-color: #2196F3;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #1976D2;
+        }
+
+        .posts-remaining {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: #e3f2fd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="post-form-container">
+        <h1>Divulgar Trabalho</h1>
+        
+        <div class="posts-remaining">
+            <p>Você ainda tem {{postsRemaining}} {{#if (eq postsRemaining 1)}}post{{else}}posts{{/if}} disponível{{#unless (eq postsRemaining 1)}}is{{/unless}}.</p>
+        </div>
+
+        <form action="/premium/create-post" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Título do Trabalho</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="coverImage">Imagem de Capa (opcional)</label>
+                <input type="file" id="coverImage" name="coverImage" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <label for="whatsappLink">Link do WhatsApp</label>
+                <input type="url" id="whatsappLink" name="whatsappLink" required>
+            </div>
+
+            <div class="form-group">
+                <label for="workType">Tipo de Trabalho</label>
+                <select id="workType" name="workType" required>
+                    <option value="">Selecione o tipo de trabalho</option>
+                    <option value="construcao">Construção</option>
+                    <option value="eletrica">Elétrica</option>
+                    <option value="hidraulica">Hidráulica</option>
+                    <option value="jardinagem">Jardinagem</option>
+                    <option value="limpeza">Limpeza</option>
+                    <option value="manutencao">Manutenção</option>
+                    <option value="outros">Outros</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-button">Publicar Trabalho</button>
+        </form>
+    </div>
+</body>
+</html> 

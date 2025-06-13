@@ -51,6 +51,9 @@ app.engine('handlebars', exphbs.engine({
         isEqual: function(a, b) {
             return a === b;
         },
+        eq: function(a, b) {
+            return a === b;
+        },
         section: function(name, options) {
             if (!this._sections) this._sections = {};
             this._sections[name] = options.fn(this);
@@ -69,8 +72,6 @@ app.use(
     })
 )
 app.use(express.json())
-
-app.use(upload.single('imagem'))
 
 app.use(
     session({

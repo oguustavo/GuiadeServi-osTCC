@@ -5,15 +5,15 @@ const db = require('../db/conn')
 const User = db.define('User',{
     name:{
         type: DataTypes.STRING,
-        require:true,
+        allowNull: false,
     },
     email:{
         type: DataTypes.STRING,
-        require:true,
+        allowNull: false,
     },
     password:{
         type: DataTypes.STRING,
-        require:true,
+        allowNull: false,
     },
     matricula:{
         type: DataTypes.STRING,
@@ -26,6 +26,18 @@ const User = db.define('User',{
     isPremium: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+    },
+    premiumPlan: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    premiumExpiresAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    premiumPostsRemaining: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
     }
 })
 module.exports = User

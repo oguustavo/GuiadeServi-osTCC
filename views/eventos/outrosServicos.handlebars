@@ -84,6 +84,66 @@
             background-color: var(--highlight);
             border-color: var(--highlight);
         }
+
+        .premium-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FFD700;
+            color: #000;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .post-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--highlight);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .post-button:hover {
+            background-color: #e69500;
+            color: white;
+            text-decoration: none;
+        }
+
+        .category-link {
+            display: block;
+            padding: 8px 12px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .category-link:hover {
+            background-color: #f8f9fa;
+            color: var(--primary);
+        }
+
+        .no-services {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-link.active {
+            background-color: #007BFF;
+            color: #fff;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -92,113 +152,79 @@
 
         <div class="search-bar">
             <input type="text" class="search-input" placeholder="Busque por um serviço">
-            <a href="#" class="highlight-button">Deseja divulgar seu trabalho? Clique aqui!</a>
+            {{#if session.userid}}
+                {{#if isPremium}}
+                    <a href="/premium/post-form" class="highlight-button">Divulgar trabalho</a>
+                {{else}}
+                    <a href="/premium" class="highlight-button">Seja Premium para divulgar</a>
+                {{/if}}
+            {{else}}
+                <a href="/login" class="highlight-button">Faça login para divulgar</a>
+            {{/if}}
         </div>
 
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-3">
                 <div class="filter-sidebar">
-                    <div class="filter-title">Filtro Rápido</div>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Disponibilidade imediata</a></li>
-                        <li><a href="#">Melhores avaliados</a></li>
-                        <li><a href="#">Em destaque</a></li>
-                        <li><a href="#">Categoria</a></li>
-                        <li><a href="#">Promoções</a></li>
-                    </ul>
+                    <div class="filter-title">Categorias</div>
+                    {{#if workTypes}}
+                        <div class="categories-list">
+                            {{#each workTypes}}
+                                <a href="?category={{this}}" class="category-link{{#if ../selectedCategory}}{{#if (eq ../selectedCategory this)}} active{{/if}}{{/if}}">{{this}}</a>
+                            {{/each}}
+                        </div>
+                    {{else}}
+                        <p class="text-muted">Nenhuma categoria disponível</p>
+                    {{/if}}
                 </div>
             </div>
 
             <!-- Main Content -->
             <div class="col-md-9">
-                <!-- Em Destaque -->
-                <h2 class="mb-3">Em Destaque</h2>
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col">
-                        <div class="card">
-                            <img src="/img/servico1.jpg" class="card-img-top" alt="Serviço 1">
-                            <div class="card-body">
-                                <h5 class="card-title">Instalação de Ar-Condicionado</h5>
-                                <p class="card-text">Classificação: ★★★★★</p>
-                                <a href="#" class="btn btn-primary">Mais informações</a>
+                <h2 class="mb-4">
+                    {{#if selectedCategory}}
+                        Serviços de {{selectedCategory}}
+                    {{else}}
+                        Todos os Serviços
+                    {{/if}}
+                </h2>
+                {{#if premiumPosts}}
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        {{#each premiumPosts}}
+                            <div class="col">
+                                <div class="card">
+                                    {{#if this.coverImage}}
+                                        <img src="{{this.coverImage}}" class="card-img-top" alt="{{this.title}}">
+                                    {{else}}
+                                        <img src="/img/default-service.jpg" class="card-img-top" alt="Imagem padrão">
+                                    {{/if}}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{this.title}}</h5>
+                                        <p class="card-text">Tipo: {{this.workType}}</p>
+                                        <a href="{{this.whatsappLink}}" class="btn btn-primary" target="_blank">Contatar</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        {{/each}}
                     </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="/img/servico2.jpg" class="card-img-top" alt="Serviço 2">
-                            <div class="card-body">
-                                <h5 class="card-title">Serviços de Pedreiro</h5>
-                                <p class="card-text">Classificação: ★★★★☆</p>
-                                <a href="#" class="btn btn-primary">Mais informações</a>
-                            </div>
-                        </div>
+                {{else}}
+                    <div class="no-services">
+                        <h3>Nenhum serviço disponível no momento</h3>
+                        <p>Seja o primeiro a divulgar seu trabalho!</p>
                     </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="/img/servico3.jpg" class="card-img-top" alt="Serviço 3">
-                            <div class="card-body">
-                                <h5 class="card-title">Manutenção Elétrica</h5>
-                                <p class="card-text">Classificação: ★★★★☆</p>
-                                <a href="#" class="btn btn-primary">Mais informações</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Top Serviços da Semana -->
-                <h2 class="mt-5 mb-3">Top Serviços da Semana</h2>
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col">
-                        <div class="card">
-                            <img src="/img/servico4.jpg" class="card-img-top" alt="Serviço 4">
-                            <div class="card-body">
-                                <h5 class="card-title">Construção Civil</h5>
-                                <p class="card-text">Classificação: ★★★★★</p>
-                                <a href="#" class="btn btn-primary">Mais informações</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="/img/servico5.jpg" class="card-img-top" alt="Serviço 5">
-                            <div class="card-body">
-                                <h5 class="card-title">Jardinagem</h5>
-                                <p class="card-text">Classificação: ★★★★☆</p>
-                                <a href="#" class="btn btn-primary">Mais informações</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Jardim -->
-                <h2 class="mt-5 mb-3">Jardim</h2>
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col">
-                        <div class="card">
-                            <img src="/img/servico6.jpg" class="card-img-top" alt="Serviço 6">
-                            <div class="card-body">
-                                <h5 class="card-title">Corte de Grama</h5>
-                                <p class="card-text">Classificação: ★★★★☆</p>
-                                <a href="#" class="btn btn-primary">Mais informações</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="/img/servico7.jpg" class="card-img-top" alt="Serviço 7">
-                            <div class="card-body">
-                                <h5 class="card-title">Paisagismo</h5>
-                                <p class="card-text">Classificação: ★★★★★</p>
-                                <a href="#" class="btn btn-primary">Mais informações</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{/if}}
             </div>
         </div>
     </div>
+
+    {{#if session.userid}}
+        {{#if isPremium}}
+            <a href="/premium/post-form" class="post-button">
+                <i class="fas fa-plus"></i> Divulgar Trabalho
+            </a>
+        {{/if}}
+    {{/if}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
