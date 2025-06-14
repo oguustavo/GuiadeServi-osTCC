@@ -5,65 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Promoções dos Mercados</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #007BFF;
-            --secondary: #FFFFFF;
-            --support: #03A9F4;
-            --highlight: #FFA500;
+            --primary-blue: #007BFF;
+            --highlight-orange: #FFA500;
+            --light-bg: #f8f9fa;
+            --dark-text: #2c3e50;
+            --light-text: #6c757d;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --hover-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
         }
+
         body {
-            background-color: #f8f9fa;
+            background-color: var(--light-bg);
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-text);
+            line-height: 1.6;
         }
+
+        .container-fluid.promotions-wrapper {
+            padding: 2rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
         .page-title {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--highlight);
-        }
-        .store-section {
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 2.5rem;
+            text-align: center;
             margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .page-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background-color: var(--highlight-orange);
+            border-radius: 2px;
+        }
+
+        .store-section {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 3rem;
         }
+
         .store-title {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--highlight);
+            color: var(--dark-text);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
         }
-        .promocoes-grid {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
+
+        .store-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background-color: var(--primary-blue);
+            border-radius: 1px;
         }
-        .promocao-item {
-            flex: 0 1 300px;
-            cursor: pointer;
-            transition: transform 0.2s;
+
+        .promotions-carousel .carousel-inner {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            aspect-ratio: 16/9; /* Proporção para as imagens */
         }
-        .promocao-item:hover {
-            transform: scale(1.02);
-        }
-        .promocao-item img {
+
+        .promotions-carousel .carousel-item img {
             width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: 100%;
+            object-fit: contain; /* Ajusta a imagem para caber sem cortar */
+            background-color: #f0f0f0; /* Fundo para imagens com proporções diferentes */
         }
-        .promocao-item img.error {
-            border: 2px solid #ff0000;
+
+        .promotions-carousel .carousel-control-prev,
+        .promotions-carousel .carousel-control-next {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.8;
+            transition: var(--transition);
         }
-        /* Modal styles */
+
+        .promotions-carousel .carousel-control-prev:hover,
+        .promotions-carousel .carousel-control-next:hover {
+            background: rgba(0, 0, 0, 0.7);
+            opacity: 1;
+        }
+
+        .promotions-carousel .carousel-indicators button {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--primary-blue);
+            border: none;
+            margin: 0 5px;
+            opacity: 0.5;
+            transition: var(--transition);
+        }
+
+        .promotions-carousel .carousel-indicators button.active {
+            opacity: 1;
+            background-color: var(--highlight-orange);
+            width: 12px;
+            height: 12px;
+        }
+
         .modal-content {
-            background-color: transparent;
+            background-color: rgba(0,0,0,0.8);
             border: none;
         }
         .modal-body {
@@ -72,96 +144,179 @@
         .modal img {
             max-width: 100%;
             height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: var(--border-radius);
         }
-        .dot-indicators {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-            gap: 5px;
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            .store-section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            .store-title {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+            .promotions-carousel .carousel-control-prev,
+            .promotions-carousel .carousel-control-next {
+                width: 40px;
+                height: 40px;
+            }
         }
-        .dot {
-            width: 8px;
-            height: 8px;
-            background-color: #ccc;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        .dot.active {
-            background-color: var(--highlight);
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+            .store-section {
+                padding: 1rem;
+            }
+            .store-title {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <h1 class="page-title">PROMOÇÕES</h1>
+    <div class="container-fluid promotions-wrapper">
+        <h1 class="page-title">PROMOÇÕES DA CIDADE</h1>
         
         <!-- Desco - Centro Parobé -->
         <div class="store-section">
             <h2 class="store-title">Desco - Centro Parobé</h2>
-            <div class="promocoes-grid">
-                <div class="promocao-item">
-                    <img src="/img/promocoes/desco1.jpg" alt="Promoções Desco 1" data-store="desco" data-index="1">
-                    <div class="dot-indicators">
-                        <span class="dot active" data-index="1"></span>
-                        <span class="dot" data-index="2"></span>
-                        <span class="dot" data-index="3"></span>
+            <div id="carouselDesco" class="carousel slide promotions-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselDesco" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselDesco" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselDesco" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/img/promocoes/desco1.jpg" class="d-block w-100 promocao-img" alt="Promoções Desco 1" data-store="desco" data-index="1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/promocoes/desco2.jpg" class="d-block w-100 promocao-img" alt="Promoções Desco 2" data-store="desco" data-index="2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/promocoes/desco3.jpeg" class="d-block w-100 promocao-img" alt="Promoções Desco 3" data-store="desco" data-index="3">
                     </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselDesco" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselDesco" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
 
         <!-- Brasil Lopes -->
         <div class="store-section">
             <h2 class="store-title">Brasil Lopes</h2>
-            <div class="promocoes-grid">
-                <div class="promocao-item">
-                    <img src="/img/promocoes/brasil-lopes1.jpg" alt="Promoções Brasil Lopes 1" data-store="brasil-lopes" data-index="1">
-                    <div class="dot-indicators">
-                        <span class="dot active" data-index="1"></span>
-                        <span class="dot" data-index="2"></span>
-                        <span class="dot" data-index="3"></span>
+            <div id="carouselBrasilLopes" class="carousel slide promotions-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselBrasilLopes" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselBrasilLopes" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselBrasilLopes" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/img/promocoes/brasil-lopes1.jpg" class="d-block w-100 promocao-img" alt="Promoções Brasil Lopes 1" data-store="brasil-lopes" data-index="1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/promocoes/brasil-lopes2.jpg" class="d-block w-100 promocao-img" alt="Promoções Brasil Lopes 2" data-store="brasil-lopes" data-index="2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/promocoes/brasil-lopes3.jpg" class="d-block w-100 promocao-img" alt="Promoções Brasil Lopes 3" data-store="brasil-lopes" data-index="3">
                     </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselBrasilLopes" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselBrasilLopes" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
 
         <!-- Pompeia -->
         <div class="store-section">
             <h2 class="store-title">Pompeia</h2>
-            <div class="promocoes-grid">
-                <div class="promocao-item">
-                    <img src="/img/promocoes/pompeia1.jpg" alt="Promoções Pompeia 1" data-store="pompeia" data-index="1">
-                    <div class="dot-indicators">
-                        <span class="dot active" data-index="1"></span>
-                        <span class="dot" data-index="2"></span>
-                        <span class="dot" data-index="3"></span>
+            <div id="carouselPompeia" class="carousel slide promotions-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselPompeia" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselPompeia" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselPompeia" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/img/promocoes/pompeia1.jpeg" class="d-block w-100 promocao-img" alt="Promoções Pompeia 1" data-store="pompeia" data-index="1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/promocoes/pompeia2.jpg" class="d-block w-100 promocao-img" alt="Promoções Pompeia 2" data-store="pompeia" data-index="2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/promocoes/pompeia3.jpg" class="d-block w-100 promocao-img" alt="Promoções Pompeia 3" data-store="pompeia" data-index="3">
                     </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselPompeia" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselPompeia" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
 
-        
+        <!-- PapaCardo -->
         <div class="store-section">
             <h2 class="store-title">PapaCardo</h2>
-            <div class="promocoes-grid">
-                <div class="promocao-item">
-                    <img src="/img/promocoes/papacardo1.jpg" alt="Promoções PapaCardo 1" data-store="papacardo" data-index="1">
-                    <div class="dot-indicators">
-                        <span class="dot active" data-index="1"></span>
-                        <span class="dot" data-index="2"></span>
-                        <span class="dot" data-index="3"></span>
+            <div id="carouselPapacardo" class="carousel slide promotions-carousel" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselPapacardo" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselPapacardo" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselPapacardo" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/img/promocoes/papacardo1.jpg" class="d-block w-100 promocao-img" alt="Promoções PapaCardo 1" data-store="papacardo" data-index="1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/promocoes/papacardo2.jpeg" class="d-block w-100 promocao-img" alt="Promoções PapaCardo 2" data-store="papacardo" data-index="2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/promocoes/papacardo3.jpg" class="d-block w-100 promocao-img" alt="Promoções PapaCardo 3" data-store="papacardo" data-index="3">
                     </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselPapacardo" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselPapacardo" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Modal para zoom -->
-    <div class="modal fade" id="imageModal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <img src="" class="w-100" id="modalImage">
+                    <img src="" class="w-100" id="modalImage" alt="Imagem em destaque">
                 </div>
             </div>
         </div>
@@ -169,120 +324,49 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Mapa de extensões para cada imagem
         const imageExtensions = {
-            'desco': {
-                1: 'jpg',
-                2: 'jpg',
-                3: 'jpeg'
-            },
-            'brasil-lopes': {
-                1: 'jpg',
-                2: 'jpg',
-                3: 'jpg'
-            },
-            'pompeia': {
-                1: 'jpeg',
-                2: 'jpg',
-                3: 'jpg'
-            },
-            'papacardo': {
-                1: 'jpg',
-                2: 'jpeg',
-                3: 'jpg'
-            }
+            'desco': { 1: 'jpg', 2: 'jpg', 3: 'jpeg' },
+            'brasil-lopes': { 1: 'jpg', 2: 'jpg', 3: 'jpg' },
+            'pompeia': { 1: 'jpeg', 2: 'jpg', 3: 'jpg' },
+            'papacardo': { 1: 'jpg', 2: 'jpeg', 3: 'jpg' }
         };
 
-        // Função para abrir o modal
         function openModal(imgSrc) {
             const modal = new bootstrap.Modal(document.getElementById('imageModal'));
             document.getElementById('modalImage').src = imgSrc;
             modal.show();
         }
 
-        // Função para trocar a imagem
-        function changeImage(dot) {
-            const container = dot.closest('.promocao-item');
-            const img = container.querySelector('img');
-            const store = img.dataset.store;
-            const index = dot.dataset.index;
-            
-            // Pega a extensão correta para a imagem
-            const extension = imageExtensions[store][index];
-            
-            // Atualiza a imagem
-            const newSrc = `/img/promocoes/${store}${index}.${extension}`;
-            img.src = newSrc;
-            img.dataset.index = index;
-            
-            // Remove classe de erro se existir
-            img.classList.remove('error');
-            
-            // Adiciona tratamento de erro para imagem
-            img.onerror = function() {
-                this.classList.add('error');
-                console.error(`Erro ao carregar imagem: ${newSrc}`);
-            };
-            
-            // Atualiza os pontos
-            container.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
-            dot.classList.add('active');
-        }
-
-        // Adiciona evento de clique nas imagens para abrir o modal
-        document.querySelectorAll('.promocao-item img').forEach(img => {
+        // Adiciona evento de clique nas imagens dentro dos carrosséis para abrir o modal
+        document.querySelectorAll('.promocao-img').forEach(img => {
             img.addEventListener('click', function() {
-                if (!this.classList.contains('error')) {
-                    openModal(this.src);
-                }
+                openModal(this.src);
             });
-            
-            // Adiciona tratamento de erro inicial
+
+            // Tratamento de erro de carregamento de imagem
             img.onerror = function() {
                 this.classList.add('error');
+                this.src = '/img/default-promotion.png'; // Imagem padrão para erro
                 console.error(`Erro ao carregar imagem: ${this.src}`);
             };
         });
 
-        // Adiciona evento de clique nos pontos para trocar as imagens
-        document.querySelectorAll('.dot').forEach(dot => {
-            dot.addEventListener('click', function() {
-                changeImage(this);
+        // Atualiza a imagem do carrossel ao mudar de slide (apenas para o caso de precisar carregar extensões diferentes)
+        // Embora a abordagem de ter todas as imagens no HTML já resolva isso, mantemos a estrutura caso a fonte mude.
+        document.querySelectorAll('.promotions-carousel').forEach(carouselEl => {
+            carouselEl.addEventListener('slide.bs.carousel', function(event) {
+                const activeIndex = event.to;
+                const carouselId = this.id;
+                const store = carouselId.replace('carousel', '').toLowerCase();
+                
+                // Encontra a imagem que vai ser ativada
+                const imgElement = this.querySelector(`.carousel-item:nth-child(${activeIndex + 1}) .promocao-img`);
+                if (imgElement && imageExtensions[store]) {
+                    const originalIndex = parseInt(imgElement.dataset.index);
+                    const extension = imageExtensions[store][originalIndex];
+                    imgElement.src = `/img/promocoes/${store}${originalIndex}.${extension}`;
+                }
             });
-        });
-
-        // Adiciona navegação com teclado
-        document.addEventListener('keydown', function(e) {
-            const activeSection = document.querySelector('.promocao-item img[src*="' + getCurrentImage() + '"]')?.closest('.promocao-item');
-            if (!activeSection) return;
-
-            const activeDot = activeSection.querySelector('.dot.active');
-            const currentIndex = parseInt(activeDot.dataset.index);
-
-            if (e.key === 'ArrowRight' && currentIndex < 3) {
-                const nextDot = activeSection.querySelector(`.dot[data-index="${currentIndex + 1}"]`);
-                if (nextDot) changeImage(nextDot);
-            } else if (e.key === 'ArrowLeft' && currentIndex > 1) {
-                const prevDot = activeSection.querySelector(`.dot[data-index="${currentIndex - 1}"]`);
-                if (prevDot) changeImage(prevDot);
-            }
-        });
-
-        function getCurrentImage() {
-            const modalImage = document.getElementById('modalImage');
-            if (modalImage.src) {
-                const filename = modalImage.src.split('/').pop();
-                return filename.split(/[0-9]/)[0];
-            }
-            return '';
-        }
-
-        // Inicializa as imagens com as extensões corretas
-        document.querySelectorAll('.promocao-item img').forEach(img => {
-            const store = img.dataset.store;
-            const index = img.dataset.index;
-            const extension = imageExtensions[store][index];
-            img.src = `/img/promocoes/${store}${index}.${extension}`;
         });
     </script>
 </body>

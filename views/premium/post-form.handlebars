@@ -4,62 +4,222 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Divulgar Trabalho</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #007BFF;
+            --primary-dark: #0056b3;
+            --highlight: #FFA500;
+            --text-dark: #2c3e50;
+            --text-light: #6c757d;
+            --success: #28a745;
+            --warning: #ffc107;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
         .post-form-container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 2rem auto;
-            padding: 2rem;
+            padding: 2.5rem;
             background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
         }
 
-        .form-group {
+        .post-form-container h1 {
+            color: var(--text-dark);
+            font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        .form-group input[type="file"] {
-            padding: 0.5rem;
-        }
-
-        .submit-button {
-            background-color: #2196F3;
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .submit-button:hover {
-            background-color: #1976D2;
+        .post-form-container h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--highlight);
+            border-radius: 2px;
         }
 
         .posts-remaining {
             text-align: center;
             margin-bottom: 2rem;
-            padding: 1rem;
+            padding: 1.2rem;
             background-color: #e3f2fd;
-            border-radius: 5px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .posts-remaining i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .posts-remaining p {
+            margin: 0;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input[type="file"] {
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            cursor: pointer;
+        }
+
+        .form-group input[type="file"]:hover {
+            border-color: var(--primary);
+        }
+
+        .form-text {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        .submit-button {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+        }
+
+        .submit-button i {
+            font-size: 1.2rem;
+        }
+
+        .file-preview {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .file-preview img {
+            max-width: 200px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .post-form-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .post-form-container h1 {
+                font-size: 1.75rem;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 10px;
+            }
+        }
+
+        /* Estilização do select */
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+
+        /* Animação de loading no botão */
+        .submit-button.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .submit-button.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -68,33 +228,45 @@
         <h1>Divulgar Trabalho</h1>
         
         <div class="posts-remaining">
+            <i class="fas fa-info-circle"></i>
             <p>Você ainda tem {{postsRemaining}} {{#if (eq postsRemaining 1)}}post{{else}}posts{{/if}} disponível{{#unless (eq postsRemaining 1)}}is{{/unless}}.</p>
         </div>
 
-        <form action="/premium/create-post" method="POST" enctype="multipart/form-data">
+        <form action="/premium/create-post" method="POST" enctype="multipart/form-data" id="postForm">
             <div class="form-group">
-                <label for="title">Título do Trabalho</label>
-                <input type="text" id="title" name="title" required>
+                <label for="title">
+                    <i class="fas fa-heading"></i> Título do Trabalho
+                </label>
+                <input type="text" id="title" name="title" required placeholder="Ex: Serviços de Elétrica Residencial">
             </div>
 
             <div class="form-group">
-                <label for="description">Descrição (máx. 100 caracteres)</label>
-                <textarea id="description" name="description" rows="3" maxlength="100"></textarea>
-                <small id="descriptionCharCounter" class="form-text text-muted">0/100 caracteres</small>
+                <label for="description">
+                    <i class="fas fa-align-left"></i> Descrição
+                </label>
+                <textarea id="description" name="description" rows="3" maxlength="100" placeholder="Descreva brevemente seu serviço..."></textarea>
+                <small id="descriptionCharCounter" class="form-text">0/100 caracteres</small>
             </div>
 
             <div class="form-group">
-                <label for="coverImage">Imagem de Capa (opcional)</label>
+                <label for="coverImage">
+                    <i class="fas fa-image"></i> Imagem de Capa
+                </label>
                 <input type="file" id="coverImage" name="coverImage" accept="image/*">
+                <div class="file-preview" id="filePreview"></div>
             </div>
 
             <div class="form-group">
-                <label for="whatsappLink">Link do WhatsApp</label>
-                <input type="url" id="whatsappLink" name="whatsappLink" required>
+                <label for="whatsappLink">
+                    <i class="fab fa-whatsapp"></i> Link do WhatsApp
+                </label>
+                <input type="url" id="whatsappLink" name="whatsappLink" required placeholder="Ex: https://wa.me/5551999999999">
             </div>
 
             <div class="form-group">
-                <label for="workType">Tipo de Trabalho</label>
+                <label for="workType">
+                    <i class="fas fa-tools"></i> Tipo de Trabalho
+                </label>
                 <select id="workType" name="workType" required>
                     <option value="">Selecione o tipo de trabalho</option>
                     <option value="construcao">Construção</option>
@@ -107,7 +279,10 @@
                 </select>
             </div>
 
-            <button type="submit" class="submit-button">Publicar Trabalho</button>
+            <button type="submit" class="submit-button">
+
+                Publicar Trabalho
+            </button>
         </form>
     </div>
 
@@ -120,8 +295,45 @@
             descriptionTextarea.addEventListener('input', () => {
                 const currentLength = descriptionTextarea.value.length;
                 descriptionCharCounter.textContent = `${currentLength}/100 caracteres`;
+                
+                // Mudar cor do contador baseado no limite
+                if (currentLength > 90) {
+                    descriptionCharCounter.style.color = '#dc3545';
+                } else if (currentLength > 70) {
+                    descriptionCharCounter.style.color = '#ffc107';
+                } else {
+                    descriptionCharCounter.style.color = '#6c757d';
+                }
             });
         }
+
+        // Preview da imagem
+        const coverImageInput = document.getElementById('coverImage');
+        const filePreview = document.getElementById('filePreview');
+
+        coverImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    filePreview.style.display = 'block';
+                    filePreview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                }
+                reader.readAsDataURL(file);
+            } else {
+                filePreview.style.display = 'none';
+                filePreview.innerHTML = '';
+            }
+        });
+
+        // Loading state no botão de submit
+        const form = document.getElementById('postForm');
+        const submitButton = form.querySelector('.submit-button');
+
+        form.addEventListener('submit', function() {
+            submitButton.classList.add('loading');
+            submitButton.disabled = true;
+        });
     </script>
 </body>
 </html> 

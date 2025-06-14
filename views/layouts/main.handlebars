@@ -203,7 +203,7 @@
         </ul>
     </nav>
 
-    <div class="container">
+    <div class="{{containerClass}}">
         {{#if messages.message}}
             <div class="flash-message {{#if messages.success}}success{{else}}{{#if messages.error}}error{{else}}info{{/if}}{{/if}}">
                 <i class="fas {{#if messages.success}}fa-check-circle{{else}}{{#if messages.error}}fa-exclamation-circle{{else}}fa-info-circle{{/if}}{{/if}}"></i>

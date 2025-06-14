@@ -5,163 +5,239 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serviços Gerais</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #007BFF;
             --highlight: #FFA500;
             --secondary: #FFFFFF;
+            --text-dark: #2c3e50;
+            --text-light: #6c757d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
 
         body {
             background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
         }
 
         .page-title {
-            color: var(--primary);
-            font-weight: bold;
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-top: 2rem;
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 3px solid var(--highlight);
+            font-size: 2.2rem;
         }
 
         .search-bar {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 20px;
         }
 
         .search-input {
             width: 70%;
-            padding: 10px 15px;
+            padding: 12px 20px;
             border: 2px solid #e9ecef;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
         }
 
         .highlight-button {
             background-color: var(--highlight);
             color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 25px;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            box-shadow: var(--shadow);
+        }
+
+        .highlight-button:hover {
+            background-color: #e69500;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .filter-sidebar {
             background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 20px;
         }
 
         .filter-title {
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--highlight);
+        }
+
+        .category-link {
+            display: block;
+            padding: 12px 15px;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+            margin-bottom: 8px;
+            font-weight: 500;
+            background-color: #f8f9fa;
+        }
+
+        .category-link:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .category-link.active {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
         }
 
         .card {
             border: none;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-radius: 15px;
+            overflow: hidden;
+            height: 100%;
+            background-color: white;
         }
 
         .card:hover {
-            transform: scale(1.05);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
 
         .card img {
-            height: 150px;
+            height: 200px;
             object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 25px;
         }
 
         .card-title {
-            color: var(--primary);
-            font-weight: bold;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .card-text.description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
 
         .btn-primary {
             background-color: var(--highlight);
-            border-color: var(--highlight);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background-color: #e69500;
+            transform: translateY(-2px);
         }
 
         .premium-badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 15px;
+            right: 15px;
             background-color: #FFD700;
             color: #000;
-            padding: 5px 10px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+        }
+
+        .top-week-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+        }
+
+        .no-services {
+            text-align: center;
+            padding: 3rem;
+            background-color: white;
             border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            box-shadow: var(--shadow);
+        }
+
+        .no-services h3 {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .no-services p {
+            color: var(--text-light);
         }
 
         .post-button {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             background-color: var(--highlight);
             color: white;
             padding: 15px 30px;
             border-radius: 30px;
             text-decoration: none;
-            font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             z-index: 1000;
+            transition: var(--transition);
         }
 
         .post-button:hover {
             background-color: #e69500;
             color: white;
-            text-decoration: none;
-        }
-
-        .category-link {
-            display: block;
-            padding: 8px 12px;
-            color: #333;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        .category-link:hover {
-            background-color: #f8f9fa;
-            color: var(--primary);
-        }
-
-        .category-link.active {
-            background-color: #007BFF;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        .no-services {
-            text-align: center;
-            padding: 2rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .top-week-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #28a745; /* Cor verde para destaque */
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            z-index: 5;
-        }
-
-        .card-text.description {
-            font-size: 0.9rem;
-            color: #555;
-            margin-bottom: 10px;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
         }
     </style>
 </head>
@@ -170,7 +246,7 @@
         <h1 class="page-title">Serviços Gerais</h1>
 
         <div class="search-bar">
-            <input type="text" class="search-input" placeholder="Busque por um serviço">
+            <input type="text" class="search-input" id="searchInput" placeholder="Busque por um serviço...">
             {{#if session.userid}}
                 {{#if isPremium}}
                     <a href="/premium/post-form" class="highlight-button">Divulgar trabalho</a>
@@ -211,7 +287,7 @@
                 {{#if premiumPosts}}
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         {{#each premiumPosts}}
-                            <div class="col">
+                            <div class="col service-card">
                                 <div class="card">
                                     {{#if this.coverImage}}
                                         <img src="{{this.coverImage}}" class="card-img-top" alt="{{this.title}}">
@@ -252,5 +328,24 @@
     {{/if}}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Funcionalidade de pesquisa
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.service-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const description = card.querySelector('.card-text.description')?.textContent.toLowerCase() || '';
+                const workType = card.querySelector('.card-text:last-of-type').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm) || workType.includes(searchTerm)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
