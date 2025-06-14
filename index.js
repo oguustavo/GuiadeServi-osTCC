@@ -73,6 +73,8 @@ app.use(
 )
 app.use(express.json())
 
+app.use(upload.single('imagem'))
+
 app.use(
     session({
         name: 'session',
