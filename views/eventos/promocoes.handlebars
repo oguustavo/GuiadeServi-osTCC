@@ -55,12 +55,39 @@
             border-radius: 2px;
         }
 
+        .search-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
         .store-section {
             background: white;
             padding: 2.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--card-shadow);
             margin-bottom: 3rem;
+            transition: var(--transition);
+        }
+
+        .store-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
         }
 
         .store-title {
@@ -88,14 +115,14 @@
         .promotions-carousel .carousel-inner {
             border-radius: var(--border-radius);
             overflow: hidden;
-            aspect-ratio: 16/9; /* Proporção para as imagens */
+            aspect-ratio: 16/9;
         }
 
         .promotions-carousel .carousel-item img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Ajusta a imagem para caber sem cortar */
-            background-color: #f0f0f0; /* Fundo para imagens com proporções diferentes */
+            object-fit: contain;
+            background-color: #f0f0f0;
         }
 
         .promotions-carousel .carousel-control-prev,
@@ -134,6 +161,48 @@
             height: 12px;
         }
 
+        .promotion-details {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+        }
+
+        .promotion-badge {
+            background: var(--highlight-orange);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .share-button {
+            background: #f8f9fa;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: var(--dark-text);
+        }
+
+        .share-button:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
         .modal-content {
             background-color: rgba(0,0,0,0.8);
             border: none;
@@ -149,7 +218,6 @@
             border-radius: var(--border-radius);
         }
 
-        /* Responsividade */
         @media (max-width: 768px) {
             .page-title {
                 font-size: 2rem;
@@ -186,8 +254,22 @@
     <div class="container-fluid promotions-wrapper">
         <h1 class="page-title">PROMOÇÕES DA CIDADE</h1>
         
+        <!-- Seção de Busca -->
+        <div class="search-section">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="input-group">
+                        <input type="text" class="form-control search-input" id="searchPromotions" placeholder="Buscar promoções...">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- Desco - Centro Parobé -->
-        <div class="store-section">
+        <div class="store-section" data-store="desco">
             <h2 class="store-title">Desco - Centro Parobé</h2>
             <div id="carouselDesco" class="carousel slide promotions-carousel" data-bs-ride="carousel">
                 <div class="carousel-indicators">
@@ -215,10 +297,25 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
+            <div class="promotion-details">
+                <span class="promotion-badge">Válido até 31/12/2023</span>
+                <p class="mb-2">Promoções especiais em produtos selecionados. Consulte as condições em cada imagem.</p>
+                <div class="share-buttons">
+                    <button class="share-button" onclick="sharePromotion('desco')">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="share-button" onclick="sharePromotion('desco')">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button class="share-button" onclick="sharePromotion('desco')">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Brasil Lopes -->
-        <div class="store-section">
+        <div class="store-section" data-store="brasil-lopes">
             <h2 class="store-title">Brasil Lopes</h2>
             <div id="carouselBrasilLopes" class="carousel slide promotions-carousel" data-bs-ride="carousel">
                 <div class="carousel-indicators">
@@ -246,10 +343,25 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
+            <div class="promotion-details">
+                <span class="promotion-badge">Válido até 31/12/2023</span>
+                <p class="mb-2">Ofertas especiais em produtos selecionados. Consulte as condições em cada imagem.</p>
+                <div class="share-buttons">
+                    <button class="share-button" onclick="sharePromotion('brasil-lopes')">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="share-button" onclick="sharePromotion('brasil-lopes')">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button class="share-button" onclick="sharePromotion('brasil-lopes')">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Pompeia -->
-        <div class="store-section">
+        <div class="store-section" data-store="pompeia">
             <h2 class="store-title">Pompeia</h2>
             <div id="carouselPompeia" class="carousel slide promotions-carousel" data-bs-ride="carousel">
                 <div class="carousel-indicators">
@@ -277,10 +389,25 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
+            <div class="promotion-details">
+                <span class="promotion-badge">Válido até 31/12/2023</span>
+                <p class="mb-2">Promoções especiais em produtos selecionados. Consulte as condições em cada imagem.</p>
+                <div class="share-buttons">
+                    <button class="share-button" onclick="sharePromotion('pompeia')">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="share-button" onclick="sharePromotion('pompeia')">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button class="share-button" onclick="sharePromotion('pompeia')">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- PapaCardo -->
-        <div class="store-section">
+        <div class="store-section" data-store="papacardo">
             <h2 class="store-title">PapaCardo</h2>
             <div id="carouselPapacardo" class="carousel slide promotions-carousel" data-bs-ride="carousel">
                 <div class="carousel-indicators">
@@ -307,6 +434,21 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
+            </div>
+            <div class="promotion-details">
+                <span class="promotion-badge">Válido até 31/12/2023</span>
+                <p class="mb-2">Promoções especiais em produtos selecionados. Consulte as condições em cada imagem.</p>
+                <div class="share-buttons">
+                    <button class="share-button" onclick="sharePromotion('papacardo')">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button class="share-button" onclick="sharePromotion('papacardo')">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button class="share-button" onclick="sharePromotion('papacardo')">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -351,15 +493,51 @@
             };
         });
 
-        // Atualiza a imagem do carrossel ao mudar de slide (apenas para o caso de precisar carregar extensões diferentes)
-        // Embora a abordagem de ter todas as imagens no HTML já resolva isso, mantemos a estrutura caso a fonte mude.
+        // Função de busca
+        document.getElementById('searchPromotions').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const storeSections = document.querySelectorAll('.store-section');
+            
+            storeSections.forEach(section => {
+                const storeName = section.querySelector('.store-title').textContent.toLowerCase();
+                const storeData = section.getAttribute('data-store');
+                
+                if (storeName.includes(searchTerm) || storeData.includes(searchTerm)) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        });
+
+        // Função para compartilhar promoções
+        function sharePromotion(store) {
+            const storeName = document.querySelector(`[data-store="${store}"] .store-title`).textContent;
+            const shareText = `Confira as promoções especiais do ${storeName} no Guia de Serviços!`;
+            const shareUrl = window.location.href;
+            
+            // Compartilhar no Facebook
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Promoções Especiais',
+                    text: shareText,
+                    url: shareUrl
+                }).catch(console.error);
+            } else {
+                // Fallback para copiar link
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert('Link copiado para a área de transferência!');
+                }).catch(console.error);
+            }
+        }
+
+        // Atualiza a imagem do carrossel ao mudar de slide
         document.querySelectorAll('.promotions-carousel').forEach(carouselEl => {
             carouselEl.addEventListener('slide.bs.carousel', function(event) {
                 const activeIndex = event.to;
                 const carouselId = this.id;
                 const store = carouselId.replace('carousel', '').toLowerCase();
                 
-                // Encontra a imagem que vai ser ativada
                 const imgElement = this.querySelector(`.carousel-item:nth-child(${activeIndex + 1}) .promocao-img`);
                 if (imgElement && imageExtensions[store]) {
                     const originalIndex = parseInt(imgElement.dataset.index);
