@@ -169,6 +169,25 @@
             transition: var(--transition);
         }
 
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+            color: white;
+            transform: translateY(-2px);
+        }
+
         .btn-primary:hover {
             background-color: #e69500;
             transform: translateY(-2px);
@@ -367,7 +386,9 @@
                                             <p class="card-text description">{{this.description}}</p>
                                         {{/if}}
                                         <p class="card-text">Tipo: {{this.workType}}</p>
-                                        <a href="https://wa.me/{{formatPhone this.whatsappLink}}" class="btn btn-primary" target="_blank">Contatar</a>
+                                        <a href="https://wa.me/{{formatPhone this.whatsappLink}}" class="btn btn-whatsapp" target="_blank">
+                                            <i class="fab fa-whatsapp"></i> Contatar
+                                        </a>
                                     </div>
                                 </div>
                             </div>

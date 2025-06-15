@@ -147,6 +147,7 @@ module.exports = class EventosControllers {
 
     static async deleteEvento(req, res) {
         try {
+            console.log('deleteEvento req.body:', req.body)
             const { id, tipo } = req.body
             let model
             let itemName = ''
