@@ -4,62 +4,365 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagamento - Plano {{planName}}</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2196F3;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #f44336;
+            --text: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --border: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+        }
+
+        .container {
+            padding-top: 1.5rem;
+        }
+
         .payment-container {
             max-width: 600px;
-            margin: 2rem auto;
-            padding: 2rem;
+            margin: 0 auto;
             background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .payment-header {
+            background: linear-gradient(135deg, var(--primary), #1976D2);
+            color: white;
+            padding: 1.8rem;
             text-align: center;
+            position: relative;
+        }
+
+        .payment-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .plan-badge {
+            margin: 2px
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .payment-content {
+            padding: 1.8rem;
         }
 
         .plan-details {
-            margin: 2rem 0;
-            padding: 1rem;
-            background-color: #f8f9fa;
-            border-radius: 8px;
+            background-color: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-icon {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .plan-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0;
         }
 
         .plan-price {
-            font-size: 2rem;
-            color: #2196F3;
+            font-size: 2.5rem;
+            color: var(--primary);
             font-weight: bold;
             margin: 1rem 0;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .plan-price .period {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: normal;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .features-list li {
+            padding: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-light);
+            background-color: #fff;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .features-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .features-list i {
+            color: var(--success);
+            font-size: 1.1rem;
+        }
+
+        .payment-summary {
+            background-color: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.8rem;
+        }
+
+        .summary-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .summary-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-label {
+            color: var(--text-light);
+        }
+
+        .summary-value {
+            font-weight: 500;
+        }
+
+        .total {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem;
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            background-color: rgba(33, 150, 243, 0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .payment-method i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .payment-method-info {
+            flex: 1;
+        }
+
+        .payment-method-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .payment-method-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
         }
 
         .payment-button {
-            background-color: #4CAF50;
+            width: 100%;
+            background-color: var(--success);
             color: white;
-            padding: 1rem 2rem;
+            padding: 1rem;
             border: none;
-            border-radius: 5px;
-            font-size: 1.2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
         }
 
         .payment-button:hover {
             background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .security-info {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            padding: 1rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .security-info i {
+            color: var(--success);
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .payment-header {
+                padding: 1.4rem;
+            }
+
+            .plan-badge {
+                position: static;
+                display: inline-block;
+                margin-top: 1rem;
+            }
+
+            .payment-content {
+                padding: 1.4rem;
+            }
+
+            .plan-details, .payment-summary {
+                padding: 1.4rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="payment-container">
-        <h1>Pagamento - Plano {{planName}}</h1>
-        
-        <div class="plan-details">
-            <h2>Detalhes do Plano</h2>
-            <p>{{planDescription}}</p>
-            <div class="plan-price">R${{planPrice}}/mês</div>
-        </div>
+    <div class="container">
+        <div class="payment-container">
+            <div class="payment-header">
+                <h1>Finalizar Assinatura</h1>
+                <div class="plan-badge">Plano {{planName}}</div>
+            </div>
 
-        <form action="/premium/process-payment" method="POST">
-            <input type="hidden" name="planType" value="{{planType}}">
-            <button type="submit" class="payment-button">Pagar Agora</button>
-        </form>
+            <div class="payment-content">
+                <div class="plan-details">
+                    <div class="plan-header">
+                        <i class="fas fa-crown plan-icon"></i>
+                        <h2 class="plan-title">{{planName}}</h2>
+                    </div>
+
+                    <div class="plan-price">
+                        R${{planPrice}}<span class="period">/mês</span>
+                    </div>
+
+                    <ul class="features-list">
+                        {{#if planType}}
+                            {{#if (eq planType 'basic')}}
+                                <li><i class="fas fa-check"></i> 1 vaga para divulgar</li>
+                                <li><i class="fas fa-check"></i> Destaque por 3 dias seguidos</li>
+                                <li><i class="fas fa-check"></i> Renovação automática do destaque</li>
+                            {{else if (eq planType 'grande')}}
+                                <li><i class="fas fa-check"></i> Até 3 vagas para divulgar</li>
+                                <li><i class="fas fa-check"></i> Destaque por 5 dias seguidos</li>
+                                <li><i class="fas fa-check"></i> Renovação automática do destaque</li>
+                            {{else if (eq planType 'gigante')}}
+                                <li><i class="fas fa-check"></i> Até 4 vagas para divulgar</li>
+                                <li><i class="fas fa-check"></i> Destaque por 7 dias seguidos</li>
+                                <li><i class="fas fa-check"></i> Renovação automática do destaque</li>
+                            {{else if (eq planType 'master')}}
+                                <li><i class="fas fa-check"></i> Até 8 vagas para divulgar</li>
+                                <li><i class="fas fa-check"></i> Vagas fixas no topo permanentemente</li>
+                                <li><i class="fas fa-check"></i> Máxima visibilidade garantida</li>
+                            {{/if}}
+                        {{/if}}
+                    </ul>
+                </div>
+
+                <div class="payment-summary">
+                    <h3 class="summary-title">Resumo do Pagamento</h3>
+                    
+                    <div class="summary-item">
+                        <span class="summary-label">Plano</span>
+                        <span class="summary-value">{{planName}}</span>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <span class="summary-label">Valor Mensal</span>
+                        <span class="summary-value">R${{planPrice}}</span>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <span class="summary-label">Taxa de Processamento</span>
+                        <span class="summary-value">Grátis</span>
+                    </div>
+                    
+                    <div class="summary-item total">
+                        <span class="summary-label">Total</span>
+                        <span class="summary-value">R${{planPrice}}</span>
+                    </div>
+
+                    <div class="payment-method">
+                        <i class="fab fa-pix"></i>
+                        <div class="payment-method-info">
+                            <div class="payment-method-title">PIX</div>
+                            <div class="payment-method-description">Pagamento instantâneo e seguro</div>
+                        </div>
+                    </div>
+
+                    <form action="/premium/process-payment" method="POST">
+                        <input type="hidden" name="planType" value="{{planType}}">
+                        <button type="submit" class="payment-button">
+                            <i class="fas fa-lock"></i>
+                            Finalizar Pagamento
+                        </button>
+                    </form>
+
+                    <div class="security-info">
+                        <i class="fas fa-shield-alt"></i>
+                        Pagamento 100% seguro e criptografado
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html> 
