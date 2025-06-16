@@ -82,6 +82,7 @@
             box-shadow: var(--shadow);
             position: sticky;
             top: 20px;
+            z-index: 10;
         }
 
         .filter-title {
@@ -180,6 +181,9 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            margin-top: auto;
+            width: 100%;
+            margin-bottom: 1rem;
         }
 
         .btn-whatsapp:hover {
@@ -208,15 +212,26 @@
 
         .top-week-badge {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: #28a745;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            box-shadow: var(--shadow);
+            top: 18px;
+            left: 18px;
+            background: linear-gradient(90deg, #ffb300 0%, #ffd700 100%);
+            color: #222;
+            padding: 8px 22px 8px 18px;
+            border-radius: 20px 8px 20px 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(255, 183, 0, 0.18);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            z-index: 2;
+            border: 2px solid #fffbe6;
+            text-shadow: 0 1px 2px #fffbe6;
+        }
+
+        .top-week-badge i {
+            margin-right: 8px;
+            color: #ff9800;
         }
 
         .no-services {
@@ -322,6 +337,86 @@
                 font-size: 0.9rem;
             }
         }
+
+        .category-carousel {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            scroll-behavior: smooth;
+        }
+        .category-carousel .service-card {
+            min-width: 320px;
+            max-width: 320px;
+            flex: 0 0 320px;
+            display: flex;
+            height: 100%;
+        }
+        .card.h-100 {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 420px;
+            position: relative;
+            background: #fff;
+        }
+        .card-img-top {
+            height: 180px;
+            object-fit: cover;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            width: 100%;
+        }
+        .card-body {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-bottom: 0;
+        }
+        .card-title {
+            margin-bottom: 0.5rem;
+            min-height: 2.2em;
+        }
+        .card-text.description {
+            min-height: 2.8em;
+            margin-bottom: 0.5rem;
+        }
+        .btn-whatsapp {
+            margin-top: auto;
+            width: 100%;
+        }
+        .top-week-badge {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: linear-gradient(90deg, #ffb300 0%, #ffd700 100%);
+            color: #222;
+            padding: 8px 22px 8px 18px;
+            border-radius: 20px 8px 20px 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(255, 183, 0, 0.18);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            z-index: 2;
+            border: 2px solid #fffbe6;
+            text-shadow: 0 1px 2px #fffbe6;
+        }
+        .top-week-badge i {
+            margin-right: 8px;
+            color: #ff9800;
+        }
+        .category-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-top: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -346,15 +441,16 @@
             <div class="col-md-3">
                 <div class="filter-sidebar">
                     <div class="filter-title">Categorias</div>
-                    {{#if workTypes}}
-                        <div class="categories-list">
-                            {{#each workTypes}}
-                                <a href="?category={{this}}" class="category-link{{#if ../selectedCategory}}{{#if (eq ../selectedCategory this)}} active{{/if}}{{/if}}">{{this}}</a>
-                            {{/each}}
-                        </div>
-                    {{else}}
-                        <p class="text-muted">Nenhuma categoria disponível</p>
-                    {{/if}}
+                    <div class="categories-list">
+                        <a href="#top" class="category-link">Destaques</a>
+                        <a href="#construcao" class="category-link">Construção</a>
+                        <a href="#eletrica" class="category-link">Elétrica</a>
+                        <a href="#hidraulica" class="category-link">Hidráulica</a>
+                        <a href="#jardinagem" class="category-link">Jardinagem</a>
+                        <a href="#limpeza" class="category-link">Limpeza</a>
+                        <a href="#manutencao" class="category-link">Manutenção</a>
+                        <a href="#outros" class="category-link">Outros</a>
+                    </div>
                 </div>
             </div>
 
@@ -368,17 +464,49 @@
                     {{/if}}
                 </h2>
                 {{#if premiumPosts}}
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <h2 class="category-title" id="top">Serviços em Destaque</h2>
+                    <hr>
+                    <div class="category-carousel">
                         {{#each premiumPosts}}
-                            <div class="col service-card">
-                                <div class="card">
+                            {{#if this.isTopWeek}}
+                                <div class="col-12 col-md-4 me-3 flex-shrink-0 service-card">
+                                    <div class="card h-100">
+                                        {{#if this.coverImage}}
+                                            <img src="{{this.coverImage}}" class="card-img-top" alt="{{this.title}}">
+                                        {{else}}
+                                            <img src="/img/default-service.jpg" class="card-img-top" alt="Imagem padrão">
+                                        {{/if}}
+                                        <div class="top-week-badge"><i class="fas fa-star"></i>Serviço Top</div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{this.title}}</h5>
+                                            {{#if this.description}}
+                                                <p class="card-text description">{{this.description}}</p>
+                                            {{/if}}
+                                            <p class="card-text">Tipo: {{this.workType}}</p>
+                                            <a href="#" class="btn btn-whatsapp contact-btn" data-whatsapp="https://wa.me/{{formatPhone this.whatsappLink}}">
+                                                <i class="fab fa-whatsapp"></i> Contatar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                {{/if}}
+                <h3 class="category-title" id="construcao">Construção</h3>
+                <hr>
+                <div class="category-carousel">
+                    {{#each premiumPosts}}
+                        {{#if (eq this.workType "construcao")}}
+                            <div class="col-12 col-md-4 me-3 flex-shrink-0 service-card">
+                                <div class="card h-100">
                                     {{#if this.coverImage}}
                                         <img src="{{this.coverImage}}" class="card-img-top" alt="{{this.title}}">
                                     {{else}}
                                         <img src="/img/default-service.jpg" class="card-img-top" alt="Imagem padrão">
                                     {{/if}}
                                     {{#if this.isTopWeek}}
-                                        <div class="top-week-badge">Serviço Top</div>
+                                        <div class="top-week-badge"><i class="fas fa-star"></i>Serviço Top</div>
                                     {{/if}}
                                     <div class="card-body">
                                         <h5 class="card-title">{{this.title}}</h5>
@@ -386,20 +514,201 @@
                                             <p class="card-text description">{{this.description}}</p>
                                         {{/if}}
                                         <p class="card-text">Tipo: {{this.workType}}</p>
-                                        <a href="https://wa.me/{{formatPhone this.whatsappLink}}" class="btn btn-whatsapp" target="_blank">
+                                        <a href="#" class="btn btn-whatsapp contact-btn" data-whatsapp="https://wa.me/{{formatPhone this.whatsappLink}}">
                                             <i class="fab fa-whatsapp"></i> Contatar
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                        {{/each}}
-                    </div>
-                {{else}}
-                    <div class="no-services">
-                        <h3>Nenhum serviço disponível no momento</h3>
-                        <p>Seja o primeiro a divulgar seu trabalho!</p>
-                    </div>
-                {{/if}}
+                        {{/if}}
+                    {{/each}}
+                </div>
+
+                <h3 class="category-title" id="eletrica">Elétrica</h3>
+                <hr>
+                <div class="category-carousel">
+                    {{#each premiumPosts}}
+                        {{#if (eq this.workType "eletrica")}}
+                            <div class="col-12 col-md-4 me-3 flex-shrink-0 service-card">
+                                <div class="card h-100">
+                                    {{#if this.coverImage}}
+                                        <img src="{{this.coverImage}}" class="card-img-top" alt="{{this.title}}">
+                                    {{else}}
+                                        <img src="/img/default-service.jpg" class="card-img-top" alt="Imagem padrão">
+                                    {{/if}}
+                                    {{#if this.isTopWeek}}
+                                        <div class="top-week-badge"><i class="fas fa-star"></i>Serviço Top</div>
+                                    {{/if}}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{this.title}}</h5>
+                                        {{#if this.description}}
+                                            <p class="card-text description">{{this.description}}</p>
+                                        {{/if}}
+                                        <p class="card-text">Tipo: {{this.workType}}</p>
+                                        <a href="#" class="btn btn-whatsapp contact-btn" data-whatsapp="https://wa.me/{{formatPhone this.whatsappLink}}">
+                                            <i class="fab fa-whatsapp"></i> Contatar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                </div>
+
+                <h3 class="category-title" id="hidraulica">Hidráulica</h3>
+                <hr>
+                <div class="category-carousel">
+                    {{#each premiumPosts}}
+                        {{#if (eq this.workType "hidraulica")}}
+                            <div class="col-12 col-md-4 me-3 flex-shrink-0 service-card">
+                                <div class="card h-100">
+                                    {{#if this.coverImage}}
+                                        <img src="{{this.coverImage}}" class="card-img-top" alt="{{this.title}}">
+                                    {{else}}
+                                        <img src="/img/default-service.jpg" class="card-img-top" alt="Imagem padrão">
+                                    {{/if}}
+                                    {{#if this.isTopWeek}}
+                                        <div class="top-week-badge"><i class="fas fa-star"></i>Serviço Top</div>
+                                    {{/if}}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{this.title}}</h5>
+                                        {{#if this.description}}
+                                            <p class="card-text description">{{this.description}}</p>
+                                        {{/if}}
+                                        <p class="card-text">Tipo: {{this.workType}}</p>
+                                        <a href="#" class="btn btn-whatsapp contact-btn" data-whatsapp="https://wa.me/{{formatPhone this.whatsappLink}}">
+                                            <i class="fab fa-whatsapp"></i> Contatar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                </div>
+
+                <h3 class="category-title" id="jardinagem">Jardinagem</h3>
+                <hr>
+                <div class="category-carousel">
+                    {{#each premiumPosts}}
+                        {{#if (eq this.workType "jardinagem")}}
+                            <div class="col-12 col-md-4 me-3 flex-shrink-0 service-card">
+                                <div class="card h-100">
+                                    {{#if this.coverImage}}
+                                        <img src="{{this.coverImage}}" class="card-img-top" alt="{{this.title}}">
+                                    {{else}}
+                                        <img src="/img/default-service.jpg" class="card-img-top" alt="Imagem padrão">
+                                    {{/if}}
+                                    {{#if this.isTopWeek}}
+                                        <div class="top-week-badge"><i class="fas fa-star"></i>Serviço Top</div>
+                                    {{/if}}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{this.title}}</h5>
+                                        {{#if this.description}}
+                                            <p class="card-text description">{{this.description}}</p>
+                                        {{/if}}
+                                        <p class="card-text">Tipo: {{this.workType}}</p>
+                                        <a href="#" class="btn btn-whatsapp contact-btn" data-whatsapp="https://wa.me/{{formatPhone this.whatsappLink}}">
+                                            <i class="fab fa-whatsapp"></i> Contatar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                </div>
+
+                <h3 class="category-title" id="limpeza">Limpeza</h3>
+                <hr>
+                <div class="category-carousel">
+                    {{#each premiumPosts}}
+                        {{#if (eq this.workType "limpeza")}}
+                            <div class="col-12 col-md-4 me-3 flex-shrink-0 service-card">
+                                <div class="card h-100">
+                                    {{#if this.coverImage}}
+                                        <img src="{{this.coverImage}}" class="card-img-top" alt="{{this.title}}">
+                                    {{else}}
+                                        <img src="/img/default-service.jpg" class="card-img-top" alt="Imagem padrão">
+                                    {{/if}}
+                                    {{#if this.isTopWeek}}
+                                        <div class="top-week-badge"><i class="fas fa-star"></i>Serviço Top</div>
+                                    {{/if}}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{this.title}}</h5>
+                                        {{#if this.description}}
+                                            <p class="card-text description">{{this.description}}</p>
+                                        {{/if}}
+                                        <p class="card-text">Tipo: {{this.workType}}</p>
+                                        <a href="#" class="btn btn-whatsapp contact-btn" data-whatsapp="https://wa.me/{{formatPhone this.whatsappLink}}">
+                                            <i class="fab fa-whatsapp"></i> Contatar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                </div>
+
+                <h3 class="category-title" id="manutencao">Manutenção</h3>
+                <hr>
+                <div class="category-carousel">
+                    {{#each premiumPosts}}
+                        {{#if (eq this.workType "manutencao")}}
+                            <div class="col-12 col-md-4 me-3 flex-shrink-0 service-card">
+                                <div class="card h-100">
+                                    {{#if this.coverImage}}
+                                        <img src="{{this.coverImage}}" class="card-img-top" alt="{{this.title}}">
+                                    {{else}}
+                                        <img src="/img/default-service.jpg" class="card-img-top" alt="Imagem padrão">
+                                    {{/if}}
+                                    {{#if this.isTopWeek}}
+                                        <div class="top-week-badge"><i class="fas fa-star"></i>Serviço Top</div>
+                                    {{/if}}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{this.title}}</h5>
+                                        {{#if this.description}}
+                                            <p class="card-text description">{{this.description}}</p>
+                                        {{/if}}
+                                        <p class="card-text">Tipo: {{this.workType}}</p>
+                                        <a href="#" class="btn btn-whatsapp contact-btn" data-whatsapp="https://wa.me/{{formatPhone this.whatsappLink}}">
+                                            <i class="fab fa-whatsapp"></i> Contatar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                </div>
+
+                <h3 class="category-title" id="outros">Outros</h3>
+                <hr>
+                <div class="category-carousel">
+                    {{#each premiumPosts}}
+                        {{#if (eq this.workType "outros")}}
+                            <div class="col-12 col-md-4 me-3 flex-shrink-0 service-card">
+                                <div class="card h-100">
+                                    {{#if this.coverImage}}
+                                        <img src="{{this.coverImage}}" class="card-img-top" alt="{{this.title}}">
+                                    {{else}}
+                                        <img src="/img/default-service.jpg" class="card-img-top" alt="Imagem padrão">
+                                    {{/if}}
+                                    {{#if this.isTopWeek}}
+                                        <div class="top-week-badge"><i class="fas fa-star"></i>Serviço Top</div>
+                                    {{/if}}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{this.title}}</h5>
+                                        {{#if this.description}}
+                                            <p class="card-text description">{{this.description}}</p>
+                                        {{/if}}
+                                        <p class="card-text">Tipo: {{this.workType}}</p>
+                                        <a href="#" class="btn btn-whatsapp contact-btn" data-whatsapp="https://wa.me/{{formatPhone this.whatsappLink}}">
+                                            <i class="fab fa-whatsapp"></i> Contatar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                </div>
             </div>
         </div>
     </div>
@@ -411,6 +720,34 @@
             </a>
         {{/if}}
     {{/if}}
+
+    <!-- Modal de Alerta -->
+    <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-warning">
+            <h5 class="modal-title" id="alertModalLabel">Atenção!</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          </div>
+          <div class="modal-body">
+            <p><strong>Nunca aceite pagar valores antecipados!</strong></p>
+            <p>Desconfie de qualquer pedido de pagamento antes da prestação do serviço. Não envie dinheiro, pix ou depósitos antecipados para desconhecidos.</p>
+            <ul>
+              <li>Negocie pessoalmente sempre que possível.</li>
+              <li>Desconfie de ofertas muito vantajosas.</li>
+              <li>Denuncie qualquer tentativa de golpe.</li>
+            </ul>
+            <p>Este site não se responsabiliza por negociações.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Entendi</button>
+            <a id="continueWhatsapp" href="#" target="_blank" class="btn btn-success">
+              Ir para o WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -429,6 +766,18 @@
                 } else {
                     card.style.display = 'none';
                 }
+            });
+        });
+
+        // Alerta de segurança ao clicar em "Contatar"
+        document.querySelectorAll('.contact-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const whatsappLink = this.getAttribute('data-whatsapp');
+                const continueBtn = document.getElementById('continueWhatsapp');
+                continueBtn.setAttribute('href', whatsappLink);
+                const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
+                alertModal.show();
             });
         });
     </script>
