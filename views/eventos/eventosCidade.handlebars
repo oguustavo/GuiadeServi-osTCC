@@ -14,7 +14,6 @@
             --highlight: #FFA500;
         }
         
-        
         .page-title {
             color: var(--primary);
             font-weight: 600;
@@ -23,47 +22,6 @@
             border-bottom: 3px solid var(--highlight);
         }
         
-        .event-card {
-            margin-bottom: 2rem;
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-        .event-card:hover {
-            transform: translateY(-5px);
-        }
-        .event-image {
-            height: 200px;
-            object-fit: cover;
-            border-radius: 12px 12px 0 0;
-        }
-        .event-type-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        .event-date {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-        .event-location {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-        .event-description {
-            color: #495057;
-            margin: 1rem 0;
-        }
-        .event-contact {
-            background-color: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-        }
         .search-container {
             margin: 20px 0 30px;
             padding: 10px;
@@ -106,10 +64,153 @@
             border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(0,123,255,0.1);
         }
+        
+        .category-carousel {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 1.5rem;
+            padding: 1rem 0.5rem;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            align-items: stretch;
+        }
+
+        .event-card {
+            min-width: 280px;
+            flex: 0 0 auto;
+            margin-bottom: 1rem;
+            height: 100%;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            line-height: 1.4;
+        }
+
+        .event-date, .event-location {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-description {
+            color: #495057;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 1rem 0;
+            flex-grow: 1;
+        }
+
+        .event-type-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            z-index: 1;
+        }
+
+        .event-contact {
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            
+        }
+
         .highlight {
             background-color: #fff3cd;
             padding: 2px;
             border-radius: 2px;
+        }
+
+        .no-results-message {
+            margin: 2rem 0;
+        }
+
+        .alert-info {
+            background-color: #e3f2fd;
+            border-color: #90caf9;
+            color: #0d47a1;
+        }
+
+        @media (max-width: 768px) {
+            .event-card {
+                min-width: 240px;
+                flex: 0 0 auto;
+            }
+
+            .card-img-top {
+                height: 180px;
+            }
+
+            .card-body {
+                padding: 1.25rem;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .event-type-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
         }
         .no-results {
             text-align: center;
@@ -120,7 +221,6 @@
             border-radius: 4px;
             margin: 10px 0;
         }
-        
     </style>
 </head>
 <body>
@@ -130,136 +230,299 @@
         </h1>
 
         <div class="row g-3 mb-4">
-  <div class="col-12 col-md-8">
-    <div class="position-relative">
-      <input 
-        type="text" 
-        id="searchInput" 
-        class="form-control ps-5" 
-        placeholder="Busque por nome do evento..." 
-        autocomplete="off">
-      <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-primary"></i>
-    </div>
-  </div>
-  <div class="col-12 col-md-4">
-    <select id="typeFilter" class="form-select">
-      <option value="">Todos os tipos</option>
-      <option value="show">Show</option>
-      <option value="festival">Festival</option>
-      <option value="palestra">Palestra</option>
-      <option value="feira">Feira</option>
-    </select>
-  </div>
-</div>
-        
-        <div class="row" id="eventsContainer">
-            {{#if eventos}}
+            <div class="col-12 col-md-8">
+                <div class="position-relative">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        class="form-control ps-5" 
+                        placeholder="Busque por nome do evento..." 
+                        autocomplete="off">
+                    <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-primary"></i>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <select id="typeFilter" class="form-select">
+                    <option value="">Todos os tipos</option>
+                    <option value="show">Show</option>
+                    <option value="festival">Festival</option>
+                    <option value="palestra">Palestra</option>
+                    <option value="feira">Feira</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Shows Section -->
+        <div class="mb-5" id="shows-section">
+            <h2 class="category-title">Shows</h2>
+            <hr>
+            <div class="category-carousel">
                 {{#each eventos}}
-                    <div class="col-md-6 col-lg-4 event-item" data-type="{{this.tipoEvento}}">
-                        <div class="card event-card">
-                            {{#if this.imagem}}
-                                <img src="{{this.imagem}}" class="card-img-top event-image" alt="{{this.nome}}">
-                            {{else}}
-                                <img src="/images/default-event.jpg" class="card-img-top event-image" alt="Evento sem imagem">
-                            {{/if}}
-                            <span class="event-type-badge bg-primary text-white">{{this.tipoEvento}}</span>
-                            <div class="card-body">
-                                <h5 class="card-title">{{this.nome}}</h5>
-                                <p class="event-date">
-                                    <i class="fas fa-calendar-alt"></i> {{formatDate this.data}} às {{this.horario}}
-                                </p>
-                                <p class="event-location">
-                                    <i class="fas fa-map-marker-alt"></i> 
-                                    <a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.local}}" target="_blank" class="text-decoration-none">{{this.local}}</a>
-                                </p>
-                                {{#if this.contato}}
-                                <p class="event-location">
-                                    <i class="fas fa-phone"></i> {{formatPhone this.contato}}
-                                </p>
+                    {{#if (eq this.tipoEvento "show")}}
+                        <div class="col-12 col-md-4 me-3 flex-shrink-0 event-card" data-type="show">
+                            <div class="card h-100">
+                                {{#if this.imagem}}
+                                    <img src="{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
+                                {{else}}
+                                    <img src="/images/default-event.jpg" class="card-img-top" alt="Evento sem imagem">
                                 {{/if}}
-                                <p class="event-description">{{this.descricao}}</p>
-                                
-                                <div class="event-contact">
-                                    {{#if this.vendaPresencial}}
-                                        <p class="mb-0">
-                                            <i class="fas fa-ticket-alt"></i> Venda de ingressos presencial
-                                        </p>
-                                    {{else}}
-                                        <a href="{{this.linkInscricao}}" class="btn btn-primary w-100" target="_blank">
-                                            <i class="fas fa-link"></i> Inscreva-se aqui
-                                        </a>
+                                <span class="event-type-badge bg-primary text-white">{{this.tipoEvento}}</span>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{this.nome}}</h5>
+                                    <p class="event-date">
+                                        <i class="fas fa-calendar-alt"></i> {{formatDate this.data}} às {{this.horario}}
+                                    </p>
+                                    <p class="event-location">
+                                        <i class="fas fa-map-marker-alt"></i> 
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.local}}" target="_blank" class="text-decoration-none">{{this.local}}</a>
+                                    </p>
+                                    {{#if this.contato}}
+                                    <p class="event-location">
+                                        <i class="fas fa-phone"></i> {{formatPhone this.contato}}
+                                    </p>
                                     {{/if}}
+                                    <p class="event-description">{{this.descricao}}</p>
+                                    
+                                    <div class="event-contact">
+                                        {{#if this.vendaPresencial}}
+                                            <p class="mb-0">
+                                                <i class="fas fa-ticket-alt"></i> Venda de ingressos presencial
+                                            </p>
+                                        {{else}}
+                                            <a href="{{this.linkInscricao}}" class="btn btn-primary w-100" target="_blank">
+                                                <i class="fas fa-link"></i> Inscreva-se aqui
+                                            </a>
+                                        {{/if}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {{/if}}
                 {{/each}}
-            {{else}}
-                <div class="col-12 text-center">
-                    <p class="text-muted">Nenhum evento cadastrado no momento.</p>
-                </div>
-            {{/if}}
+            </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            const typeFilter = document.getElementById('typeFilter');
-            const eventsContainer = document.getElementById('eventsContainer');
-            const eventItems = document.querySelectorAll('.event-item');
+        <!-- Palestras Section -->
+        <div class="mb-5" id="palestras-section">
+            <h2 class="category-title">Palestras</h2>
+            <hr>
+            <div class="category-carousel">
+                {{#each eventos}}
+                    {{#if (eq this.tipoEvento "palestra")}}
+                        <div class="col-12 col-md-4 me-3 flex-shrink-0 event-card" data-type="palestra">
+                            <div class="card h-100">
+                                {{#if this.imagem}}
+                                    <img src="{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
+                                {{else}}
+                                    <img src="/images/default-event.jpg" class="card-img-top" alt="Evento sem imagem">
+                                {{/if}}
+                                <span class="event-type-badge bg-primary text-white">{{this.tipoEvento}}</span>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{this.nome}}</h5>
+                                    <p class="event-date">
+                                        <i class="fas fa-calendar-alt"></i> {{formatDate this.data}} às {{this.horario}}
+                                    </p>
+                                    <p class="event-location">
+                                        <i class="fas fa-map-marker-alt"></i> 
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.local}}" target="_blank" class="text-decoration-none">{{this.local}}</a>
+                                    </p>
+                                    {{#if this.contato}}
+                                    <p class="event-location">
+                                        <i class="fas fa-phone"></i> {{formatPhone this.contato}}
+                                    </p>
+                                    {{/if}}
+                                    <p class="event-description">{{this.descricao}}</p>
+                                    
+                                    <div class="event-contact">
+                                        {{#if this.vendaPresencial}}
+                                            <p class="mb-0">
+                                                <i class="fas fa-ticket-alt"></i> Venda de ingressos presencial
+                                            </p>
+                                        {{else}}
+                                            <a href="{{this.linkInscricao}}" class="btn btn-primary w-100" target="_blank">
+                                                <i class="fas fa-link"></i> Inscreva-se aqui
+                                            </a>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
 
-            function filterEvents() {
-                const searchTerm = searchInput.value.toLowerCase().trim();
-                const selectedType = typeFilter.value.toLowerCase();
-                let hasResults = false;
+        <!-- Festivais Section -->
+        <div class="mb-5" id="festivais-section">
+            <h2 class="category-title">Festivais</h2>
+            <hr>
+            <div class="category-carousel">
+                {{#each eventos}}
+                    {{#if (eq this.tipoEvento "festival")}}
+                        <div class="col-12 col-md-4 me-3 flex-shrink-0 event-card" data-type="festival">
+                            <div class="card h-100">
+                                {{#if this.imagem}}
+                                    <img src="{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
+                                {{else}}
+                                    <img src="/images/default-event.jpg" class="card-img-top" alt="Evento sem imagem">
+                                {{/if}}
+                                <span class="event-type-badge bg-primary text-white">{{this.tipoEvento}}</span>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{this.nome}}</h5>
+                                    <p class="event-date">
+                                        <i class="fas fa-calendar-alt"></i> {{formatDate this.data}} às {{this.horario}}
+                                    </p>
+                                    <p class="event-location">
+                                        <i class="fas fa-map-marker-alt"></i> 
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.local}}" target="_blank" class="text-decoration-none">{{this.local}}</a>
+                                    </p>
+                                    {{#if this.contato}}
+                                    <p class="event-location">
+                                        <i class="fas fa-phone"></i> {{formatPhone this.contato}}
+                                    </p>
+                                    {{/if}}
+                                    <p class="event-description">{{this.descricao}}</p>
+                                    
+                                    <div class="event-contact">
+                                        {{#if this.vendaPresencial}}
+                                            <p class="mb-0">
+                                                <i class="fas fa-ticket-alt"></i> Venda de ingressos presencial
+                                            </p>
+                                        {{else}}
+                                            <a href="{{this.linkInscricao}}" class="btn btn-primary w-100" target="_blank">
+                                                <i class="fas fa-link"></i> Inscreva-se aqui
+                                            </a>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
 
-                eventItems.forEach(item => {
-                    const eventName = item.querySelector('.card-title').textContent.toLowerCase();
-                    const eventType = item.getAttribute('data-type').toLowerCase();
-                    
-                    const matchesSearch = eventName.includes(searchTerm);
-                    const matchesType = !selectedType || eventType === selectedType;
-                    
-                    if (matchesSearch && matchesType) {
-                        hasResults = true;
-                        item.style.display = '';
-                        
-                        if (searchTerm) {
-                            const title = item.querySelector('.card-title');
-                            title.innerHTML = title.textContent.replace(
-                                new RegExp(searchTerm, 'gi'),
-                                match => `<span class="highlight">${match}</span>`
-                            );
+        <!-- Feiras Section -->
+        <div class="mb-5" id="feiras-section">
+            <h2 class="category-title">Feiras</h2>
+            <hr>
+            <div class="category-carousel">
+                {{#each eventos}}
+                    {{#if (eq this.tipoEvento "feira")}}
+                        <div class="col-12 col-md-4 me-3 flex-shrink-0 event-card" data-type="feira">
+                            <div class="card h-100">
+                                {{#if this.imagem}}
+                                    <img src="{{this.imagem}}" class="card-img-top" alt="{{this.nome}}">
+                                {{else}}
+                                    <img src="/images/default-event.jpg" class="card-img-top" alt="Evento sem imagem">
+                                {{/if}}
+                                <span class="event-type-badge bg-primary text-white">{{this.tipoEvento}}</span>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{this.nome}}</h5>
+                                    <p class="event-date">
+                                        <i class="fas fa-calendar-alt"></i> {{formatDate this.data}} às {{this.horario}}
+                                    </p>
+                                    <p class="event-location">
+                                        <i class="fas fa-map-marker-alt"></i> 
+                                        <a href="https://www.google.com/maps/search/?api=1&query={{encodeURIComponent this.local}}" target="_blank" class="text-decoration-none">{{this.local}}</a>
+                                    </p>
+                                    {{#if this.contato}}
+                                    <p class="event-location">
+                                        <i class="fas fa-phone"></i> {{formatPhone this.contato}}
+                                    </p>
+                                    {{/if}}
+                                    <p class="event-description">{{this.descricao}}</p>
+                                    
+                                    <div class="event-contact">
+                                        {{#if this.vendaPresencial}}
+                                            <p class="mb-0">
+                                                <i class="fas fa-ticket-alt"></i> Venda de ingressos presencial
+                                            </p>
+                                        {{else}}
+                                            <a href="{{this.linkInscricao}}" class="btn btn-primary w-100" target="_blank">
+                                                <i class="fas fa-link"></i> Inscreva-se aqui
+                                            </a>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const searchInput = document.getElementById('searchInput');
+                const typeFilter = document.getElementById('typeFilter');
+                const sections = document.querySelectorAll('[id$="-section"]');
+
+                function filterEvents() {
+                    const searchTerm = searchInput.value.toLowerCase().trim();
+                    const selectedType = typeFilter.value.toLowerCase();
+                    let hasAnyVisibleCards = false;
+
+                    sections.forEach(section => {
+                        const eventCards = section.querySelectorAll('.event-card');
+                        let hasVisibleCards = false;
+
+                        eventCards.forEach(card => {
+                            const eventName = card.querySelector('.card-title').textContent.toLowerCase();
+                            const eventType = card.getAttribute('data-type').toLowerCase();
+                            
+                            const matchesSearch = eventName.includes(searchTerm);
+                            const matchesType = !selectedType || eventType === selectedType;
+                            
+                            if (matchesSearch && matchesType) {
+                                card.style.display = '';
+                                hasVisibleCards = true;
+                                hasAnyVisibleCards = true;
+                                
+                                if (searchTerm) {
+                                    const title = card.querySelector('.card-title');
+                                    const originalText = title.textContent;
+                                    title.innerHTML = originalText.replace(
+                                        new RegExp(searchTerm, 'gi'),
+                                        match => `<span class="highlight">${match}</span>`
+                                    );
+                                }
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+
+                        section.style.display = hasVisibleCards ? '' : 'none';
+                    });
+
+                    // Gerencia a mensagem de "nenhum resultado"
+                    let noResultsMessage = document.querySelector('.no-results-message');
+                    if (!hasAnyVisibleCards) {
+                        if (!noResultsMessage) {
+                            noResultsMessage = document.createElement('div');
+                            noResultsMessage.className = 'col-12 no-results-message text-center mt-4';
+                            noResultsMessage.innerHTML = `
+                                <div class="alert alert-info">
+                                    <i class="fas fa-search me-2"></i>
+                                    Nenhum evento encontrado
+                                </div>
+                            `;
+                            document.querySelector('.container').appendChild(noResultsMessage);
                         }
-                    } else {
-                        item.style.display = 'none';
+                    } else if (noResultsMessage) {
+                        noResultsMessage.remove();
                     }
-                });
-
-                // Mostra mensagem quando não há resultados
-                const noResults = document.createElement('div');
-                noResults.className = 'col-12 no-results';
-                noResults.innerHTML = `
-                    <i class="fas fa-search me-2"></i>
-                    Nenhum evento encontrado
-                `;
-
-                const existingNoResults = eventsContainer.querySelector('.no-results');
-                if (!hasResults) {
-                    if (!existingNoResults) {
-                        eventsContainer.appendChild(noResults);
-                    }
-                } else if (existingNoResults) {
-                    existingNoResults.remove();
                 }
-            }
 
-           
-            searchInput.addEventListener('input', filterEvents);
-            typeFilter.addEventListener('change', filterEvents);
-        });
-    </script>
+                // Adiciona os event listeners
+                searchInput.addEventListener('input', filterEvents);
+                typeFilter.addEventListener('change', filterEvents);
+
+                // Executa o filtro inicialmente
+                filterEvents();
+            });
+        </script>
+    </div>
 </body>
 </html>
