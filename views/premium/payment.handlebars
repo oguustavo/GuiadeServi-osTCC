@@ -53,14 +53,12 @@
         }
 
         .plan-badge {
-            margin: 2px
-            position: absolute;
-            top: 20px;
-            right: 35px;
+            margin: 10px auto 0;
+            display: inline-block;
             background: rgba(255,255,255,0.2);
-            padding: 8px 16px;
+            padding: 5px 15px;
             border-radius: 20px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             backdrop-filter: blur(4px);
         }
 
@@ -260,9 +258,8 @@
             }
 
             .plan-badge {
-                position: static;
-                display: inline-block;
-                margin-top: 1rem;
+                margin-top: 8px;
+                padding: 4px 12px;
             }
 
             .payment-content {
@@ -279,21 +276,21 @@
     <div class="container">
         <div class="payment-container">
             <div class="payment-header">
-                <h1>Finalizar Assinatura</h1>
-                <div class="plan-badge">Plano {{planName}}</div>
+                <h1>{{#if showPix}}Pagamento via PIX{{else}}Finalizar Assinatura{{/if}}</h1>
+                <div style="text-align: center;">
+                    <div class="plan-badge">Plano {{planName}}</div>
+                </div>
             </div>
-
             <div class="payment-content">
                 <div class="plan-details">
                     <div class="plan-header">
                         <i class="fas fa-crown plan-icon"></i>
                         <h2 class="plan-title">{{planName}}</h2>
                     </div>
-
                     <div class="plan-price">
                         R${{planPrice}}<span class="period">/mês</span>
                     </div>
-
+                    {{#unless showPix}}
                     <ul class="features-list">
                         {{#if planType}}
                             {{#if (eq planType 'basic')}}
@@ -315,54 +312,70 @@
                             {{/if}}
                         {{/if}}
                     </ul>
+                    {{/unless}}
                 </div>
-
                 <div class="payment-summary">
-                    <h3 class="summary-title">Resumo do Pagamento</h3>
-                    
-                    <div class="summary-item">
-                        <span class="summary-label">Plano</span>
-                        <span class="summary-value">{{planName}}</span>
-                    </div>
-                    
-                    <div class="summary-item">
-                        <span class="summary-label">Valor Mensal</span>
-                        <span class="summary-value">R${{planPrice}}</span>
-                    </div>
-                    
-                    <div class="summary-item">
-                        <span class="summary-label">Taxa de Processamento</span>
-                        <span class="summary-value">Grátis</span>
-                    </div>
-                    
-                    <div class="summary-item total">
-                        <span class="summary-label">Total</span>
-                        <span class="summary-value">R${{planPrice}}</span>
-                    </div>
-
-                    <div class="payment-method">
-                        <i class="fab fa-pix"></i>
-                        <div class="payment-method-info">
-                            <div class="payment-method-title">PIX</div>
-                            <div class="payment-method-description">Pagamento instantâneo e seguro</div>
+                    {{#if showPix}}
+                        <h3 class="summary-title">Instruções para Pagamento PIX</h3>
+                        <div style="text-align:center; margin-bottom:1.5rem;">
+                            <img src="data:image/png;base64,{{{pixQrCodeBase64}}}" alt="QR Code PIX" style="max-width:250px; width:100%; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08);" />
                         </div>
-                    </div>
-
-                    <form action="/premium/process-payment" method="POST">
-                        <input type="hidden" name="planType" value="{{planType}}">
-                        <button type="submit" class="payment-button">
-                            <i class="fas fa-lock"></i>
-                            Finalizar Pagamento
-                        </button>
-                    </form>
-
+                        <div style="margin-bottom:1rem; text-align:center;">
+                            <button onclick="navigator.clipboard.writeText('{{{pixCopyPaste}}}');this.innerText='Copiado!';setTimeout(()=>this.innerText='Copiar código PIX',2000);" class="payment-button" style="width:auto; margin:0 auto;">Copiar código PIX</button>
+                        </div>
+                        <div style="background:#f8f9fa; border-radius:8px; padding:1rem; margin-bottom:1rem; text-align:center;">
+                            <strong>Código PIX:</strong>
+                            <div style="word-break:break-all; font-size:0.95rem; color:#333; margin:0.5rem 0;">{{{pixCopyPaste}}}</div>
+                            <span style="color:#666; font-size:0.9rem;">Escaneie o QR Code acima ou cole o código no app do seu banco.</span>
+                            {{#if pixExpiration}}
+                                <div style="color:#f44336; font-size:0.85rem; margin-top:0.5rem;">Válido até: {{formatDate pixExpiration}}</div>
+                            {{/if}}
+                            {{#if pixTicketUrl}}
+                                <div style="margin-top:1rem;">
+                                    <a href="{{pixTicketUrl}}" target="_blank" class="payment-button" style="background-color: var(--primary); text-decoration: none; width:auto; margin:0 auto;">Ver Detalhes do Pagamento no MP</a>
+                                </div>
+                            {{/if}}
+                        </div>
+                    {{else}}
+                        <h3 class="summary-title">Resumo do Pagamento</h3>
+                        <div class="summary-item">
+                            <span class="summary-label">Plano</span>
+                            <span class="summary-value">{{planName}}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Valor Mensal</span>
+                            <span class="summary-value">R${{planPrice}}</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Taxa de Processamento</span>
+                            <span class="summary-value">Grátis</span>
+                        </div>
+                        <div class="summary-item total">
+                            <span class="summary-label">Total</span>
+                            <span class="summary-value">R${{planPrice}}</span>
+                        </div>
+                        <div class="payment-method">
+                            <i class="fab fa-pix"></i>
+                            <div class="payment-method-info">
+                                <div class="payment-method-title">PIX</div>
+                                <div class="payment-method-description">Pagamento instantâneo e seguro</div>
+                            </div>
+                        </div>
+                        <form action="/premium/process-payment" method="POST">
+                            <input type="hidden" name="planType" value="{{planType}}">
+                            <button type="submit" class="payment-button">
+                                <i class="fas fa-lock"></i>
+                                Finalizar Pagamento
+                            </button>
+                        </form>
+                    {{/if}}
                     <div class="security-info">
-                        <i class="fas fa-shield-alt"></i>
-                        Pagamento 100% seguro e criptografado
+                        
+                        Pagamento 100% seguro e criptografado {{#if showPix}}via Mercado Pago{{/if}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-</html> 
+</html>
